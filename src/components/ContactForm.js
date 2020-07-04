@@ -1,10 +1,14 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { Form, Label, Input, FormGroup } from 'reactstrap'
+import { Container, Form, Label, Input, FormGroup } from 'reactstrap'
+
+const divStyle = {
+  marginTop: '40px',
+  marginBottom: '20px'
+};
 
 const ContactForm = () => (
   <div>
-    <h5>Enter your information: </h5>
     <Formik
       initialValues={{ name: '', email: '', LINE: '', message: '' }}
       validate={values => {
@@ -39,48 +43,51 @@ const ContactForm = () => (
         isSubmitting,
         /* and other goodies */
       }) => (
-          <Form onSubmit={handleSubmit} action="mailto:perrottarichard@gmail.com" className='form-ui'>
-            <FormGroup>
-              <Label for='name'>Name</Label>
-              <Input
-                placeholder='Jane'
-                type="Name"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
-              <Label for='email'>Email</Label>
-              <Input
-                placeholder='Jane@example.com'
-                type="Email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-              {errors.email && touched.email && errors.email}
-              <Label for='Line'>LINE</Label>
-              <Input
-                placeholder='Line ID'
-                type="Line"
-                name="LINE"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.LINE}
-              />
-              <Label for='message'>Message</Label>
-              <Input
-                placeholder='I have a question about...'
-                type="Message"
-                name="message"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.message}
-              />
-              {errors.message && touched.message && errors.message}
-            </FormGroup>
-          </Form>
+          <Container style={divStyle}>
+            <h5>Enter your information: </h5>
+            <Form onSubmit={handleSubmit} action="mailto:perrottarichard@gmail.com" className='form-ui'>
+              <FormGroup>
+                <Label for='name'>Name</Label>
+                <Input
+                  placeholder='Jane'
+                  type="Name"
+                  name="name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+                <Label for='email'>Email</Label>
+                <Input
+                  placeholder='Jane@example.com'
+                  type="Email"
+                  name="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+                {errors.email && touched.email && errors.email}
+                <Label for='Line'>LINE</Label>
+                <Input
+                  placeholder='Line ID'
+                  type="Line"
+                  name="LINE"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.LINE}
+                />
+                <Label for='message'>Message</Label>
+                <Input
+                  placeholder='I have a question about...'
+                  type="Message"
+                  name="message"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.message}
+                />
+                {errors.message && touched.message && errors.message}
+              </FormGroup>
+            </Form>
+          </Container>
         )}
     </Formik>
   </div>

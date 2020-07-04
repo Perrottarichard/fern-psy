@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 
-//import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -29,7 +29,13 @@ const MyNavbar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink id="NavLink" href="#forum">Forum</NavLink>
+              <NavLink tag={Link} id="NavLink" to="/forum">Forum</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} id="NavLink" to="/about">About</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} id="NavLink" to="/contact">Contact</NavLink>
             </NavItem>
           </Nav>
           <NavbarText id='NavBarText'>
