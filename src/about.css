@@ -1,0 +1,57 @@
+@media only screen and (max-width: 299px) {
+  #navbrand {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  #navbrand {
+    font-size: 1.5rem;
+  }
+}
+#about {
+margin-top: 40px;
+font-size: 1.10em;
+font-family: 'Poppins', sans-serif;
+text-align: center;
+  height: auto;
+  width: auto;
+}
+#heading {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+#about-me {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  padding: 6px;
+  text-shadow: 1px 1px white;
+}
+#name {
+  color: rgb(59, 43, 43)
+}
+#title {
+  color: rgb(187, 97, 157);
+}
+/* #list {
+  background-color: rgb(248, 219, 245);
+  font-family: 'Kanit', sans-serif;
+} */
+
+p {
+color: rgb(48, 45, 45);
+font-family: 'Fira Code', monospace;
+}
+
+li {
+color: rgb(34, 33, 32);
+font-family: 'Fira Code', monospace;
+}
+img {
+display: block;
+float: left;
+margin-left: 2rem;
+margin-right: auto;
+-webkit-box-shadow: 12px 29px 81px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 12px 29px 81px 0px rgba(0,0,0,0.75);
+box-shadow: 12px 29px 81px 0px rgba(0,0,0,0.75);
+}

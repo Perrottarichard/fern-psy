@@ -1,17 +1,18 @@
 import React from 'react';
 import MyNavbar from './components/Navbar';
 import About from './components/About';
-import WelcomeMessage from './components/Welcome'
+import FormModal from './components/FormModal'
+
 //import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
-function App() {
+const App = () => {
   return (
     //<Router>
     <div className="App">
       <MyNavbar />
-      <WelcomeMessage />
       <About />
+      <FormModal />
 
     </div>
     //</Router>

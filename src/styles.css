@@ -1,0 +1,53 @@
+@media only screen and (max-width: 299px) {
+  #navbrand {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  #navbrand {
+    font-size: 1.5rem;
+  }
+}
+#navbar {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+#navbrand {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #343a40;
+  text-shadow: 1px 1px white;
+}
+#NavLink {
+font-family: 'Fira Code', monospace;
+color: #343a40;
+}
+#NavBarText {
+font-family: 'Fira Code', monospace;
+color: #343a40;
+}
+#fa {
+height: 40px;
+width: 40px;
+float: right;
+color: #343a40;
+margin-right: 10px;
+margin-left: 10px;
+}
+#DropDownMenu {
+background-color: #343a40;
+}
+#DropDownItem {
+font-family: 'Fira Code', monospace;
+color: rgb(255, 187, 0);
+}
+#span {
+  font-family: 'Fira Code', monospace;
+  float: right;
+  color:#343a40;
+  font-weight: 700;
+}
+#dropdownmenu {
+background-color: #343a40
+}
