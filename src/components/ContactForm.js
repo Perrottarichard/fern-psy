@@ -45,7 +45,7 @@ const ContactForm = () => (
       }) => (
           <Container style={divStyle}>
             <h5>Enter your information: </h5> {/*Thai*/}
-            <Form onSubmit={handleSubmit} action="mailto:perrottarichard@gmail.com" className='form-ui'>
+            <Form onSubmit={handleSubmit} className='form-ui'>
               <FormGroup>
                 <Label for='name'>Name</Label>
                 <Input
