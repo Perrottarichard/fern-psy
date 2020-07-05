@@ -9,7 +9,7 @@ import ContactForm from './components/ContactForm';
 import Notification from './components/Notification'
 import forumService from './services/forumService'
 import { setUser } from './reducers/userReducer'
-import { initializeQuestions } from './reducers/forumReducer';
+//import { initializeQuestions } from './reducers/forumReducer';
 
 
 const App = () => {
@@ -17,7 +17,6 @@ const App = () => {
   const forum = useSelector(state => state.forum)
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
-
   // const dispatch = useDispatch()
   // useEffect(() => {
   //   dispatch(initializeQuestions())
