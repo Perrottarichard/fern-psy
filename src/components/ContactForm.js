@@ -44,7 +44,7 @@ const ContactForm = () => (
         /* and other goodies */
       }) => (
           <Container style={divStyle}>
-            <h5>Enter your information: </h5>
+            <h5>Enter your information: </h5> {/*Thai*/}
             <Form onSubmit={handleSubmit} action="mailto:perrottarichard@gmail.com" className='form-ui'>
               <FormGroup>
                 <Label for='name'>Name</Label>
@@ -75,9 +75,9 @@ const ContactForm = () => (
                   onBlur={handleBlur}
                   value={values.LINE}
                 />
-                <Label for='message'>Message</Label>
+                <Label for='message'>Message</Label> {/*Thai*/}
                 <Input
-                  placeholder='I have a question about...'
+                  placeholder='I have a question about...' //Thai
                   type="Message"
                   name="message"
                   onChange={handleChange}

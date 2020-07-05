@@ -37,13 +37,15 @@ const MyNavbar = (props) => {
             <NavItem>
               <NavLink tag={Link} id="NavLink" to="/contact">Contact</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} id="NavLink" to="/login">Login</NavLink>
+            </NavItem>
           </Nav>
           <NavbarText id='NavBarText'>
             <a href="mailto:furbynilu@gmail.com"> <FontAwesomeIcon id='fa' icon={faEnvelopeSquare} />
             </a>
             <a href="https://www.facebook.com/NiluAcounselor"> <FontAwesomeIcon id='fa' icon={faFacebookSquare} /></a>
           </NavbarText>
-
         </Collapse>
       </Navbar>
     </div>
