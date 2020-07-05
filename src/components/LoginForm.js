@@ -46,7 +46,7 @@ const LoginForm = (props) => {
     }
   }
   return (
-    <div className='container'>
+    <div className='container' id='login-form'>
       <h2>Login</h2>
       <Form onSubmit={submitLogin}>
         <FormGroup>

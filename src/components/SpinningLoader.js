@@ -4,7 +4,8 @@ import { Spinner } from 'reactstrap'
 const SpinningLoader = () => {
   return (
     <div>
-      <Spinner style={{ width: '3rem', height: '3rem' }} />{' '}
+      Loading...
+      <Spinner type="grow" color="primary" style={{ width: '5rem', height: '5rem' }} />
     </div>
   )
 }

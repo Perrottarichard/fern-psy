@@ -51,3 +51,9 @@ color: rgb(255, 187, 0);
 #dropdownmenu {
 background-color: #343a40
 }
+#register-form {
+  align-items: center;
+}
+#login-form {
+  margin-top: 3rem;
+}

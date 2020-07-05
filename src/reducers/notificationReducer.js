@@ -57,16 +57,16 @@ export const goodRegister = () => {
     message: `Successfully registered!`
   }
 }
-export const badLogin = () => {
+export const badLogin = (message) => {
   return {
     type: 'BAD_LOGIN',
-    message: `Sorry. Please try again`
+    message: message
   }
 }
-export const badRegister = () => {
+export const badRegister = (message) => {
   return {
     type: 'BAD_REGISTER',
-    message: `Sorry. Please try again`
+    message: message
   }
 }
 
