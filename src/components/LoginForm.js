@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { badLogin, goodLogin, reset } from '../reducers/notificationReducer'
+import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
-import { setUser } from '../reducers/userReducer'
+
 import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
 import RegisterForm from './RegisterForm'
 
@@ -52,7 +53,7 @@ const LoginForm = (props) => {
     else {
       try {
         const user =
-          await loginService.login({ username, password })
+          await loginService.userlogin({ username, password })
         window.localStorage.setItem(
           'loggedForumUser', JSON.stringify(user)
         )

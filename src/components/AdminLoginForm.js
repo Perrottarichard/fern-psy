@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { badLogin, goodLogin, reset } from '../reducers/notificationReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
-import { setUser } from '../reducers/userReducer'
+import { setUser } from '../reducers/activeUserReducer'
 import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
 
 const textStyle = {

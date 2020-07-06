@@ -17,12 +17,11 @@ import {
 
 const MyNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, setLoggedIn, loggedIn } = props
+  const { activeUser, setLoggedIn, loggedIn } = props
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    //<Router>
     <div>
       <Navbar id="navbar" color="dark" dark expand="md">
         <NavbarBrand id='navbrand' href="/">Fern's Counseling</NavbarBrand>
@@ -36,28 +35,48 @@ const MyNavbar = (props) => {
               <NavLink tag={Link} id="NavLink" to="/about">About</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/contact">Contact Fern</NavLink>
+              {
+                (!activeUser || activeUser.username !== "Fern-Admin")
+                  ?
+                  <NavLink tag={Link} id="NavLink" to="/contact">Contact Fern</NavLink>
+                  :
+                  <NavLink tag={Link} id="NavLink" to="/admin/dashboard">Dashboard</NavLink>
+              }
             </NavItem>
+            {
+              (!activeUser || !loggedIn)
+                ?
+                <NavItem>
+                  <NavLink tag={Link} id="NavLink" to="/admin">Admin</NavLink>
+                </NavItem>
+                :
+                null
+            }
           </Nav>
-          {(!user || !loggedIn) ?
-            <div id='nav-login-button'>
-              <Link to="/login"><Button outline color='primary'>Login</Button></Link>
-            </div>
-            :
-            null}
-
-          {(user && loggedIn) ?
-            <div>
-              <NavbarText id='NavBarText'>
-                <FontAwesomeIcon id='fa' icon={faUser} /><br />{user.username}
-              </NavbarText>
-              <Logout setLoggedIn={setLoggedIn} />
-            </div>
-            : null}
+          {
+            (!activeUser || !loggedIn)
+              ?
+              <div id='nav-login-button'>
+                <Link to="/login"><Button outline color='primary'>Login</Button></Link>
+              </div>
+              :
+              null
+          }
+          {
+            (activeUser && loggedIn)
+              ?
+              <div>
+                <NavbarText id='NavBarText'>
+                  <FontAwesomeIcon id='fa' icon={faUser} /><br />{activeUser.username}
+                </NavbarText>
+                <Logout setLoggedIn={setLoggedIn} />
+              </div>
+              :
+              null
+          }
         </Collapse>
       </Navbar>
     </div>
-    //</Router>
   );
 }
 export default MyNavbar;

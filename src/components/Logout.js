@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { clearUser } from '../reducers/userReducer'
-import { logoutNotify, reset } from '../reducers/notificationReducer'
 import { Button } from 'reactstrap'
+import { clearUser } from '../reducers/activeUserReducer'
+import { logoutNotify, reset } from '../reducers/notificationReducer'
 
 const Logout = (props) => {
   const { setLoggedIn } = props

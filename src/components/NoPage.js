@@ -1,5 +1,4 @@
 import React from 'react'
-import { faAutoprefixer } from '@fortawesome/free-brands-svg-icons'
 
 const NoPage = () => {
 

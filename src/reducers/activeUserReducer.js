@@ -1,4 +1,5 @@
-const userReducer = (state = {}, action) => {
+
+const activeUserReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
       return action.data
@@ -22,4 +23,5 @@ export const clearUser = () => {
     data: null
   }
 }
-export default userReducer
+
+export default activeUserReducer

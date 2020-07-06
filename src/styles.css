@@ -74,11 +74,11 @@ background-color: #343a40
   margin-top: 3rem;
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
-  border-color:  rgb(235, 100, 123);
+  /* border-color:  rgb(235, 100, 123);
   border-style: solid;
-  border-width: 5px;
+  border-width: 5px; */
   padding: 20px;
-  box-shadow: 10px 10px 20px gray
+  /* box-shadow: 10px 10px 20px gray */
 }
 #admin-submit-login {
   background-color: rgb(235, 100, 123);

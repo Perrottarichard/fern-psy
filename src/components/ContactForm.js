@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import Recaptcha from 'react-recaptcha'
-import contactService from '../services/contactService'
 import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { Container, Form, Label, Input, FormGroup, Button } from 'reactstrap'
-
+import contactService from '../services/contactService'
 
 const textStyle = {
   textAlign: 'center',
@@ -63,17 +62,18 @@ const ContactForm = () => {
           }
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          if (!isVerified) {
-            alert('Please verify that you are a human')
-          } else {
-            const response = await contactService.sendMessage(values)
-            console.log(response.message)
-            setSubmitting(false)
-            resetForm({})
-            history.push('/forum')
+        onSubmit={
+          async (values, { setSubmitting, resetForm }) => {
+            if (!isVerified) {
+              alert('Please verify that you are a human')
+            } else {
+              const response = await contactService.sendContact(values)
+              console.log(response.message)
+              setSubmitting(false)
+              resetForm({})
+              history.push('/forum')
+            }
           }
-        }
         }
       >
         {({
@@ -94,8 +94,7 @@ const ContactForm = () => {
                 <a href="https://www.facebook.com/NiluAcounselor"> <FontAwesomeIcon id='fa-contact-form' icon={faFacebookSquare} /></a>
               </div>
               <br />
-              <h3 style={textStyle}>Enter your information: </h3> {/*Thai*/}
-
+              <h3 style={textStyle}>Enter your information: </h3>
               <Form style={formStyle} onSubmit={handleSubmit} className='form-ui'>
                 <FormGroup style={{ marginBottom: '0' }}>
                   <Label style={labelStyle} for='name'>Name</Label>
@@ -125,9 +124,9 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.LINE}
                   /><br />
-                  <Label style={labelStyle} for='message'>Message</Label> {/*Thai*/}
+                  <Label style={labelStyle} for='message'>Message</Label>
                   <Input
-                    placeholder='I have a question about...' //Thai
+                    placeholder='I have a question about...'
                     type="Message"
                     name="message"
                     onChange={handleChange}
