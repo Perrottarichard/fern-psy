@@ -7,12 +7,42 @@ import { reset, goodRegister, badRegister } from '../reducers/notificationReduce
 import userService from '../services/userService'
 import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
+//align sign up button
+const textStyle = {
+  textAlign: 'center',
+  fontFamily: 'Poppins'
+}
+const registerButtonStyle = {
+  display: 'inline-block'
+}
+const formDivStyle = {
+  display: 'block',
+  textAlign: 'center'
+}
+const labelStyle = {
+  float: 'left',
+  marginBottom: '0px',
+  padding: '0px',
+  fontFamily: 'Poppins'
+}
+const inputStyle = {
+  float: 'left',
+  marginBottom: '1rem'
+}
+const genderSelectStyle = {
+  marginRight: '20px',
+  float: 'left',
+  fontFamily: 'Poppins'
+}
+
 const RegisterForm = () => {
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  //captcha value
   const [isVerified, setIsVerified] = useState(false)
+
   const [loading, setLoading] = useState(false)
 
   const [name, setName] = useState('')
@@ -26,9 +56,9 @@ const RegisterForm = () => {
   const dispatch = useDispatch()
 
   const genderOptions = [
-    { value: 'male', label: 'male' },
-    { value: 'female', label: 'female' },
-    { value: 'other', label: 'other' }
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+    { value: 'Other', label: 'Other' }
   ]
 
   const handleChangeName = (event) => {
@@ -98,7 +128,7 @@ const RegisterForm = () => {
           dispatch(goodRegister())
           setTimeout(() => {
             dispatch(reset())
-          }, 5000)
+          }, 4000)
           setUsername('')
           setPassword('')
           setConfirmPassword('')
@@ -127,29 +157,30 @@ const RegisterForm = () => {
         <div>
           <SpinningLoader />
         </div> :
-        <div>
-          <Button color="primary" onClick={toggle}>{'Sign up'}</Button>
+        <div style={formDivStyle}>
+          <Button style={registerButtonStyle} color="primary" onClick={toggle}>{'Sign up'}</Button>
           <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
             <ModalBody>
-              <h2>Register</h2>
-              <Form onSubmit={submitRegister} action='?' method='POST'>
-                <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
+              <h2 style={textStyle}>Register</h2>
+              <Form onSubmit={submitRegister} >
+
                 <FormGroup>
-                  <Label>Name:</Label>
-                  <Input onChange={handleChangeName} value={name}></Input>
-                  <Label>Username:</Label>
-                  <Input onChange={handleChangeUsername} value={username}></Input>
-                  <Label>Password:</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input>
-                  <Label>Confirm Password:</Label>
-                  <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input>
-                  <Label>Gender:</Label> <Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select>
-                  <Label>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input>
-                  <Label>Date of Birth:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input>
+                  <Label style={labelStyle}>Name:</Label>
+                  <Input style={inputStyle} onChange={handleChangeName} value={name}></Input>
+                  <Label style={labelStyle}>Username:</Label>
+                  <Input style={inputStyle} onChange={handleChangeUsername} value={username}></Input>
+                  <Label style={labelStyle}>Password:</Label> <Input style={inputStyle} id='password' type="password" onChange={handleChangePassword} value={password}></Input>
+                  <Label style={labelStyle}>Confirm Password:</Label>
+                  <Input style={inputStyle} onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input>
+                  <Label style={labelStyle}>Email:</Label> <Input style={inputStyle} id='email' type="text" onChange={handleChangeEmail} value={email}></Input>
+                  <Label style={genderSelectStyle}>Gender:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
+                  <Label style={labelStyle}>Date of Birth:</Label> <Input style={inputStyle} id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input>
                 </FormGroup>
               </Form>
             </ModalBody>
+            <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
             <ModalFooter>
-              <Button color='success' type='submit' onClick={submitRegister}>Sign Up!</Button>
+              <Button color='primary' type='submit' onClick={submitRegister}>Sign Up</Button>
               <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
           </Modal></div>}

@@ -7,6 +7,32 @@ import { setUser } from '../reducers/userReducer'
 import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
 import RegisterForm from './RegisterForm'
 
+const textStyle = {
+  textAlign: 'center',
+  fontFamily: 'Poppins'
+}
+const formDivStyle = {
+  display: 'block',
+  textAlign: 'center'
+}
+const formStyle = {
+  width: '70%',
+  display: 'inline-block'
+}
+const labelStyle = {
+  float: 'left',
+  marginBottom: '0px',
+  padding: '0px',
+  fontFamily: 'Poppins'
+}
+const inputStyle = {
+  float: 'left',
+  marginBottom: '1rem'
+}
+const loginButtonStyle = {
+  float: 'left'
+}
+
 const LoginForm = (props) => {
   const { setLoggedIn } = props
   const [username, setUsername] = useState('')
@@ -47,17 +73,19 @@ const LoginForm = (props) => {
   }
   return (
     <div className='container' id='login-form'>
-      <h2>Login</h2>
-      <Form onSubmit={submitLogin}>
-        <FormGroup>
-          <Label>Username:</Label>
-          <Input onChange={handleChangeUser} value={username}></Input>
-          <Label>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input>
-          <Button id='submit-login' type="submit">Login</Button>
-          <hr />
-        </FormGroup>
-      </Form>
-      <p>Don't have an account? </p>
+      <h2 style={textStyle}>Login</h2>
+      <div id='form-div' style={formDivStyle}>
+        <Form style={formStyle} onSubmit={submitLogin}>
+          <FormGroup>
+            <Label style={labelStyle}>Username:</Label>
+            <Input style={inputStyle} onChange={handleChangeUser} value={username}></Input>
+            <Label style={labelStyle}>Password:</Label> <Input style={inputStyle} id='password' type="password" onChange={handleChangePass} value={password}></Input>
+            <Button color='success' style={loginButtonStyle} id='submit-login' type="submit">Login</Button>
+          </FormGroup>
+        </Form>
+      </div>
+      <br />
+      <p style={textStyle}>Don't have an account? </p>
       <RegisterForm />
     </div>
   )
