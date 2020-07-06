@@ -87,9 +87,14 @@ const RegisterForm = () => {
       setIsVerified(true);
     }
   }
+  const variations = ['fern', 'Fern', 'admin', 'Admin', 'administrator', 'Administrator', 'nilubon', 'Nilubon', 'Fern-Admin', 'Fern-admin', 'fern-admin', 'fern-Admin', 'Fern Admin', 'fern Admin', 'Fern admin', 'fern admin', 'FernAdmin', 'fernAdmin', 'fern_admin', 'Fern_Admin']
+
   const submitRegister = async event => {
     event.preventDefault()
-    if (!name || !username || !selectedGender || !dateOfBirth || !password) {
+    if (variations.includes(username) || variations.map(v => v.toLowerCase).includes(username)) {
+      alert('Sorry, that username is restricted')
+    }
+    else if (!name || !username || !selectedGender || !dateOfBirth || !password) {
       alert('You must fill all fields')
     }
     else if (password.length < 5 || username.length < 5) {

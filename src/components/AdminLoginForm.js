@@ -6,7 +6,6 @@ import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import { setUser } from '../reducers/userReducer'
 import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
-import RegisterForm from './RegisterForm'
 
 const textStyle = {
   textAlign: 'center',
@@ -28,10 +27,10 @@ const labelStyle = {
 }
 const loginButtonStyle = {
   float: 'center',
-  width: '100px'
+  width: '200px'
 }
 
-const LoginForm = (props) => {
+const AdminLoginForm = (props) => {
   const { setLoggedIn } = props
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -51,26 +50,26 @@ const LoginForm = (props) => {
     }
     else {
       try {
-        const user =
-          await loginService.login({ username, password })
+        const admin =
+          await loginService.adminLogin({ username, password })
         window.localStorage.setItem(
-          'loggedForumUser', JSON.stringify(user)
+          'loggedForumUser', JSON.stringify(admin)
         )
-        forumService.setToken(user.token)
-        dispatch(setUser(user))
+        forumService.setToken(admin.token)
+        dispatch(setUser(admin))
         setLoggedIn(true)
-        dispatch(goodLogin(`Welcome back ${user.username}`))
+        dispatch(goodLogin(`Welcome back ${admin.username}`))
         setTimeout(() => {
           dispatch(reset())
         }, 3000)
         setUsername('')
         setPassword('')
-        history.push('/forum')
+        history.push('/admin/dashboard')
       }
       catch (error) {
         console.log(error.message)
         if (error.message.includes('401')) {
-          dispatch(badLogin('Make sure your username and password are correct...'))
+          dispatch(badLogin('Are you sure you are the admin? Check your username and password again...'))
         } else {
           dispatch(badLogin('Something went wrong...'))
         }
@@ -78,26 +77,20 @@ const LoginForm = (props) => {
     }
   }
   return (
-    <div className='container' id='login-form'>
-      <h2 style={textStyle}>Login</h2>
+    <div className='container' id='admin-login-form'>
+      <h2 style={textStyle}>Admin Login</h2>
       <div id='form-div' style={formDivStyle}>
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>
             <Label style={labelStyle}>Username:</Label>
             <Input onChange={handleChangeUser} value={username}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <Button color='primary' style={loginButtonStyle} id='submit-login' type="submit">Enter</Button>
+            <Button color='none' style={loginButtonStyle} id='admin-submit-login' type="submit">Enter</Button>
           </FormGroup>
         </Form>
-      </div>
-      <br />
-      <hr />
-      <div id='no-account-div'>
-        <p style={textStyle}>Don't have an account? </p>
-        <RegisterForm />
       </div>
     </div>
   )
 }
 
-export default LoginForm
+export default AdminLoginForm

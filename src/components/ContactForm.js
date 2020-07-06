@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Recaptcha from 'react-recaptcha'
 import contactService from '../services/contactService'
 import { Formik } from 'formik';
@@ -35,6 +36,7 @@ const contactButtonStyle = {
 
 const ContactForm = () => {
   const [isVerified, setIsVerified] = useState(false)
+  const history = useHistory()
   const recaptchaLoaded = () => {
     console.log('captcha loaded successfully')
   }
@@ -61,13 +63,15 @@ const ContactForm = () => {
           }
           return errors;
         }}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           if (!isVerified) {
             alert('Please verify that you are a human')
           } else {
             const response = await contactService.sendMessage(values)
             console.log(response.message)
             setSubmitting(false)
+            resetForm({})
+            history.push('/forum')
           }
         }
         }
@@ -96,7 +100,6 @@ const ContactForm = () => {
                 <FormGroup style={{ marginBottom: '0' }}>
                   <Label style={labelStyle} for='name'>Name</Label>
                   <Input
-                    placeholder='Jane'
                     type="Name"
                     name="name"
                     onChange={handleChange}
@@ -105,7 +108,7 @@ const ContactForm = () => {
                   /><br />
                   <Label style={labelStyle} for='email'>Email</Label>
                   <Input
-                    placeholder='Jane@example.com'
+                    placeholder='You@example.com'
                     type="Email"
                     name="email"
                     onChange={handleChange}

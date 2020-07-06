@@ -9,6 +9,9 @@ import ContactForm from './components/ContactForm';
 import Notification from './components/Notification'
 import forumService from './services/forumService'
 import { setUser } from './reducers/userReducer'
+import AdminLoginForm from './components/AdminLoginForm';
+import AdminDashboard from './components/AdminDashboard'
+import NoPage from './components/NoPage'
 //import { initializeQuestions } from './reducers/forumReducer';
 
 
@@ -51,7 +54,14 @@ const App = () => {
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
-          <Route path="api/admin" />
+          <Route path='/admin/dashboard'>
+            {!user || user.username !== 'Fern-Admin' ?
+              <NoPage /> :
+              <AdminDashboard />}
+          </Route>
+          <Route path="/admin">
+            <AdminLoginForm setLoggedIn={setLoggedIn} />
+          </Route>
         </Switch>
 
       </div>

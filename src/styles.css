@@ -31,6 +31,8 @@ font-weight: 400;
 font-size: 12px;
 color: #343a40;
 margin-right: 10px;
+text-align: center;
+align-items: center;
 }
 #nav-logout-button {
   float: right;
@@ -67,4 +69,21 @@ background-color: #343a40
 }
 #login-form {
   margin-top: 3rem;
+}
+#admin-login-form {
+  margin-top: 3rem;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-color:  rgb(235, 100, 123);
+  border-style: solid;
+  border-width: 5px;
+  padding: 20px;
+  box-shadow: 10px 10px 20px gray
+}
+#admin-submit-login {
+  background-color: rgb(235, 100, 123);
+  border-color: black;
+  border-width: 1px;
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
 }
