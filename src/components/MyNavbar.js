@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
-
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import Logout from './Logout'
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -12,11 +11,13 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText
+  NavbarText,
+  Button
 } from 'reactstrap';
 
 const MyNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, setLoggedIn, loggedIn } = props
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -35,17 +36,24 @@ const MyNavbar = (props) => {
               <NavLink tag={Link} id="NavLink" to="/about">About</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/contact">Contact</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/login">Login</NavLink>
+              <NavLink tag={Link} id="NavLink" to="/contact">Contact Fern</NavLink>
             </NavItem>
           </Nav>
-          <NavbarText id='NavBarText'>
-            <a href="mailto:furbynilu@gmail.com"> <FontAwesomeIcon id='fa' icon={faEnvelopeSquare} />
-            </a>
-            <a href="https://www.facebook.com/NiluAcounselor"> <FontAwesomeIcon id='fa' icon={faFacebookSquare} /></a>
-          </NavbarText>
+          {(!user || !loggedIn) ?
+            <div id='nav-login-button'>
+              <Link to="/login"><Button outline color='secondary'>Login</Button></Link>
+            </div>
+            :
+            null}
+
+          {(user && loggedIn) ?
+            <div>
+              <NavbarText id='NavBarText'>
+                <FontAwesomeIcon id='fa' icon={faUser} /><br />{user.username}
+              </NavbarText>
+              <Logout setLoggedIn={setLoggedIn} />
+            </div>
+            : null}
         </Collapse>
       </Navbar>
     </div>

@@ -15,6 +15,8 @@ const notificationReducer = (state = nada, action) => {
       return action.message
     case 'BAD_REGISTER':
       return action.message
+    case 'LOGOUT':
+      return action.message
     case 'RESET':
       return nada
     default:
@@ -45,16 +47,16 @@ export const deleteMessage = () => {
     message: `You deleted a question`
   }
 }
-export const goodLogin = () => {
+export const goodLogin = (message) => {
   return {
     type: 'GOOD_LOGIN',
-    message: `Welcome back!`
+    message: message
   }
 }
 export const goodRegister = () => {
   return {
     type: 'GOOD_REGISTER',
-    message: `Successfully registered!`
+    message: `Successfully registered! You can now log in.`
   }
 }
 export const badLogin = (message) => {
@@ -67,6 +69,12 @@ export const badRegister = (message) => {
   return {
     type: 'BAD_REGISTER',
     message: message
+  }
+}
+export const logoutNotify = () => {
+  return {
+    type: 'LOGOUT',
+    message: 'You have logged out'
   }
 }
 

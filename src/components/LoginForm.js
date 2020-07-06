@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { badLogin, goodLogin, reset } from '../reducers/notificationReducer'
 import loginService from '../services/loginService'
@@ -25,12 +26,9 @@ const labelStyle = {
   padding: '0px',
   fontFamily: 'Poppins'
 }
-const inputStyle = {
-  float: 'left',
-  marginBottom: '1rem'
-}
 const loginButtonStyle = {
-  float: 'left'
+  float: 'center',
+  width: '100px'
 }
 
 const LoginForm = (props) => {
@@ -38,6 +36,7 @@ const LoginForm = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleChangeUser = (event) => {
     setUsername(event.target.value)
@@ -47,28 +46,31 @@ const LoginForm = (props) => {
   }
   const submitLogin = async event => {
     event.preventDefault()
-    try {
-      const user =
-        await loginService.login({ username, password })
-      window.localStorage.setItem(
-        'loggedForumUser', JSON.stringify(user)
-      )
-      forumService.setToken(user.token)
-      dispatch(setUser(user))
-      setLoggedIn(true)
-      dispatch(goodLogin())
-      setTimeout(() => {
-        dispatch(reset())
-      }, 1000)
-      setUsername('')
-      setPassword('')
-      console.log(user)
+    if (!username || !password) {
+      alert('You must enter a username and password')
     }
-    catch (error) {
-      dispatch(badLogin())
-      setTimeout(() => {
-        dispatch(reset())
-      }, 3000)
+    else {
+      try {
+        const user =
+          await loginService.login({ username, password })
+        window.localStorage.setItem(
+          'loggedForumUser', JSON.stringify(user)
+        )
+        forumService.setToken(user.token)
+        dispatch(setUser(user))
+        setLoggedIn(true)
+        dispatch(goodLogin(`Welcome back ${user.username}`))
+        setTimeout(() => {
+          dispatch(reset())
+        }, 3000)
+        setUsername('')
+        setPassword('')
+        history.push('/forum')
+      }
+      catch (error) {
+        console.log(error.message)
+        dispatch(badLogin('Something went wrong...'))
+      }
     }
   }
   return (
@@ -78,15 +80,18 @@ const LoginForm = (props) => {
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>
             <Label style={labelStyle}>Username:</Label>
-            <Input style={inputStyle} onChange={handleChangeUser} value={username}></Input>
-            <Label style={labelStyle}>Password:</Label> <Input style={inputStyle} id='password' type="password" onChange={handleChangePass} value={password}></Input>
-            <Button color='success' style={loginButtonStyle} id='submit-login' type="submit">Login</Button>
+            <Input onChange={handleChangeUser} value={username}></Input><br />
+            <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
+            <Button color='primary' style={loginButtonStyle} id='submit-login' type="submit">Enter</Button>
           </FormGroup>
         </Form>
       </div>
       <br />
-      <p style={textStyle}>Don't have an account? </p>
-      <RegisterForm />
+      <hr />
+      <div id='no-account-div'>
+        <p style={textStyle}>Don't have an account? </p>
+        <RegisterForm />
+      </div>
     </div>
   )
 }

@@ -1,15 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Alert } from 'reactstrap'
+import { UncontrolledAlert } from 'reactstrap'
+
+const textStyle = {
+  textAlign: 'center',
+  fontFamily: 'Poppins'
+}
 
 const Notification = () => {
   const notification = useSelector(state => state.notifications)
   return (
-    <div>
+    <div >
       {notification !== '' ?
-        <Alert variant='success'>
-          {notification}
-        </Alert>
+        <UncontrolledAlert style={textStyle} variant='info'>
+          <h4>{notification}</h4>
+        </UncontrolledAlert>
         : null}
     </div>
   )

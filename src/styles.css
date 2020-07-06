@@ -18,35 +18,46 @@
   font-weight: 700;
   color: #343a40;
   text-shadow: 1px 1px white;
+  margin-right: 40px;
 }
 #NavLink {
-font-family: 'Fira Code', monospace;
+font-family: 'Poppins';
 color: #343a40;
+margin-right: 20px;
 }
 #NavBarText {
-font-family: 'Fira Code', monospace;
-color: #343a40;
-}
-#fa {
-height: 40px;
-width: 40px;
-float: right;
+font-family: 'Poppins';
+font-weight: 400;
+font-size: 12px;
 color: #343a40;
 margin-right: 10px;
+}
+#nav-logout-button {
+  float: right;
+  align-content: center;
+  margin-top: 18px;
+}
+#nav-login-button {
+  float: right;
+  align-content: center;
+  margin-top: 0;
+}
+#fa {
+height: 30px;
+width: 30px;
+float: right;
+color: #343a40;
+margin-right: 15px;
 margin-left: 10px;
+}
+#fa-contact-form {
+  height: 60px;
+width: 60px;
+color: #5d90c4;
+
 }
 #DropDownMenu {
 background-color: #343a40;
-}
-#DropDownItem {
-font-family: 'Fira Code', monospace;
-color: rgb(255, 187, 0);
-}
-#span {
-  font-family: 'Fira Code', monospace;
-  float: right;
-  color:#343a40;
-  font-weight: 700;
 }
 #dropdownmenu {
 background-color: #343a40

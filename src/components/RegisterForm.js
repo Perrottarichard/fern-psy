@@ -3,7 +3,7 @@ import Recaptcha from 'react-recaptcha'
 import { useDispatch } from 'react-redux'
 import SpinningLoader from './SpinningLoader'
 import Select from 'react-select'
-import { reset, goodRegister, badRegister } from '../reducers/notificationReducer'
+import { goodRegister, badRegister } from '../reducers/notificationReducer'
 import userService from '../services/userService'
 import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } from 'reactstrap'
 
@@ -13,7 +13,8 @@ const textStyle = {
   fontFamily: 'Poppins'
 }
 const registerButtonStyle = {
-  display: 'inline-block'
+  display: 'inline-block',
+  width: '100px'
 }
 const formDivStyle = {
   display: 'block',
@@ -24,10 +25,6 @@ const labelStyle = {
   marginBottom: '0px',
   padding: '0px',
   fontFamily: 'Poppins'
-}
-const inputStyle = {
-  float: 'left',
-  marginBottom: '1rem'
 }
 const genderSelectStyle = {
   marginRight: '20px',
@@ -92,62 +89,43 @@ const RegisterForm = () => {
   }
   const submitRegister = async event => {
     event.preventDefault()
-    //check captcha
-    if (isVerified) {
-      toggle() //close modal
-      //validate field info
-      if (!name || !username || !selectedGender || !dateOfBirth || !password) {
-        dispatch(badRegister('You must fill all fields'))
-        setTimeout(() => {
-          dispatch(reset())
-        }, 5000)
-      }
-      else if (password.length < 5 || username.length < 5) {
-        dispatch(badRegister('Your username and password must be at least 5 characters long'))
-        setTimeout(() => {
-          dispatch(reset())
-        })
-      }
-      else if (password !== confirmPassword) {
-        dispatch(badRegister('You passwords are not the same. Try again.'))
-        setTimeout(() => {
-          dispatch(reset())
-        }, 5000);
-      }
-      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-        dispatch(badRegister('Your email address is not valid'))
-        setTimeout(() => {
-          dispatch(reset())
-        }, 5000)
-      }
-      else {
-        try {
-          setLoading(true)
-          await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
-          setLoading(false)
-          dispatch(goodRegister())
-          setTimeout(() => {
-            dispatch(reset())
-          }, 4000)
-          setUsername('')
-          setPassword('')
-          setConfirmPassword('')
-          setName('')
-          setSelectedGender('')
-          setEmail('')
-          setDateOfBirth('')
-        }
-        catch (error) {
-          console.log(error)
-          setLoading(false)
-          dispatch(badRegister(error.message))
-          setTimeout(() => {
-            dispatch(reset())
-          }, 3000)
-        }
-      }
-    } else {
+    if (!name || !username || !selectedGender || !dateOfBirth || !password) {
+      alert('You must fill all fields')
+    }
+    else if (password.length < 5 || username.length < 5) {
+      alert('Your username and password must be at least 5 characters long')
+    }
+    else if (password !== confirmPassword) {
+      alert('Your passwords are not the same. Try again.')
+    }
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      alert('Your email address is not valid')
+    }
+    else if (!isVerified) {
       alert('Please verify that you are a human')
+    }
+
+    else {
+      //close modal
+      toggle()
+      try {
+        setLoading(true)
+        await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
+        setLoading(false)
+        dispatch(goodRegister())
+        setUsername('')
+        setPassword('')
+        setConfirmPassword('')
+        setName('')
+        setSelectedGender('')
+        setEmail('')
+        setDateOfBirth('')
+      }
+      catch (error) {
+        console.log(error)
+        setLoading(false)
+        dispatch(badRegister('Something went wrong...'))
+      }
     }
   }
 
@@ -166,15 +144,15 @@ const RegisterForm = () => {
 
                 <FormGroup>
                   <Label style={labelStyle}>Name:</Label>
-                  <Input style={inputStyle} onChange={handleChangeName} value={name}></Input>
+                  <Input onChange={handleChangeName} value={name}></Input><br />
                   <Label style={labelStyle}>Username:</Label>
-                  <Input style={inputStyle} onChange={handleChangeUsername} value={username}></Input>
-                  <Label style={labelStyle}>Password:</Label> <Input style={inputStyle} id='password' type="password" onChange={handleChangePassword} value={password}></Input>
+                  <Input onChange={handleChangeUsername} value={username}></Input><br />
+                  <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
                   <Label style={labelStyle}>Confirm Password:</Label>
-                  <Input style={inputStyle} onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input>
-                  <Label style={labelStyle}>Email:</Label> <Input style={inputStyle} id='email' type="text" onChange={handleChangeEmail} value={email}></Input>
+                  <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input><br />
+                  <Label style={labelStyle}>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input><br />
                   <Label style={genderSelectStyle}>Gender:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
-                  <Label style={labelStyle}>Date of Birth:</Label> <Input style={inputStyle} id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input>
+                  <Label style={labelStyle}>Date of Birth:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input><br />
                 </FormGroup>
               </Form>
             </ModalBody>

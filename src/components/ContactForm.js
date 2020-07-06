@@ -1,96 +1,146 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Recaptcha from 'react-recaptcha'
+import contactService from '../services/contactService'
 import { Formik } from 'formik';
-import { Container, Form, Label, Input, FormGroup } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
+import { Container, Form, Label, Input, FormGroup, Button } from 'reactstrap'
 
-const divStyle = {
-  marginTop: '40px',
+
+const textStyle = {
+  textAlign: 'center',
+  fontFamily: 'Poppins'
+}
+const formDivStyle = {
+  display: 'block',
+  textAlign: 'center',
+  marginTop: '50px'
+}
+const formStyle = {
+  width: '90%',
+  display: 'inline-block'
+}
+const labelStyle = {
+  float: 'left',
+  marginBottom: '0px',
+  padding: '0px',
+  fontFamily: 'Poppins'
+}
+const contactButtonStyle = {
+  float: 'center',
+  width: '200px',
   marginBottom: '20px'
-};
+}
 
-const ContactForm = () => (
-  <div>
-    <Formik
-      initialValues={{ name: '', email: '', LINE: '', message: '' }}
-      validate={values => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = 'Required';
+const ContactForm = () => {
+  const [isVerified, setIsVerified] = useState(false)
+  const recaptchaLoaded = () => {
+    console.log('captcha loaded successfully')
+  }
+  const verifyCallback = (response) => {
+    if (response) {
+      setIsVerified(true);
+    }
+  }
+  return (
+    <div>
+      <Formik
+        initialValues={{ name: '', email: '', LINE: '', message: '' }}
+        validate={values => {
+          const errors = {};
+          if (!values.email) {
+            errors.email = 'Required';
+          }
+          if (!values.message) {
+            errors.message = 'Required'
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
+          }
+          return errors;
+        }}
+        onSubmit={async (values, { setSubmitting }) => {
+          if (!isVerified) {
+            alert('Please verify that you are a human')
+          } else {
+            const response = await contactService.sendMessage(values)
+            console.log(response.message)
+            setSubmitting(false)
+          }
         }
-        if (!values.message) {
-          errors.message = 'Required'
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
         }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log('submit clicked do something')
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-        /* and other goodies */
-      }) => (
-          <Container style={divStyle}>
-            <h5>Enter your information: </h5> {/*Thai*/}
-            <Form onSubmit={handleSubmit} className='form-ui'>
-              <FormGroup>
-                <Label for='name'>Name</Label>
-                <Input
-                  placeholder='Jane'
-                  type="Name"
-                  name="name"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                />
-                <Label for='email'>Email</Label>
-                <Input
-                  placeholder='Jane@example.com'
-                  type="Email"
-                  name="email"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                />
-                {errors.email && touched.email && errors.email}
-                <Label for='Line'>LINE</Label>
-                <Input
-                  placeholder='Line ID'
-                  type="Line"
-                  name="LINE"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.LINE}
-                />
-                <Label for='message'>Message</Label> {/*Thai*/}
-                <Input
-                  placeholder='I have a question about...' //Thai
-                  type="Message"
-                  name="message"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.message}
-                />
-                {errors.message && touched.message && errors.message}
-              </FormGroup>
-            </Form>
-          </Container>
-        )}
-    </Formik>
-  </div>
-);
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+            <Container style={formDivStyle}>
+              <p style={{ fontFamily: 'Poppins' }}> We understand if you don't want to post on the forum just yet.  Instead, you can use this form to contact Fern privately, or add her on social media.</p>
+              <div id='NavBarText'>
+                <a href="mailto:furbynilu@gmail.com"> <FontAwesomeIcon id='fa-contact-form' icon={faEnvelopeSquare} />
+                </a>
+                <a href="https://www.facebook.com/NiluAcounselor"> <FontAwesomeIcon id='fa-contact-form' icon={faFacebookSquare} /></a>
+              </div>
+              <br />
+              <h3 style={textStyle}>Enter your information: </h3> {/*Thai*/}
+
+              <Form style={formStyle} onSubmit={handleSubmit} className='form-ui'>
+                <FormGroup style={{ marginBottom: '0' }}>
+                  <Label style={labelStyle} for='name'>Name</Label>
+                  <Input
+                    placeholder='Jane'
+                    type="Name"
+                    name="name"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                  /><br />
+                  <Label style={labelStyle} for='email'>Email</Label>
+                  <Input
+                    placeholder='Jane@example.com'
+                    type="Email"
+                    name="email"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  /><br />
+                  {errors.email && touched.email && errors.email}
+                  <Label style={labelStyle} for='Line'>LINE</Label>
+                  <Input
+                    placeholder='Line ID'
+                    type="Line"
+                    name="LINE"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.LINE}
+                  /><br />
+                  <Label style={labelStyle} for='message'>Message</Label> {/*Thai*/}
+                  <Input
+                    placeholder='I have a question about...' //Thai
+                    type="Message"
+                    name="message"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.message}
+                  /><br />
+                  {errors.message && touched.message && errors.message}
+                </FormGroup>
+                <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
+                <Button style={contactButtonStyle} type='submit' color='primary'>Send</Button><br />
+              </Form>
+            </Container>
+          )}
+      </Formik>
+    </div>
+  );
+}
 
 export default ContactForm;

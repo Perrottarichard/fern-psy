@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import MyNavbar from './components/Navbar';
+import MyNavbar from './components/MyNavbar';
 import About from './components/About';
 import LoginForm from './components/LoginForm'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <MyNavbar />
+        <MyNavbar user={user} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
         <Notification />
         <Switch>
           <Route path="/about">
@@ -49,7 +49,7 @@ const App = () => {
             <ForumMain />
           </Route>
           <Route path="/login">
-            <LoginForm />
+            <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
           <Route path="api/admin" />
         </Switch>
