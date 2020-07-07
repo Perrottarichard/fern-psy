@@ -52,7 +52,7 @@ const App = () => {
             <ContactForm />
           </Route>
           <Route path="/forum">
-            <ForumMain />
+            <ForumMain activeUser={activeUser} />
           </Route>
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
