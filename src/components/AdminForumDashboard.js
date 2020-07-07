@@ -13,9 +13,6 @@ const AdminForumDashboard = () => {
     dispatch(initializeForumPending())
   }, [dispatch])
 
-  const postToChange = (post) => {
-    setAnswering(post)
-  }
   return (
     <Container>
       <Table striped>
@@ -33,13 +30,13 @@ const AdminForumDashboard = () => {
                 <td>{c.user.email}</td>
                 <td>{c.date.slice(0, 10)}</td>
                 <td><div dangerouslySetInnerHTML={{ __html: c.question }} /></td>
-                <td><Button onClick={() => postToChange(c)}>Answer</Button></td>
+                <td><Button onClick={() => setAnswering(c)}>Answer</Button></td>
               </tr>
               : null)
           }
         </tbody>
       </Table>
-      <AdminForumAnswer post={answering} />
+      <AdminForumAnswer answering={answering} setAnswering={setAnswering} />
     </Container>
   )
 }

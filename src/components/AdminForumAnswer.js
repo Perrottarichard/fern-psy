@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Label } from 'reactstrap'
-import { Editor } from '@tinymce/tinymce-react'
+import { Container, Button, Label, Input } from 'reactstrap'
 import { answerQuestion } from '../reducers/forumReducer'
 import { answeredQuestion, fail } from '../reducers/notificationReducer'
 
@@ -13,12 +12,12 @@ const labelStyle = {
   marginTop: '30px'
 }
 const AdminForumAnswer = (props) => {
-  const { post } = props
+  const { setAnswering, answering } = props
   const [answer, setAnswer] = useState('')
   const dispatch = useDispatch()
 
-  const handleContentChange = (content, editor) => {
-    setAnswer(content)
+  const handleContentChange = (event) => {
+    setAnswer(event.target.value)
   }
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
@@ -27,11 +26,12 @@ const AdminForumAnswer = (props) => {
     } else {
       try {
         const postToAnswer = {
-          ...post, answer: answer, isAnswered: true
+          ...answering, answer: answer, isAnswered: true
         }
         dispatch(answerQuestion(postToAnswer))
         dispatch(answeredQuestion())
         setAnswer('')
+        setAnswering('')
       } catch (error) {
         console.log(error)
         dispatch(fail())
@@ -43,19 +43,11 @@ const AdminForumAnswer = (props) => {
       <Container>
         <Label style={labelStyle}>Question:</Label>
         <p style={{ fontFamily: 'Poppins' }}>Reminder: This forum is anonymous.</p>
-        {(!post.question) ? <h3 style={{ color: 'red' }}>You must first select a post</h3> :
-          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Poppins' }}>You are answering the following question:</p><div dangerouslySetInnerHTML={{ __html: post.question }} style={{ marginBottom: '10px' }} />{post._id}</div>}
-        <Editor
-          apiKey="1jdezn4w8yzylr4m873z9o7tlc1wl9b6xnlenejmp0dws97n"
-          initialValue=""
-          init={{
-            height: 200,
-            menubar: false,
-            plugins: [],
-            toolbar:
-              'fontselect fontsizeselect | bold italic underline| cut copy paste'
-          }}
-          onEditorChange={handleContentChange}
+        {(!answering.question) ? <h3 style={{ color: 'red' }}>You must first select a post</h3> :
+          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Poppins' }}>You are answering the following question:</p>{answering.question}</div>}
+        <Input
+          type='textarea'
+          onChange={handleContentChange}
           value={answer}
           onSubmit={handleEditorSubmit}
         />

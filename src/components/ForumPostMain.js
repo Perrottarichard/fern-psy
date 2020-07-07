@@ -1,11 +1,12 @@
 /* eslint-disable no-multi-str */
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Container, Button, Input, Label } from 'reactstrap'
-import { Editor } from '@tinymce/tinymce-react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
+import { questionAsked, fail } from '../reducers/notificationReducer'
 
 const labelStyle = {
   fontFamily: 'Poppins',
@@ -45,12 +46,13 @@ const ForumPostMain = (props) => {
   const [selectedTags, setSelectedTags] = useState([])
   const animatedTags = makeAnimated()
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value)
   }
-  const handleContentChange = (content, editor) => {
-    setQuestion(content)
+  const handleContentChange = (event) => {
+    setQuestion(event.target.value)
   }
   const handleTagChange = (selectedTags) => {
     setSelectedTags(selectedTags)
@@ -58,8 +60,8 @@ const ForumPostMain = (props) => {
 
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
-    if (!title || !question || !selectedTags.length >= 2) {
-      alert('Please make sure you have a title, a question, and at least 2 tags')
+    if (!title || !question || !selectedTags) {
+      alert('Please make sure you have a title, a question, and some tags')
     }
     const postToAdd = {
       title: title,
@@ -69,7 +71,18 @@ const ForumPostMain = (props) => {
       tags: selectedTags.map(t => t.value),
       likes: 0
     }
-    dispatch(addQuestion(postToAdd))
+    try {
+      dispatch(addQuestion(postToAdd))
+      dispatch(questionAsked())
+      setTitle('')
+      setQuestion('')
+      setSelectedTags([])
+      history.push('/forum')
+    } catch (error) {
+      console.log(error)
+      dispatch(fail())
+    }
+
   }
   return (
     <Container>
@@ -87,17 +100,10 @@ const ForumPostMain = (props) => {
       <div id='forum-question-div'>
         <Label style={labelStyle}>Question:</Label>
         <p style={{ fontFamily: 'Poppins' }}>Reminder: This forum is anonymous. Although you must have an account to post, your name and username will NOT show on the forum, so feel free to ask anything.</p>
-        <Editor
-          apiKey="1jdezn4w8yzylr4m873z9o7tlc1wl9b6xnlenejmp0dws97n"
-          initialValue=""
-          init={{
-            height: 200,
-            menubar: false,
-            plugins: [],
-            toolbar:
-              'fontselect fontsizeselect | bold italic underline| cut copy paste'
-          }}
-          onEditorChange={handleContentChange}
+        <Input
+          type='textarea'
+          placeholder='I have a question about...'
+          onChange={handleContentChange}
           value={question}
           onSubmit={handleEditorSubmit}
         />

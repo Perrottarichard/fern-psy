@@ -3,7 +3,7 @@ import forumService from '../services/forumService'
 const forumReducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_QUESTION':
-      return state.concat(action.data)
+      return state
     case 'INIT_FORUM_PENDING':
       return action.data
     case 'INIT_FORUM_ANSWERED':

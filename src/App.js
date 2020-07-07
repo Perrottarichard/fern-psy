@@ -16,6 +16,7 @@ import AdminUsersDashboard from './components/AdminUsersDashboard'
 import AdminForumDashboard from './components/AdminForumDashboard'
 import NoPage from './components/NoPage'
 import { Button, UncontrolledCollapse } from 'reactstrap';
+
 //import { initializeQuestions } from './reducers/forumReducer';
 
 
@@ -46,6 +47,7 @@ const App = () => {
       <div className="App">
         <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
         <Notification />
+
         <Switch>
           <Route path="/about">
             <About />

@@ -17,6 +17,8 @@ const notificationReducer = (state = nada, action) => {
       return action.message
     case 'ANSWERED_NOTIFY':
       return action.message
+    case 'QUESTION_ASKED':
+      return action.message
     case 'FAIL':
       return action.message
     case 'LOGOUT':
@@ -85,6 +87,12 @@ export const answeredQuestion = () => {
   return {
     type: 'ANSWERED_NOTIFY',
     message: 'You answered a question'
+  }
+}
+export const questionAsked = () => {
+  return {
+    type: 'QUESTION_ASKED',
+    message: 'successful post'
   }
 }
 export const fail = () => {
