@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button, Container } from 'reactstrap'
 import { initializeUsers } from '../reducers/userInfoForAdminReducer'
 
-const buttonStyle = {
-  marginTop: '20px'
-}
+// const buttonStyle = {
+//   marginTop: '20px'
+// }
 
 const AdminUsersDashboard = () => {
   const dispatch = useDispatch()
   const users = useSelector(state => state.userInfoForAdmin)
-  const [toggle, setToggle] = useState(false)
+  const [questionToggle, setQuestionToggle] = useState(false)
 
   useEffect(() => {
     dispatch(initializeUsers())
@@ -18,34 +18,29 @@ const AdminUsersDashboard = () => {
 
   return (
     <Container>
-      <Button style={buttonStyle} outline color='success' onClick={() => setToggle(!toggle)}>Show Users</Button>
-      {
-        (!toggle)
-          ?
-          null
-          :
-          <Table striped>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Birthday</th>
-                <th>Questions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(c =>
-                <tr key={c._id}>
-                  <td>{c.name}</td>
-                  <td>{c.username}</td>
-                  <td>{c.email}</td>
-                  <td>{c.dateOfBirth}</td>
-                  <td>{c.questions.map(q => <li key={q.id}>{q}</li>)}</td>
-                </tr>)}
-            </tbody>
-          </Table>
-      }
+      <Table striped>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>DOB(yyyy-mm-dd)</th>
+            <th>Questions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            users.map(c =>
+              <tr key={c.id}>
+                <td>{c.name}</td>
+                <td>{c.username}</td>
+                <td>{c.email}</td>
+                <td>{c.dateOfBirth.slice(0, 10)}</td>
+                <td><Button color='secondary' size='sm' onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
+              </tr>)
+          }
+        </tbody>
+      </Table>
     </Container>
   )
 }

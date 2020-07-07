@@ -1,11 +1,12 @@
 import React from 'react'
+import { Container } from 'reactstrap'
 
 
 const ForumMain = () => {
   return (
-    <div>
+    <Container>
       THE FORUM WILL GO HERE
-    </div>
+    </Container>
   )
 }
 export default ForumMain

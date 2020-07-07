@@ -13,6 +13,7 @@ import AdminLoginForm from './components/AdminLoginForm';
 import AdminContactsDashboard from './components/AdminContactsDashboard'
 import AdminUsersDashboard from './components/AdminUsersDashboard'
 import NoPage from './components/NoPage'
+import { Button, UncontrolledCollapse } from 'reactstrap';
 //import { initializeQuestions } from './reducers/forumReducer';
 
 
@@ -60,9 +61,16 @@ const App = () => {
             {!activeUser || activeUser.username !== 'Fern-Admin' ?
               <NoPage /> :
               <div>
-                <AdminContactsDashboard />
-                <AdminUsersDashboard />
-              </div>}
+                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem' }}>Show Contacts</Button>
+                <UncontrolledCollapse toggler="#contactsToggler">
+                  <AdminContactsDashboard />
+                </UncontrolledCollapse>
+                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem' }}>Show Users</Button>
+                <UncontrolledCollapse toggler="#usersToggler">
+                  <AdminUsersDashboard />
+                </UncontrolledCollapse>
+              </div>
+            }
           </Route>
           <Route path="/admin">
             <AdminLoginForm setLoggedIn={setLoggedIn} />

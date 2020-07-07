@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button, Container } from 'reactstrap'
-import { initializeContacts } from '../reducers/contactReducer'
+import { Table, Container, Button } from 'reactstrap'
+import { initializeContacts, setContactHidden } from '../reducers/contactReducer'
 
-const buttonStyle = {
-  marginTop: '20px'
-}
+// const buttonStyle = {
+//   marginTop: '20px'
+// }
 const AdminContactsDashboard = () => {
   const dispatch = useDispatch()
   const contact = useSelector(state => state.contact)
-  const [toggle, setToggle] = useState(false)
+  // const [toggle, setToggle] = useState(false)
+
+  const setHidden = (c) => {
+    dispatch(setContactHidden(c))
+  }
 
   useEffect(() => {
     dispatch(initializeContacts())
@@ -17,36 +21,31 @@ const AdminContactsDashboard = () => {
 
   return (
     <Container>
-      <Button style={buttonStyle} outline color='primary' onClick={() => setToggle(!toggle)}>Show messages</Button>
-      {
-        (!toggle)
-          ?
-          null
-          :
-          <Table striped>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>LINE</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Message</th>
+      <Table striped>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>LINE</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            contact.map(c => c.hidden === false ?
+              <tr key={c._id}>
+                <td>{c.name}</td>
+                <td>{c.LINE}</td>
+                <td>{c.email}</td>
+                <td>{c.date.slice(0, 10)}</td>
+                <td>{c.message}</td>
+                <td><Button onClick={() => setHidden(c)} size='sm'>Remove</Button></td>
               </tr>
-            </thead>
-            <tbody>
-              {
-                contact.map(c =>
-                  <tr key={c._id}>
-                    <td>{c.name}</td>
-                    <td>{c.LINE}</td>
-                    <td>{c.email}</td>
-                    <td>{c.date}</td>
-                    <td>{c.message}</td>
-                  </tr>)
-              }
-            </tbody>
-          </Table>
-      }
+              : null)
+          }
+        </tbody>
+      </Table>
     </Container>
   )
 }
