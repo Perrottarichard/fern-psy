@@ -6,12 +6,14 @@ import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
 import About from './components/About';
 import LoginForm from './components/LoginForm'
-import ForumMain from './components/ForumMain';
+import ForumPostMain from './components/ForumPostMain';
+import ForumDisplayMain from './components/ForumDisplayMain'
 import ContactForm from './components/ContactForm';
 import Notification from './components/Notification'
 import AdminLoginForm from './components/AdminLoginForm';
 import AdminContactsDashboard from './components/AdminContactsDashboard'
 import AdminUsersDashboard from './components/AdminUsersDashboard'
+import AdminForumDashboard from './components/AdminForumDashboard'
 import NoPage from './components/NoPage'
 import { Button, UncontrolledCollapse } from 'reactstrap';
 //import { initializeQuestions } from './reducers/forumReducer';
@@ -51,8 +53,11 @@ const App = () => {
           <Route path="/contact">
             <ContactForm />
           </Route>
+          <Route exact path="/forum/post">
+            <ForumPostMain activeUser={activeUser} />
+          </Route>
           <Route path="/forum">
-            <ForumMain activeUser={activeUser} />
+            <ForumDisplayMain activeUser={activeUser} />
           </Route>
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
@@ -61,11 +66,16 @@ const App = () => {
             {!activeUser || activeUser.username !== 'Fern-Admin' ?
               <NoPage /> :
               <div>
-                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem' }}>Show Contacts</Button>
+                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Pending
+                </Button>
+                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Contacts</Button>
+                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Users</Button>
+                <UncontrolledCollapse toggler="#pendingToggler">
+                  <AdminForumDashboard />
+                </UncontrolledCollapse>
                 <UncontrolledCollapse toggler="#contactsToggler">
                   <AdminContactsDashboard />
                 </UncontrolledCollapse>
-                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem' }}>Show Users</Button>
                 <UncontrolledCollapse toggler="#usersToggler">
                   <AdminUsersDashboard />
                 </UncontrolledCollapse>

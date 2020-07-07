@@ -38,7 +38,7 @@ const tagOptions = [
   { value: 'parenting', label: 'Parenting' },
   { value: 'other', label: 'Other' }
 ]
-const ForumMain = (props) => {
+const ForumPostMain = (props) => {
   // const { activeUser } = props
   const [question, setQuestion] = useState('')
   const [title, setTitle] = useState('')
@@ -58,9 +58,6 @@ const ForumMain = (props) => {
 
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
-    console.log(!title)
-    console.log(!question)
-    console.log(selectedTags.map(t => t.value))
     if (!title || !question || !selectedTags.length >= 2) {
       alert('Please make sure you have a title, a question, and at least 2 tags')
     }
@@ -120,4 +117,4 @@ const ForumMain = (props) => {
     </Container>
   )
 }
-export default ForumMain
+export default ForumPostMain

@@ -15,6 +15,10 @@ const notificationReducer = (state = nada, action) => {
       return action.message
     case 'BAD_REGISTER':
       return action.message
+    case 'ANSWERED_NOTIFY':
+      return action.message
+    case 'FAIL':
+      return action.message
     case 'LOGOUT':
       return action.message
     case 'RESET':
@@ -75,6 +79,18 @@ export const logoutNotify = () => {
   return {
     type: 'LOGOUT',
     message: 'You have logged out'
+  }
+}
+export const answeredQuestion = () => {
+  return {
+    type: 'ANSWERED_NOTIFY',
+    message: 'You answered a question'
+  }
+}
+export const fail = () => {
+  return {
+    type: 'FAIL',
+    message: 'Something went wrong...'
   }
 }
 

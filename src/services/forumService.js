@@ -6,8 +6,12 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
-const getAll = async () => {
-  const response = await axios.get(baseUrl)
+const getPending = async () => {
+  const response = await axios.get(`${baseUrl}/pending`)
+  return response.data
+}
+const getAnswered = async () => {
+  const response = await axios.get(`${baseUrl}/answered`)
   return response.data
 }
 
@@ -19,8 +23,8 @@ const create = async newObject => {
   return response.data
 }
 
-const update = (question, newObject) => {
-  const response = axios.put(`${baseUrl}/${question.id}`, newObject)
+const update = (newObject) => {
+  const response = axios.put(`${baseUrl}/${newObject._id}`, newObject)
   return response.data
 }
 
@@ -38,4 +42,4 @@ const like = async (toUpdate) => {
   return response.data
 }
 
-export default { getAll, create, update, setToken, remove, like }
+export default { getPending, getAnswered, create, update, setToken, remove, like }

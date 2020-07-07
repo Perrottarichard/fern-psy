@@ -4,14 +4,20 @@ const forumReducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_QUESTION':
       return state.concat(action.data)
-    case 'INIT_QUESTIONS':
-      console.log(action.data)
+    case 'INIT_FORUM_PENDING':
+      return action.data
+    case 'INIT_FORUM_ANSWERED':
       return action.data
     case 'LIKE':
       const id = action.data.id
       const questionToChange = state.find(q => q.id === id)
       const changedQuestion = { ...questionToChange, likes: questionToChange.likes + 1 }
       return state.map(q => q.id === id ? changedQuestion : q)
+    case 'POST_ANSWER':
+      const answerId = action.data._id
+      const objectToModify = state.find(s => s._id === answerId)
+      const changedToAnswered = { ...objectToModify, isAnswered: true, answer: action.data.answer }
+      return state.map(s => s._id === answerId ? changedToAnswered : s)
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
     default: return state
@@ -24,6 +30,15 @@ export const upLike = (question) => {
     dispatch({
       type: 'LIKE',
       data: updatedObject
+    })
+  }
+}
+export const answerQuestion = (answer) => {
+  return async dispatch => {
+    await forumService.update(answer)
+    dispatch({
+      type: 'POST_ANSWER',
+      data: answer
     })
   }
 }
@@ -45,12 +60,21 @@ export const deleteQuestion = data => {
     })
   }
 }
-export const initializeQuestions = () => {
+export const initializeForumPending = () => {
   return async dispatch => {
-    const questions = await forumService.getAll()
+    const questions = await forumService.getPending()
     dispatch({
-      type: 'INIT_QUESTIONS',
+      type: 'INIT_FORUM_PENDING',
       data: questions
+    })
+  }
+}
+export const initializeForumAnswered = () => {
+  return async dispatch => {
+    const answered = await forumService.getAnswered()
+    dispatch({
+      type: 'INIT_FORUM_ANSWERED',
+      data: answered
     })
   }
 }

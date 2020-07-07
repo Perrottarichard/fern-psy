@@ -11,7 +11,6 @@ const activeUserReducer = (state = {}, action) => {
 }
 
 export const setUser = data => {
-  console.log(data)
   return {
     type: 'SET_USER',
     data
