@@ -6,6 +6,7 @@ import { Container, Button, Input, Label } from 'reactstrap'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
+import { toast } from 'react-toastify'
 
 const labelStyle = {
   fontFamily: 'Montserrat',
@@ -41,7 +42,7 @@ const tagOptions = [
   { value: 'other', label: 'Other' }
 ]
 const ForumPostMain = (props) => {
-  // const { activeUser } = props
+  const { activeUser } = props
   const [question, setQuestion] = useState('')
   const [title, setTitle] = useState('')
   const [selectedTags, setSelectedTags] = useState([])
@@ -62,26 +63,29 @@ const ForumPostMain = (props) => {
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
     if (!title || !question || !selectedTags) {
-      alert('Please make sure you have a title, a question, and some tags')
-    }
-    const postToAdd = {
-      title: title,
-      question: question,
-      answer: '',
-      isAnswered: false,
-      tags: selectedTags.map(t => t.value),
-      likes: 0
-    }
-    try {
-      dispatch(addQuestion(postToAdd))
-      setTitle('')
-      setQuestion('')
-      setSelectedTags([])
-      history.push('/forum')
-    } catch (error) {
-      console.log(error)
-    }
+      toast.warn('Please make sure you have a title, a question, and some tags')
+    } else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
+      toast.warn('Why are you trying to ask yourself a question?')
+    } else {
+      const postToAdd = {
+        title: title,
+        question: question,
+        answer: '',
+        isAnswered: false,
+        tags: selectedTags.map(t => t.value),
+        likes: 0
+      }
+      try {
+        dispatch(addQuestion(postToAdd))
+        setTitle('')
+        setQuestion('')
+        setSelectedTags([])
+        history.push('/forum')
+      } catch (error) {
+        console.log(error)
+      }
 
+    }
   }
   return (
     <Container>

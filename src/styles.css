@@ -113,11 +113,11 @@ background-color: #343a40
   padding: 20px;
   /* box-shadow: 10px 10px 20px gray */
 }
-#admin-submit-login {
+/* #admin-submit-login {
   background-color: #ff4da6;
   font-weight: bolder;
   color: white;
-}
+} */
 #forum-title-div {
   margin-top: 40px;
   display: block;

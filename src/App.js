@@ -31,7 +31,7 @@ const App = () => {
   // useEffect(() => {
   //   dispatch(initializeQuestions())
   // }, [dispatch])
-
+  console.log(activeUser.username)
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedForumUser')
     if (loggedUserJSON) {
@@ -73,7 +73,7 @@ const App = () => {
             <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
           <Route path='/admin/dashboard'>
-            {!activeUser || activeUser.username !== 'Fern-Admin' ?
+            {!activeUser || (!activeUser.username === 'Fern-Admin' || !activeUser.username === 'Richard-Admin') ?
               <NoPage /> :
               <div>
                 <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Pending
