@@ -70,13 +70,26 @@ const cardFooterStyle = {
 const smallStyle = {
   float: 'right'
 }
+const postButtonDivStyle = {
+  marginTop: '50px',
+  marginBottom: '50px',
+  fontFamily: 'Montserrat',
+  fontSize: '30px'
+}
+const postButtonStyle = {
+  borderColor: '#343a40',
+  borderWidth: '3px',
+  borderStyle: 'solid',
+  fontFamily: 'Montserrat',
+  backgroundColor: '#4da6ff'
+}
 const likeButtonStyle = {
   backgroundColor: '#4da6ff',
   height: '28px',
   width: '35px',
   lineHeight: '5px',
   paddingRight: '25px',
-  borderRadius: '20px'
+  borderRadius: '20px',
 }
 // const tagBadgeStyle = {
 //   backgroundColor: '',
@@ -110,8 +123,10 @@ const ForumDisplayMain = () => {
             </div>
           </Card>
         </div>)}
-      Have a question?<br />
-      <Link to='/forum/post'><Button style={{ fontFamily: 'Montserrat' }}>Submit a Post</Button></Link>
+      <div style={postButtonDivStyle}>
+        Have a question?<br />
+        <Link to='/forum/post'><Button style={postButtonStyle} block>Submit a Post</Button></Link>
+      </div>
     </Container>
   )
 }

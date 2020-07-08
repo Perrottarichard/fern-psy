@@ -31,7 +31,6 @@ const App = () => {
   // useEffect(() => {
   //   dispatch(initializeQuestions())
   // }, [dispatch])
-  console.log(activeUser.username)
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedForumUser')
     if (loggedUserJSON) {

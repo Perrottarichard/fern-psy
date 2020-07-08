@@ -7,7 +7,11 @@ import AdminForumAnswer from './AdminForumAnswer'
 
 const buttonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: 'rgb(187, 97, 157)'
+  backgroundColor: 'rgb(187, 97, 157)',
+  width: '50px',
+  paddingRight: '5px',
+  paddingLeft: '5px',
+  fontSize: '10px'
 }
 const AdminForumDashboard = () => {
   const dispatch = useDispatch()
@@ -20,7 +24,7 @@ const AdminForumDashboard = () => {
 
   return (
     <Container>
-      <Table striped>
+      <Table size='sm' hover>
         <thead>
           <tr>
             <th>Email</th>

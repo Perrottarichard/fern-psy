@@ -35,6 +35,7 @@ const loginButtonStyle = {
   width: '200px',
   backgroundColor: '#28804b',
   fontFamily: 'Montserrat',
+  color: 'white'
 }
 const iconStyle = {
   float: 'center'

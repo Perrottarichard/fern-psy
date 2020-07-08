@@ -15,7 +15,7 @@ const Logout = (props) => {
     setLoggedIn(false)
     toast.info('Logged out')
     dispatch(clearUser())
-    history.push('/login')
+    history.push('/forum')
   }
   return (
     <div id='nav-logout-button'>
