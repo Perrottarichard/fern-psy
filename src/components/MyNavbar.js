@@ -23,7 +23,7 @@ const MyNavbar = (props) => {
 
   return (
     <div>
-      <Navbar id="navbar" color="dark" dark expand="md">
+      <Navbar color='dark' id="navbar" dark expand='md' >
         <NavbarBrand id='navbrand' href="/">Fern's Counseling</NavbarBrand>
         <NavbarToggler id="dropdownmenu" onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -57,7 +57,7 @@ const MyNavbar = (props) => {
             (!activeUser || !loggedIn)
               ?
               <div id='nav-login-button'>
-                <Link to="/login"><Button outline color='primary'>Login</Button></Link>
+                <Link to="/login"><Button outline color='secondary' size='sm'>Login</Button></Link>
               </div>
               :
               null
@@ -67,7 +67,7 @@ const MyNavbar = (props) => {
               ?
               <div>
                 <NavbarText id='NavBarText'>
-                  <FontAwesomeIcon id='fa' icon={faUser} /><br />{activeUser.username}
+                  <FontAwesomeIcon id='fa-user-icon' icon={faUser} /><br />{activeUser.username}
                 </NavbarText>
                 <Logout setLoggedIn={setLoggedIn} />
               </div>

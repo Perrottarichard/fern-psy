@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { badLogin, goodLogin, reset } from '../reducers/notificationReducer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import { setUser } from '../reducers/activeUserReducer'
 import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
+import { toast } from 'react-toastify'
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat',
+  fontVariant: 'small-caps'
 }
 const formDivStyle = {
+  fontFamily: 'Montserrat',
+  fontVariant: 'small-caps',
   display: 'block',
   textAlign: 'center'
 }
@@ -23,11 +28,16 @@ const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat'
 }
 const loginButtonStyle = {
   float: 'center',
-  width: '200px'
+  width: '200px',
+  backgroundColor: '#28804b',
+  fontFamily: 'Montserrat',
+}
+const iconStyle = {
+  float: 'center'
 }
 
 const AdminLoginForm = (props) => {
@@ -46,7 +56,7 @@ const AdminLoginForm = (props) => {
   const submitLogin = async event => {
     event.preventDefault()
     if (!username || !password) {
-      alert('You must enter a username and password')
+      toast.warn('You must enter a username and password')
     }
     else {
       try {
@@ -58,27 +68,20 @@ const AdminLoginForm = (props) => {
         forumService.setToken(admin.token)
         dispatch(setUser(admin))
         setLoggedIn(true)
-        dispatch(goodLogin(`Welcome back ${admin.username}`))
-        setTimeout(() => {
-          dispatch(reset())
-        }, 3000)
         setUsername('')
         setPassword('')
         history.push('/admin/dashboard')
       }
       catch (error) {
         console.log(error.message)
-        if (error.message.includes('401')) {
-          dispatch(badLogin('Are you sure you are the admin? Check your username and password again...'))
-        } else {
-          dispatch(badLogin('Something went wrong...'))
-        }
       }
     }
   }
   return (
     <div className='container' id='admin-login-form'>
-      <h2 style={textStyle}>Admin Login</h2>
+      <div>
+        <h2 style={textStyle}><FontAwesomeIcon icon={faLock} style={iconStyle} />{' '}Admin{' '}</h2>
+      </div>
       <div id='form-div' style={formDivStyle}>
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>

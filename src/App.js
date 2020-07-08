@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { setUser } from './reducers/activeUserReducer'
 import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
@@ -9,7 +11,6 @@ import LoginForm from './components/LoginForm'
 import ForumPostMain from './components/ForumPostMain';
 import ForumDisplayMain from './components/ForumDisplayMain'
 import ContactForm from './components/ContactForm';
-import Notification from './components/Notification'
 import AdminLoginForm from './components/AdminLoginForm';
 import AdminContactsDashboard from './components/AdminContactsDashboard'
 import AdminUsersDashboard from './components/AdminUsersDashboard'
@@ -40,14 +41,21 @@ const App = () => {
       forumService.setToken(user.token)
     }
   }, [dispatch])
-
-
   return (
     <Router>
       <div className="App">
         <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
-        <Notification />
-
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Switch>
           <Route path="/about">
             <About />
@@ -68,10 +76,10 @@ const App = () => {
             {!activeUser || activeUser.username !== 'Fern-Admin' ?
               <NoPage /> :
               <div>
-                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Pending
+                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Pending
                 </Button>
-                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Contacts</Button>
-                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative' }}>Show Users</Button>
+                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Contacts</Button>
+                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Users</Button>
                 <UncontrolledCollapse toggler="#pendingToggler">
                   <AdminForumDashboard />
                 </UncontrolledCollapse>

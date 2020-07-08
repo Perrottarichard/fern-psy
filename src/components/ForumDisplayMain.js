@@ -20,7 +20,7 @@ const ForumDisplayMain = () => {
           {forum.map(f => <div key={f._id} dangerouslySetInnerHTML={{ __html: f.question }} />)}
         </div>
       Have a question?<br />
-        <Link to='/forum/post'><Button>Ask Fern</Button></Link>
+        <Link to='/forum/post'><Button style={{ fontFamily: 'Montserrat' }}>Submit a Post</Button></Link>
       </div>
     </Container>
   )

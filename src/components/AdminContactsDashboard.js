@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Table, Container, Button } from 'reactstrap'
 import { initializeContacts, setContactHidden } from '../reducers/contactReducer'
 
-// const buttonStyle = {
-//   marginTop: '20px'
-// }
+const buttonStyle = {
+  fontFamily: 'Montserrat'
+}
+
 const AdminContactsDashboard = () => {
   const dispatch = useDispatch()
   const contact = useSelector(state => state.contact)
@@ -40,7 +41,7 @@ const AdminContactsDashboard = () => {
                 <td>{c.email}</td>
                 <td>{c.date.slice(0, 10)}</td>
                 <td>{c.message}</td>
-                <td><Button onClick={() => setHidden(c)} size='sm'>Remove</Button></td>
+                <td><Button style={buttonStyle} onClick={() => setHidden(c)} size='sm'>Remove</Button></td>
               </tr>
               : null)
           }

@@ -4,31 +4,34 @@ import { useDispatch } from 'react-redux'
 import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } from 'reactstrap'
 import Select from 'react-select'
 import SpinningLoader from './SpinningLoader'
-import { goodRegister, badRegister } from '../reducers/notificationReducer'
 import userService from '../services/userService'
+import { toast } from 'react-toastify'
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat'
 }
 const registerButtonStyle = {
   display: 'inline-block',
-  width: '100px'
+  fontFamily: 'Montserrat',
+  float: 'center',
+  width: '100px',
 }
 const formDivStyle = {
   display: 'block',
-  textAlign: 'center'
+  textAlign: 'center',
+  fontFamily: 'Montserrat'
 }
 const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat'
 }
 const genderSelectStyle = {
   marginRight: '20px',
   float: 'left',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat'
 }
 
 const RegisterForm = () => {
@@ -89,22 +92,22 @@ const RegisterForm = () => {
   const submitRegister = async event => {
     event.preventDefault()
     if (variations.includes(username) || variations.map(v => v.toLowerCase).includes(username)) {
-      alert('Sorry, that username is restricted')
+      toast.warn('Sorry, that username is restricted')
     }
     else if (!name || !username || !selectedGender || !dateOfBirth || !password) {
-      alert('You must fill all fields')
+      toast.warn('You must fill all fields')
     }
     else if (password.length < 5 || username.length < 5) {
-      alert('Your username and password must be at least 5 characters long')
+      toast.warn('Your username and password must be at least 5 characters long')
     }
     else if (password !== confirmPassword) {
-      alert('Your passwords are not the same. Try again.')
+      toast.warn('Your passwords are not the same. Try again.')
     }
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      alert('Your email address is not valid')
+      toast.warn('Your email address is not valid')
     }
     else if (!isVerified) {
-      alert('Please verify that you are a human')
+      toast.warn('Please verify that you are a human')
     }
 
     else {
@@ -113,8 +116,8 @@ const RegisterForm = () => {
       try {
         setLoading(true)
         await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
+        //dispatch
         setLoading(false)
-        dispatch(goodRegister())
         setUsername('')
         setPassword('')
         setConfirmPassword('')
@@ -125,8 +128,8 @@ const RegisterForm = () => {
       }
       catch (error) {
         console.log(error)
+        toast.error('Something went wrong...')
         setLoading(false)
-        dispatch(badRegister('Something went wrong...'))
       }
     }
   }
@@ -141,7 +144,7 @@ const RegisterForm = () => {
           </div>
           :
           <div style={formDivStyle}>
-            <Button style={registerButtonStyle} color="primary" onClick={toggle}>{'Sign up'}</Button>
+            <Button style={registerButtonStyle} color='secondary' onClick={toggle}>{'Sign up'}</Button>
             <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
               <ModalBody>
                 <h2 style={textStyle}>Register</h2>
@@ -162,8 +165,8 @@ const RegisterForm = () => {
               </ModalBody>
               <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
               <ModalFooter>
-                <Button color='primary' type='submit' onClick={submitRegister}>Sign Up</Button>
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                <Button type='submit' color='secondary' onClick={submitRegister}>Sign Up</Button>
+                <Button onClick={toggle}>Cancel</Button>
               </ModalFooter>
             </Modal></div>
       }

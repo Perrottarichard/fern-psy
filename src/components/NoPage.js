@@ -3,7 +3,7 @@ import React from 'react'
 const NoPage = () => {
 
   const textStyle = {
-    fontFamily: 'Poppins',
+    fontFamily: 'Montserrat',
     fontWeight: '700',
     textAlign: 'center',
     marginTop: '300px'

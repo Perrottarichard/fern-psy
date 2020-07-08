@@ -6,10 +6,10 @@ import { Container, Button, Input, Label } from 'reactstrap'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
-import { questionAsked, fail } from '../reducers/notificationReducer'
 
 const labelStyle = {
-  fontFamily: 'Poppins',
+  fontFamily: 'Montserrat',
+  fontVariant: 'small-caps',
   fontWeight: 400,
   fontSize: '1.5rem',
   marginBottom: '0px',
@@ -18,7 +18,8 @@ const labelStyle = {
 const buttonStyle = {
   marginTop: '20px',
   width: '200px',
-  float: 'center'
+  backgroundColor: '#288046',
+  fontFamily: 'Montserrat',
 }
 
 const tagOptions = [
@@ -73,14 +74,12 @@ const ForumPostMain = (props) => {
     }
     try {
       dispatch(addQuestion(postToAdd))
-      dispatch(questionAsked())
       setTitle('')
       setQuestion('')
       setSelectedTags([])
       history.push('/forum')
     } catch (error) {
       console.log(error)
-      dispatch(fail())
     }
 
   }
@@ -88,36 +87,40 @@ const ForumPostMain = (props) => {
     <Container>
       <div id='forum-title-div'>
         <Label style={labelStyle}>Title:</Label>
-        <p style={{ fontFamily: 'Poppins' }}>Give your post an interesting title.</p>
+        <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p>
         <Input
           placeholder='My Awesome Title!'
           onChange={handleTitleChange}
           value={title}
-          style={{ marginBottom: '20px' }}
+          style={{ marginBottom: '20px', fontFamily: 'Montserrat' }}
         />
       </div>
 
       <div id='forum-question-div'>
         <Label style={labelStyle}>Question:</Label>
-        <p style={{ fontFamily: 'Poppins' }}>Reminder: This forum is anonymous. Although you must have an account to post, your name and username will NOT show on the forum, so feel free to ask anything.</p>
+        <p style={{ fontFamily: 'Montserrat' }}>Reminder: This forum is anonymous. Although you must have an account to post, your name and username will NOT show on the forum, so feel free to ask anything.</p>
         <Input
           type='textarea'
           placeholder='I have a question about...'
           onChange={handleContentChange}
           value={question}
           onSubmit={handleEditorSubmit}
+          style={{ fontFamily: 'Montserrat' }}
         />
         <Label style={labelStyle}>Tags:</Label>
-        <p style={{ fontFamily: 'Poppins' }}>Select some tags to help other people know what your question is about!</p>
+        <p style={{ fontFamily: 'Montserrat' }}>Select some tags to help other people know what your question is about!</p>
         <Select
           options={tagOptions}
           onChange={handleTagChange}
           closeMenuOnSelect={false}
           components={animatedTags}
+          style={{ fontFamily: 'Montserrat' }}
           defaultValue={[]}
           isMulti>
         </Select>
-        <Button style={buttonStyle} color='primary' onClick={handleEditorSubmit}>Ask Fern!</Button>
+        <div style={{ display: 'block', textAlign: 'center' }}>
+          <Button style={buttonStyle} onClick={handleEditorSubmit}>Ask Fern!</Button>
+        </div>
       </div>
 
     </Container>

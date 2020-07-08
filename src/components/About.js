@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, ListGroup, ListGroupItem } from 'reactstrap';
-// import Fern from '../components/fernQR.jpg'
+import Fern from '../fern-logo-350.png'
 import '../about.css';
 
 function About() {
@@ -10,7 +10,10 @@ function About() {
         <h1 id='name'>Nilubon Sukawanich</h1>
         <h4 id='title'>Counselor</h4>
       </div>
-      {/* <img src={Fern} alt="me" /> */}
+      <div style={{ marginBottom: '80px' }}>
+        <img src={Fern} alt="fern" />
+      </div>
+      <hr />
       <ListGroup flush >
         <div id='about-me'>
           <h5>Education:</h5>

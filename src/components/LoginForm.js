@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { badLogin, goodLogin, reset } from '../reducers/notificationReducer'
+import { toast } from "react-toastify"
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
@@ -11,7 +11,8 @@ import RegisterForm from './RegisterForm'
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat',
+  color: 'black'
 }
 const formDivStyle = {
   display: 'block',
@@ -25,11 +26,14 @@ const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat',
+  color: 'white'
 }
 const loginButtonStyle = {
   float: 'center',
-  width: '100px'
+  width: '200px',
+  backgroundColor: '#288046',
+  fontFamily: 'Montserrat'
 }
 
 const LoginForm = (props) => {
@@ -48,7 +52,7 @@ const LoginForm = (props) => {
   const submitLogin = async event => {
     event.preventDefault()
     if (!username || !password) {
-      alert('You must enter a username and password')
+      toast.warn('You must enter a username and password')
     }
     else {
       try {
@@ -59,21 +63,19 @@ const LoginForm = (props) => {
         )
         forumService.setToken(user.token)
         dispatch(setUser(user))
+        toast.info(`Welcome back ${user.username}`)
         setLoggedIn(true)
-        dispatch(goodLogin(`Welcome back ${user.username}`))
-        setTimeout(() => {
-          dispatch(reset())
-        }, 3000)
         setUsername('')
         setPassword('')
         history.push('/forum')
       }
       catch (error) {
         console.log(error.message)
+
         if (error.message.includes('401')) {
-          dispatch(badLogin('Make sure your username and password are correct...'))
+          toast.error('Check your username and password again')
         } else {
-          dispatch(badLogin('Something went wrong...'))
+          toast.error('Something went wrong...')
         }
       }
     }
@@ -87,7 +89,7 @@ const LoginForm = (props) => {
             <Label style={labelStyle}>Username:</Label>
             <Input onChange={handleChangeUser} value={username}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <Button color='primary' style={loginButtonStyle} id='submit-login' type="submit">Enter</Button>
+            <Button style={loginButtonStyle} id='submit-login' type="submit">Enter</Button>
           </FormGroup>
         </Form>
       </div>

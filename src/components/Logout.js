@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import { clearUser } from '../reducers/activeUserReducer'
-import { logoutNotify, reset } from '../reducers/notificationReducer'
+import { toast } from 'react-toastify'
 
 const Logout = (props) => {
   const { setLoggedIn } = props
@@ -13,13 +13,9 @@ const Logout = (props) => {
   const logout = () => {
     window.localStorage.clear()
     setLoggedIn(false)
+    toast.info('Logged out')
     dispatch(clearUser())
-    dispatch(logoutNotify())
-    setTimeout(() => {
-      dispatch(reset())
-    }, 3000);
-    history.push('/')
-
+    history.push('/login')
   }
   return (
     <div id='nav-logout-button'>

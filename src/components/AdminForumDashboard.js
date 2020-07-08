@@ -4,6 +4,11 @@ import { Table, Container, Button } from 'reactstrap'
 import { initializeForumPending } from '../reducers/forumReducer'
 import AdminForumAnswer from './AdminForumAnswer'
 
+
+const buttonStyle = {
+  fontFamily: 'Montserrat',
+  backgroundColor: 'rgb(187, 97, 157)'
+}
 const AdminForumDashboard = () => {
   const dispatch = useDispatch()
   const [answering, setAnswering] = useState({})
@@ -27,10 +32,10 @@ const AdminForumDashboard = () => {
           {
             forum.map(c => c.isAnswered === false ?
               <tr key={c._id}>
-                <td>{c.user.email}</td>
-                <td>{c.date.slice(0, 10)}</td>
-                <td><div dangerouslySetInnerHTML={{ __html: c.question }} /></td>
-                <td><Button onClick={() => setAnswering(c)}>Answer</Button></td>
+                <td style={{ fontFamily: 'Montserrat' }}>{c.user.email}</td>
+                <td style={{ fontFamily: 'Montserrat' }}>{c.date.slice(0, 10)}</td>
+                <td style={{ fontFamily: 'Montserrat' }}>{c.question}</td>
+                <td><Button style={buttonStyle} onClick={() => setAnswering(c)}>Answer</Button></td>
               </tr>
               : null)
           }

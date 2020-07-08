@@ -7,15 +7,18 @@ import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { Container, Form, Label, Input, FormGroup, Button } from 'reactstrap'
 import contactService from '../services/contactService'
+import { toast } from 'react-toastify';
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat',
+  fontVariant: 'small-caps'
 }
 const formDivStyle = {
   display: 'block',
   textAlign: 'center',
-  marginTop: '50px'
+  marginTop: '50px',
+  fontFamily: 'Montserrat',
 }
 const formStyle = {
   width: '90%',
@@ -25,12 +28,15 @@ const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Poppins'
+  fontFamily: 'Montserrat',
+  fontVariant: 'small-caps'
 }
 const contactButtonStyle = {
   float: 'center',
   width: '200px',
-  marginBottom: '20px'
+  marginBottom: '20px',
+  fontFamily: 'Montserrat',
+  backgroundColor: '#288046'
 }
 
 const ContactForm = () => {
@@ -48,27 +54,24 @@ const ContactForm = () => {
     <div>
       <Formik
         initialValues={{ name: '', email: '', LINE: '', message: '' }}
-        validate={values => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          }
-          if (!values.message) {
-            errors.message = 'Required'
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
         onSubmit={
           async (values, { setSubmitting, resetForm }) => {
-            if (!isVerified) {
-              alert('Please verify that you are a human')
+            if (!values.email) {
+              toast.warn('Email required')
+            }
+            else if (!values.message) {
+              toast.warn('Message required')
+            }
+            else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            ) {
+              toast.warn('Invalid email address')
+            }
+            else if (!isVerified) {
+              toast.warn('Please verify that you are a human')
             } else {
-              const response = await contactService.sendContact(values)
-              console.log(response.message)
+              await contactService.sendContact(values)
+              toast.success('Request sent')
               setSubmitting(false)
               resetForm({})
               history.push('/forum')
@@ -78,16 +81,15 @@ const ContactForm = () => {
       >
         {({
           values,
-          errors,
-          touched,
           handleChange,
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
         }) => (
             <Container style={formDivStyle}>
-              <p style={{ fontFamily: 'Poppins' }}> We understand if you don't want to post on the forum just yet.  Instead, you can use this form to contact Fern privately, or add her on social media.</p>
+              <p style={{
+                fontFamily: 'Montserrat'
+              }}> We understand if you don't want to post on the forum just yet.  Instead, you can use this form to contact Fern privately, or add her on social media.</p>
               <div id='NavBarText'>
                 <a href="mailto:furbynilu@gmail.com"> <FontAwesomeIcon id='fa-contact-form' icon={faEnvelopeSquare} />
                 </a>
@@ -114,7 +116,6 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.email}
                   /><br />
-                  {errors.email && touched.email && errors.email}
                   <Label style={labelStyle} for='Line'>LINE</Label>
                   <Input
                     placeholder='Line ID'
@@ -133,10 +134,9 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.message}
                   /><br />
-                  {errors.message && touched.message && errors.message}
                 </FormGroup>
                 <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
-                <Button style={contactButtonStyle} type='submit' color='primary'>Send</Button><br />
+                <Button style={contactButtonStyle} type='submit' >Send</Button><br />
               </Form>
             </Container>
           )}

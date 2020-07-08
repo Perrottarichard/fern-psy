@@ -1,4 +1,5 @@
 import forumService from '../services/forumService'
+import { toast } from 'react-toastify'
 
 const forumReducer = (state = [], action) => {
   switch (action.type) {
@@ -31,6 +32,7 @@ export const upLike = (question) => {
       type: 'LIKE',
       data: updatedObject
     })
+    toast.success('You like a post!')
   }
 }
 export const answerQuestion = (answer) => {
@@ -40,6 +42,7 @@ export const answerQuestion = (answer) => {
       type: 'POST_ANSWER',
       data: answer
     })
+    toast.success('You answered a question!')
   }
 }
 export const addQuestion = data => {
@@ -49,6 +52,7 @@ export const addQuestion = data => {
       type: 'NEW_QUESTION',
       data: newQuestion
     })
+    toast.success('You submitted a question!')
   }
 }
 export const deleteQuestion = data => {
@@ -58,6 +62,7 @@ export const deleteQuestion = data => {
       type: 'DELETE_QUESTION',
       data
     })
+    toast.success('Question deleted')
   }
 }
 export const initializeForumPending = () => {

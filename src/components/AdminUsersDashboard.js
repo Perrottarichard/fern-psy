@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button, Container } from 'reactstrap'
 import { initializeUsers } from '../reducers/userInfoForAdminReducer'
 
-// const buttonStyle = {
-//   marginTop: '20px'
-// }
+const buttonStyle = {
+  fontFamily: 'Montserrat'
+}
 
 const AdminUsersDashboard = () => {
   const dispatch = useDispatch()
@@ -36,7 +36,7 @@ const AdminUsersDashboard = () => {
                 <td>{c.username}</td>
                 <td>{c.email}</td>
                 <td>{c.dateOfBirth.slice(0, 10)}</td>
-                <td><Button color='secondary' size='sm' onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
+                <td><Button style={buttonStyle} size='sm' onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
               </tr>)
           }
         </tbody>
