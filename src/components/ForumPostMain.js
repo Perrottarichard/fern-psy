@@ -34,10 +34,10 @@ const tagOptions = [
   { value: 'bipolar', label: 'Bipolar' },
   { value: 'relationships', label: 'Relationships' },
   { value: 'career', label: 'Career' },
-  { value: 'mentalHealth', label: 'Mental Health' },
+  { value: 'mental health', label: 'Mental Health' },
   { value: 'bullying', label: 'Bullying' },
   { value: 'family', label: 'Family' },
-  { value: 'peerPressure', label: 'Peer Pressure' },
+  { value: 'peer pressure', label: 'Peer Pressure' },
   { value: 'parenting', label: 'Parenting' },
   { value: 'other', label: 'Other' }
 ]

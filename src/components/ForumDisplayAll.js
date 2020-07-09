@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faUser, faQuestion, faReplyAll, faBorderAll, faCommentMedical, faHandHolding, faHandsHelping, faClipboardCheck, faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
-import {
-  Container, Card, Button, CardHeader, CardFooter, CardBody,
-  CardTitle, CardText, Badge
-} from 'reactstrap';
+import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
+// import { tagFilterSelected } from '../reducers/forumReducer'
+// import SingleTagDisplay from './SingleTagDisplay';
 
 const tagColorOptions = [
   { tag: 'sex', backgroundColor: '#ff5c4d' },
@@ -19,10 +18,10 @@ const tagColorOptions = [
   { tag: 'anxiety', backgroundColor: '#5e320f' },
   { tag: 'bipolar', backgroundColor: '#f347ff' },
   { tag: 'career', backgroundColor: '#8e2bff' },
-  { tag: 'mentalHealth', backgroundColor: '#1e45a8' },
+  { tag: 'mental health', backgroundColor: '#1e45a8' },
   { tag: 'bullying', backgroundColor: '#5e320f' },
   { tag: 'family', backgroundColor: '#ffa64d' },
-  { tag: 'peerPressure', backgroundColor: '#288046' },
+  { tag: 'peer pressure', backgroundColor: '#288046' },
   { tag: 'parenting', backgroundColor: '#6da870' },
   { tag: 'other', backgroundColor: '#707571' },
   { tag: 'illegal drugs', backgroundColor: '#40073d' },
@@ -67,17 +66,17 @@ const cardBodyStyleA = {
   padding: '10px',
   backgroundColor: '#f0e1df' //super light pink
 }
-const cardTitleStyle = {
-  fontFamily: 'Montserrat',
+// const cardTitleStyle = {
+//   fontFamily: 'Montserrat',
 
-}
-const cardTextStyle = {
-  fontFamily: 'Montserrat',
-  backgroundColor: '#e6b6b1', //pinkish
-}
-const cardFooterStyle = {
-  fontFamily: 'Montserrat'
-}
+// }
+// const cardTextStyle = {
+//   fontFamily: 'Montserrat',
+//   backgroundColor: '#e6b6b1', //pinkish
+// }
+// const cardFooterStyle = {
+//   fontFamily: 'Montserrat'
+// }
 const smallStyle = {
   float: 'right',
   color: 'white'
@@ -95,22 +94,22 @@ const postButtonStyle = {
   fontFamily: 'Montserrat',
   backgroundColor: '#288046'
 }
-const likeButtonStyle = {
-  backgroundColor: '#4da6ff',
-  height: '28px',
-  width: '35px',
-  lineHeight: '5px',
-  paddingRight: '25px',
-  borderRadius: '20px',
-}
+// const likeButtonStyle = {
+//   backgroundColor: '#4da6ff',
+//   height: '28px',
+//   width: '35px',
+//   lineHeight: '5px',
+//   paddingRight: '25px',
+//   borderRadius: '20px',
+// }
 // const tagBadgeStyle = {
 //   backgroundColor: '',
 //   width: '100px'
 // }
-const ForumDisplayMain = () => {
+const ForumDisplayAll = (props) => {
 
   const dispatch = useDispatch()
-  const forum = useSelector(state => state.forum)
+  const { forumAnswered } = props
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
@@ -118,7 +117,7 @@ const ForumDisplayMain = () => {
 
   return (
     <Container>
-      {forum.map(f =>
+      {forumAnswered.map(f =>
         <div key={f._id}>
           <Card >
             <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
@@ -132,9 +131,9 @@ const ForumDisplayMain = () => {
               <FontAwesomeIcon icon={faComment} style={{ color: '#288046', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
               {f.answer}
             </CardBody>
-            <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button>
+            {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
             <div style={{ display: 'block' }}>
-              {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} pill>{t}</Badge>)}
+              {f.tags.map(t => <Badge key={t} href={`/forum/${t}`} style={chooseTagColor(t)} >{t}</Badge>)}
             </div>
           </Card>
         </div>)}
@@ -145,4 +144,4 @@ const ForumDisplayMain = () => {
     </Container>
   )
 }
-export default ForumDisplayMain
+export default ForumDisplayAll

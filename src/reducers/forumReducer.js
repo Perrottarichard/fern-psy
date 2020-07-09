@@ -1,14 +1,19 @@
 import forumService from '../services/forumService'
 import { toast } from 'react-toastify'
 
-const forumReducer = (state = [], action) => {
+const initialState = {
+  answered: [],
+  pending: [],
+  tagFilter: ''
+}
+const forumReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'NEW_QUESTION':
       return state
     case 'INIT_FORUM_PENDING':
-      return action.data
+      return { ...state, pending: action.data }
     case 'INIT_FORUM_ANSWERED':
-      return action.data
+      return { ...state, answered: action.data }
     case 'LIKE':
       const id = action.data.id
       const questionToChange = state.find(q => q.id === id)
@@ -21,6 +26,8 @@ const forumReducer = (state = [], action) => {
       return state.map(s => s._id === answerId ? changedToAnswered : s)
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
+    case 'TAG_FILTER_SELECTED':
+      return { ...state, tagFilter: action.data }
     default: return state
   }
 }
@@ -81,6 +88,12 @@ export const initializeForumAnswered = () => {
       type: 'INIT_FORUM_ANSWERED',
       data: answered
     })
+  }
+}
+export const tagFilterSelected = (tag) => {
+  return {
+    type: 'TAG_FILTER_SELECTED',
+    data: tag
   }
 }
 export default forumReducer
