@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { setUser } from './reducers/activeUserReducer'
 import forumService from './services/forumService'
@@ -16,7 +16,7 @@ import AdminContactsDashboard from './components/AdminContactsDashboard'
 import AdminUsersDashboard from './components/AdminUsersDashboard'
 import AdminForumDashboard from './components/AdminForumDashboard'
 import NoPage from './components/NoPage'
-import { Button, UncontrolledCollapse } from 'reactstrap';
+import { Button, UncontrolledCollapse, Container } from 'reactstrap';
 
 //import { initializeQuestions } from './reducers/forumReducer';
 
@@ -74,7 +74,7 @@ const App = () => {
           <Route path='/admin/dashboard'>
             {!activeUser || (!activeUser.username === 'Fern-Admin' || !activeUser.username === 'Richard-Admin') ?
               <NoPage /> :
-              <div>
+              <Container>
                 <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Pending
                 </Button>
                 <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat' }}>Show Contacts</Button>
@@ -88,7 +88,7 @@ const App = () => {
                 <UncontrolledCollapse toggler="#usersToggler">
                   <AdminUsersDashboard />
                 </UncontrolledCollapse>
-              </div>
+              </Container>
             }
           </Route>
           <Route path="/admin">

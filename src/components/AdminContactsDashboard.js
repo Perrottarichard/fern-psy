@@ -34,7 +34,7 @@ const AdminContactsDashboard = () => {
 
   return (
     <Container>
-      <Table size='sm' hover>
+      <Table size='sm' hover responsive>
         <thead>
           <tr>
             <th>Name</th>

@@ -9,18 +9,12 @@
     font-size: 1.5rem;
   }
 }
-/* html {
-  background-color: #4da6ff;
-}
-div.App {
-  background-color: #4da6ff;
-} */
-#navbar {
-  background-color: #ffa64d;
-}
 #admin-login-form.container {
   color: black;
   background-color: white;
+}
+#navbar {
+  width: 100%;
 }
 #navbrand {
   font-family: 'Montserrat', sans-serif;
@@ -153,4 +147,25 @@ background-color: #343a40
 .Toastify__toast.Toastify__toast--success {
   font-family: 'Monserrat', sans-serif;
   background-color: #288046;
+}
+#usersToggler {
+  width: 80px;
+  font-size: 14px;
+  background-color: #288046;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+#pendingToggler {
+  width: 80px;
+  font-size: 14px;
+  background-color: #5d90c4;
+  padding-right: 15px;
+  padding-left: 10px;
+}
+#contactsToggler {
+  width: 80px;
+  font-size: 14px;
+  background-color: #ffa64d;
+  padding-right: 15px;
+  padding-left: 10px;
 }

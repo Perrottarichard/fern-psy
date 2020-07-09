@@ -36,7 +36,7 @@ const MyNavbar = (props) => {
             </NavItem>
             <NavItem>
               {
-                (!activeUser || activeUser.username !== "Fern-Admin")
+                (!activeUser || !activeUser.username === "Fern-Admin" || !activeUser.username === "Richard-Admin")
                   ?
                   <NavLink tag={Link} id="NavLink" to="/contact">Contact Fern</NavLink>
                   :

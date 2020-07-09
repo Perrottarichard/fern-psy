@@ -71,7 +71,6 @@ const LoginForm = (props) => {
       }
       catch (error) {
         console.log(error.message)
-
         if (error.message.includes('401')) {
           toast.error('Check your username and password again')
         } else {

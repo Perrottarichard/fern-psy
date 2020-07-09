@@ -82,7 +82,9 @@ const ForumPostMain = (props) => {
         setSelectedTags([])
         history.push('/forum')
       } catch (error) {
+        toast.error('You must be logged in to post to the forum')
         console.log(error)
+        history.push('/login')
       }
 
     }

@@ -81,7 +81,7 @@ const postButtonStyle = {
   borderWidth: '3px',
   borderStyle: 'solid',
   fontFamily: 'Montserrat',
-  backgroundColor: '#4da6ff'
+  backgroundColor: '#288046'
 }
 const likeButtonStyle = {
   backgroundColor: '#4da6ff',

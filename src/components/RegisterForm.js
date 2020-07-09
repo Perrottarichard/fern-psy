@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Recaptcha from 'react-recaptcha'
-import { useDispatch } from 'react-redux'
 import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } from 'reactstrap'
 import Select from 'react-select'
 import SpinningLoader from './SpinningLoader'
@@ -48,7 +47,6 @@ const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [selectedGender, setSelectedGender] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState('')
-  const dispatch = useDispatch()
 
   const toggle = () => setModal(!modal);
 
@@ -116,7 +114,7 @@ const RegisterForm = () => {
       try {
         setLoading(true)
         await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
-        //dispatch
+        toast.success('Successfully registered. You can now log in.')
         setLoading(false)
         setUsername('')
         setPassword('')

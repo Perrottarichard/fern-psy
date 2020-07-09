@@ -31,7 +31,7 @@ const AdminUsersDashboard = () => {
 
   return (
     <Container>
-      <Table size='sm' hover>
+      <Table size='sm' hover responsive>
         <thead>
           <tr>
             <th style={headingStyle}>Name</th>
@@ -50,7 +50,7 @@ const AdminUsersDashboard = () => {
                 <td><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
                 </a></td>
                 <td style={contentStyle}>{c.dateOfBirth.slice(0, 10)}</td>
-                <td><Button style={buttonStyle} size='sm' onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
+                <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
               </tr>)
           }
         </tbody>
