@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faUser, faQuestion, faReplyAll, faBorderAll, faCommentMedical, faHandHolding, faHandsHelping, faClipboardCheck, faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import {
   Container, Card, Button, CardHeader, CardFooter, CardBody,
@@ -10,13 +10,13 @@ import {
 } from 'reactstrap';
 
 const tagColorOptions = [
-  { tag: 'sex', backgroundColor: '#343a40' },
+  { tag: 'sex', backgroundColor: '#ff5c4d' },
   { tag: 'dating', backgroundColor: '#288046' },
   { tag: 'relationships', backgroundColor: '#ffa64d' },
   { tag: 'lgbt', backgroundColor: '#ff4da6' },
   { tag: 'friendship', backgroundColor: '#5050ff' },
-  { tag: 'depression', backgroundColor: '#ff5c4d' },
-  { tag: 'anxiety', backgroundColor: '#a6ff4d' },
+  { tag: 'depression', backgroundColor: '#343a40' },
+  { tag: 'anxiety', backgroundColor: '#5e320f' },
   { tag: 'bipolar', backgroundColor: '#f347ff' },
   { tag: 'career', backgroundColor: '#8e2bff' },
   { tag: 'mentalHealth', backgroundColor: '#1e45a8' },
@@ -33,7 +33,7 @@ const chooseTagColor = (passed) => {
   if (color) {
     return {
       backgroundColor: color.backgroundColor,
-      width: '80px',
+      width: '90px',
       verticalAlign: 'middle',
       postition: 'relative'
     }
@@ -53,22 +53,34 @@ const cardHeaderStyle = {
   paddingTop: '6px',
   paddingBottom: '6px'
 }
-const cardBodyStyle = {
+const cardBodyStyleQ = {
   fontSize: '14px',
   fontFamily: 'Montserrat',
-  padding: '10px'
+  padding: '10px',
+  textAlign: 'left',
+  paddingLeft: '10px',
+  backgroundColor: '#b8ffbe' //super light green
+}
+const cardBodyStyleA = {
+  fontSize: '14px',
+  fontFamily: 'Montserrat',
+  padding: '10px',
+  backgroundColor: '#f0e1df' //super light pink
 }
 const cardTitleStyle = {
-  fontFamily: 'Montserrat'
+  fontFamily: 'Montserrat',
+
 }
 const cardTextStyle = {
-  fontFamily: 'Montserrat'
+  fontFamily: 'Montserrat',
+  backgroundColor: '#e6b6b1', //pinkish
 }
 const cardFooterStyle = {
   fontFamily: 'Montserrat'
 }
 const smallStyle = {
-  float: 'right'
+  float: 'right',
+  color: 'white'
 }
 const postButtonDivStyle = {
   marginTop: '50px',
@@ -110,16 +122,19 @@ const ForumDisplayMain = () => {
         <div key={f._id}>
           <Card >
             <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-              <small className="text-muted" style={smallStyle}>{f.date.slice(0, 10)}</small>
+              <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
             </CardHeader>
-            <CardBody style={cardBodyStyle}>
-              <CardTitle style={cardTitleStyle}>{f.question}</CardTitle>
-              <CardText style={cardTextStyle}>{f.answer}
-              </CardText>
-              <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button>
+            <CardBody style={cardBodyStyleQ}>
+              <FontAwesomeIcon icon={faQuestionCircle} style={{ color: 'magenta', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+              {f.question}
             </CardBody>
+            <CardBody style={cardBodyStyleA}>
+              <FontAwesomeIcon icon={faComment} style={{ color: '#288046', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+              {f.answer}
+            </CardBody>
+            <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button>
             <div style={{ display: 'block' }}>
-              {f.tags.map(t => <Badge style={chooseTagColor(t)} pill>{t}</Badge>)}
+              {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} pill>{t}</Badge>)}
             </div>
           </Card>
         </div>)}

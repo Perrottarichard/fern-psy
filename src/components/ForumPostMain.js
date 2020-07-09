@@ -66,6 +66,9 @@ const ForumPostMain = (props) => {
       toast.warn('Please make sure you have a title, a question, and some tags')
     } else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
       toast.warn('Why are you trying to ask yourself a question?')
+    } else if (!activeUser.username) {
+      toast.warn('You must be logged in to post to the forum')
+      history.push('/login')
     } else {
       const postToAdd = {
         title: title,
@@ -84,7 +87,7 @@ const ForumPostMain = (props) => {
       } catch (error) {
         toast.error('You must be logged in to post to the forum')
         console.log(error)
-        history.push('/login')
+
       }
 
     }
