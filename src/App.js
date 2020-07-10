@@ -66,19 +66,19 @@ const App = () => {
           pauseOnHover
         />
         <Switch>
-          <Route path="/about">
+          <Route exact path="/about">
             <About />
           </Route>
-          <Route path="/contact">
+          <Route exact path="/contact">
             <ContactForm />
           </Route>
-          <Route exact path="/forum/:tag">
+          <Route path="/forum/:tag">
             <SingleTagDisplay activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
           <Route exact path="/forum">
             <ForumLandingPage activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
-          <Route exact path="/forum/post">
+          <Route path="/addpost">
             <ForumPostMain activeUser={activeUser} />
           </Route>
           <Route path="/forum/all">
@@ -107,7 +107,7 @@ const App = () => {
               </Container>
             }
           </Route>
-          <Route path="/admin">
+          <Route exact path="/admin">
             <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
         </Switch>

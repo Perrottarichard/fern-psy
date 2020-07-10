@@ -1,12 +1,12 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Card, CardTitle, CardBody } from 'reactstrap'
+import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faCocktail, faAngry } from '@fortawesome/free-solid-svg-icons';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
-import SingleTagDisplay from './SingleTagDisplay'
+// import SingleTagDisplay from './SingleTagDisplay'
 
 
 const tagOptions = [
@@ -68,6 +68,21 @@ const divStyle = {
   justifyContent: 'center',
   marginTop: '40px'
 }
+const postButtonDivStyle = {
+  display: 'block',
+  textAlign: 'center',
+  marginTop: '50px',
+  marginBottom: '50px',
+  fontFamily: 'Montserrat',
+  fontSize: '30px'
+}
+const postButtonStyle = {
+  borderColor: '#343a40',
+  borderWidth: '3px',
+  borderStyle: 'solid',
+  fontFamily: 'Montserrat',
+  backgroundColor: '#288046'
+}
 
 const ForumLandingPage = (props) => {
   const dispatch = useDispatch()
@@ -82,26 +97,33 @@ const ForumLandingPage = (props) => {
     history.push(`/forum/${t.tag}`)
   }
   return (
-    <Container style={divStyle}>
-      {tagOptions.map(t =>
-        <div key={t.tag} style={{ flexDirection: 'row' }} >
-          <Card body>
-            <CardTitle style={textStyle}>{t.tag}
-              <CardBody>
-                <span onClick={() => clickTag(t)}>
-                  <FontAwesomeIcon
-                    style={chooseTagColor(t.tag)}
-                    icon={chooseTagIcon(t.tag)}
-                  >{t.tag}
-                  </FontAwesomeIcon>
-                </span>
-              </CardBody>
-            </CardTitle>
-          </Card>
-        </div>
-      )}
-      {/* <SingleTagDisplay activeUser={activeUser} forumAnswered={forumAnswered} /> */}
-    </Container >
+    <div>
+      <Container style={divStyle}>
+        {tagOptions.map(t =>
+          <div key={t.tag} style={{ flexDirection: 'row' }} >
+            <Card body>
+              <CardTitle style={textStyle}>{t.tag}
+                <CardBody>
+                  <span onClick={() => clickTag(t)}>
+                    <FontAwesomeIcon
+                      style={chooseTagColor(t.tag)}
+                      icon={chooseTagIcon(t.tag)}
+                    >{t.tag}
+                    </FontAwesomeIcon>
+                  </span>
+                </CardBody>
+              </CardTitle>
+            </Card>
+          </div>
+        )}
+      </Container >
+      <hr />
+      <div style={postButtonDivStyle}>
+        Have a question?<br />
+        <Link to='/addpost'><Button style={postButtonStyle}>Submit a Post</Button></Link>
+      </div>
+      <br />
+    </div>
   )
 }
 export default ForumLandingPage

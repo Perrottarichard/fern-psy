@@ -59,7 +59,7 @@ export const addQuestion = data => {
       type: 'NEW_QUESTION',
       data: newQuestion
     })
-    toast.success('You submitted a question!')
+    toast.success('You submitted a question! In order to keep the forum a great place for everyone, your post will not appear publicly until Fern answers it. Check back soon!', { autoClose: false })
   }
 }
 export const deleteQuestion = data => {

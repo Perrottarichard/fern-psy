@@ -9,7 +9,7 @@ const buttonStyle = {
   fontFamily: 'Montserrat'
 }
 const mailIconStyle = {
-  fontSize: '40px',
+  fontSize: '32px',
   backgroundColor: 'white',
   color: '#343a40'
 }

@@ -70,6 +70,8 @@ const smallStyle = {
   color: 'white'
 }
 const postButtonDivStyle = {
+  display: 'block',
+  textAlign: 'center',
   marginTop: '50px',
   marginBottom: '50px',
   fontFamily: 'Montserrat',
@@ -83,10 +85,10 @@ const postButtonStyle = {
   backgroundColor: '#288046'
 }
 
+
 const SingleTagDisplay = () => {
   // const { activeUser, forumAnswered } = props
   // const dispatch = useDispatch()
-
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
   console.log(tagged)
 
@@ -117,7 +119,7 @@ const SingleTagDisplay = () => {
         </div>)}
       <div style={postButtonDivStyle}>
         Have a question?<br />
-        <Link to='/forum/post'><Button style={postButtonStyle} block>Submit a Post</Button></Link>
+        <Link to='/addpost'><Button style={postButtonStyle} >Submit a Post</Button></Link>
       </div>
     </Container>
   )

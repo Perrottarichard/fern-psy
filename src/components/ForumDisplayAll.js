@@ -139,7 +139,7 @@ const ForumDisplayAll = (props) => {
         </div>)}
       <div style={postButtonDivStyle}>
         Have a question?<br />
-        <Link to='/forum/post'><Button style={postButtonStyle} block>Submit a Post</Button></Link>
+        <Link to='/addpost'><Button style={postButtonStyle} block>Submit a Post</Button></Link>
       </div>
     </Container>
   )

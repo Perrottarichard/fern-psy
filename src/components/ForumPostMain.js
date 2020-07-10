@@ -64,7 +64,10 @@ const ForumPostMain = (props) => {
     event.preventDefault()
     if (!title || !question || !selectedTags) {
       toast.warn('Please make sure you have a title, a question, and some tags')
-    } else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
+    } else if (selectedTags.length !== 2) {
+      toast.warn('Please select 2 tags')
+    }
+    else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
       toast.warn('Why are you trying to ask yourself a question?')
     } else if (!activeUser.username) {
       toast.warn('You must be logged in to post to the forum')
@@ -117,7 +120,7 @@ const ForumPostMain = (props) => {
           style={{ fontFamily: 'Montserrat' }}
         />
         <Label style={labelStyle}>Tags:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>Select some tags to help other people know what your question is about!</p>
+        <p style={{ fontFamily: 'Montserrat' }}>Select some tags to help other people know what your question is about! (choose 2)</p>
         <Select
           options={tagOptions}
           onChange={handleTagChange}
@@ -131,7 +134,6 @@ const ForumPostMain = (props) => {
           <Button style={buttonStyle} onClick={handleEditorSubmit}>Ask Fern!</Button>
         </div>
       </div>
-
     </Container>
   )
 }

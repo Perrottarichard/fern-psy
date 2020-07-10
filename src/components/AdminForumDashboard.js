@@ -9,14 +9,14 @@ import AdminForumAnswer from './AdminForumAnswer'
 
 const buttonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: '#5d90c4',
+  backgroundColor: '#343a40',
   width: '50px',
   paddingRight: '5px',
   paddingLeft: '5px',
   fontSize: '10px'
 }
 const mailIconStyle = {
-  fontSize: '40px',
+  fontSize: '32px',
   backgroundColor: 'white',
   color: '#343a40'
 }
@@ -41,7 +41,7 @@ const AdminForumDashboard = () => {
         </thead>
         <tbody>
           {
-            forum.map(c => c.isAnswered === false ?
+            forum.pending.map(c => c.isAnswered === false ?
               <tr key={c._id}>
                 <td style={{ fontFamily: 'Montserrat' }}><a href={`mailto:${c.user.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} /></a></td>
                 <td style={{ fontFamily: 'Montserrat' }}>{c.date.slice(0, 10)}</td>

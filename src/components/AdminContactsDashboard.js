@@ -14,7 +14,7 @@ const buttonStyle = {
   backgroundColor: '#bf3d3d'
 }
 const mailIconStyle = {
-  fontSize: '40px',
+  fontSize: '32px',
   backgroundColor: 'white',
   color: '#343a40'
 }

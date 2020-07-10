@@ -43,7 +43,7 @@ const MyNavbar = (props) => {
                   <NavLink tag={Link} id="NavLink" to="/admin/dashboard">Dashboard</NavLink>
               }
             </NavItem>
-            {
+            {/* {
               (!activeUser || !loggedIn)
                 ?
                 <NavItem>
@@ -51,7 +51,7 @@ const MyNavbar = (props) => {
                 </NavItem>
                 :
                 null
-            }
+            } */}
           </Nav>
           {
             (!activeUser || !loggedIn)
