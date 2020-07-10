@@ -26,7 +26,7 @@ const buttonStyle = {
 const tagOptions = [
   { value: 'sex', label: 'Sex' },
   { value: 'dating', label: 'Dating' },
-  { value: 'illegal drugs', label: 'Illegal Drugs' },
+  { value: 'addiction', label: 'Addiction' },
   { value: 'friendship', label: 'Friendship' },
   { value: 'lgbt', label: 'LGBT' },
   { value: 'depression', label: 'Depression' },
@@ -37,8 +37,8 @@ const tagOptions = [
   { value: 'mental health', label: 'Mental Health' },
   { value: 'bullying', label: 'Bullying' },
   { value: 'family', label: 'Family' },
-  { value: 'peer pressure', label: 'Peer Pressure' },
-  { value: 'parenting', label: 'Parenting' },
+  // { value: 'peer pressure', label: 'Peer Pressure' },
+  // { value: 'parenting', label: 'Parenting' },
   { value: 'other', label: 'Other' }
 ]
 const ForumPostMain = (props) => {

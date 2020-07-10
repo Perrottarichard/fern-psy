@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
+import NoPostsYet from './NoPostsYet';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 
 const tagColorOptions = [
@@ -19,10 +20,10 @@ const tagColorOptions = [
   { tag: 'mental health', backgroundColor: '#1e45a8' },
   { tag: 'bullying', backgroundColor: '#5e320f' },
   { tag: 'family', backgroundColor: '#ffa64d' },
-  { tag: 'peer pressure', backgroundColor: '#288046' },
-  { tag: 'parenting', backgroundColor: '#6da870' },
+  // { tag: 'peer pressure', backgroundColor: '#288046' },
+  // { tag: 'parenting', backgroundColor: '#6da870' },
+  { tag: 'addiction', backgroundColor: '#40073d' },
   { tag: 'other', backgroundColor: '#707571' },
-  { tag: 'illegal drugs', backgroundColor: '#40073d' },
 
 ]
 const chooseTagColor = (passed) => {
@@ -56,7 +57,7 @@ const cardBodyStyleQ = {
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
-  backgroundColor: '#b8ffbe' //super light green
+  backgroundColor: 'white' //super light green
 }
 const cardBodyStyleA = {
   fontSize: '14px',
@@ -92,36 +93,40 @@ const SingleTagDisplay = () => {
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
   console.log(tagged)
 
-  const chosenFilter = useSelector(state => state.forum.tagFilter)
-  console.log(chosenFilter)
 
-  return (
-    <Container>
-      {tagged.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
-        <div key={f._id}>
-          <Card >
-            <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-              <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
-            </CardHeader>
-            <CardBody style={cardBodyStyleQ}>
-              <FontAwesomeIcon icon={faQuestionCircle} style={{ color: 'magenta', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-              {f.question}
-            </CardBody>
-            <CardBody style={cardBodyStyleA}>
-              <FontAwesomeIcon icon={faComment} style={{ color: '#288046', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-              {f.answer}
-            </CardBody>
-            {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
-            <div style={{ display: 'block' }}>
-              {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
-            </div>
-          </Card>
-        </div>)}
-      <div style={postButtonDivStyle}>
-        Have a question?<br />
-        <Link to='/addpost'><Button style={postButtonStyle} >Submit a Post</Button></Link>
-      </div>
-    </Container>
-  )
+  const chosenFilter = useSelector(state => state.forum.tagFilter)
+  if (tagged.length === 0) {
+    return (
+      <NoPostsYet />
+    )
+  } else
+    return (
+      <Container>
+        {tagged.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
+          <div key={f._id}>
+            <Card >
+              <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+                <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
+              </CardHeader>
+              <CardBody style={cardBodyStyleQ}>
+                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                {f.question}
+              </CardBody>
+              <CardBody style={cardBodyStyleA}>
+                <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                {f.answer}
+              </CardBody>
+              {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
+              <div style={{ display: 'block' }}>
+                {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
+              </div>
+            </Card>
+          </div>)}
+        <div style={postButtonDivStyle}>
+          Have a question?<br />
+          <Link to='/addpost'><Button style={postButtonStyle} >Submit a Post</Button></Link>
+        </div>
+      </Container>
+    )
 }
 export default SingleTagDisplay

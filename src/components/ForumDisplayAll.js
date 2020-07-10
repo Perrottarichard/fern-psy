@@ -58,7 +58,7 @@ const cardBodyStyleQ = {
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
-  backgroundColor: '#b8ffbe' //super light green
+  backgroundColor: 'white' //super light green
 }
 const cardBodyStyleA = {
   fontSize: '14px',

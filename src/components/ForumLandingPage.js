@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faCocktail, faAngry } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faCocktail, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear } from '@fortawesome/free-solid-svg-icons';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay'
@@ -11,21 +11,21 @@ import { setTagFilter } from '../reducers/forumReducer'
 
 const tagOptions = [
   { tag: 'sex', backgroundColor: '#ff5c4d', icon: faVenusMars },
-  { tag: 'dating', backgroundColor: '#288046', icon: faCocktail },
+  { tag: 'dating', backgroundColor: '#288046', icon: faGlassCheers },
   { tag: 'relationships', backgroundColor: '#ffa64d', icon: faHeartBroken },
   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },
   { tag: 'friendship', backgroundColor: '#5050ff', icon: faUserFriends },
-  { tag: 'depression', backgroundColor: '#343a40', icon: faSadCry },
-  { tag: 'anxiety', backgroundColor: '#5e320f', icon: faBolt },
-  { tag: 'bipolar', backgroundColor: '#f347ff', icon: faDizzy },
+  { tag: 'depression', backgroundColor: '#343a40', icon: faSadTear },
+  { tag: 'anxiety', backgroundColor: '#5e320f', icon: faFlushed },
+  { tag: 'bipolar', backgroundColor: '#f347ff', icon: faTheaterMasks },
   { tag: 'career', backgroundColor: '#8e2bff', icon: faBusinessTime },
   { tag: 'mental health', backgroundColor: '#1e45a8', icon: faBrain },
   { tag: 'bullying', backgroundColor: '#5e320f', icon: faAngry },
   { tag: 'family', backgroundColor: '#ffa64d', icon: faHome },
-  { tag: 'peer pressure', backgroundColor: '#288046', icon: faEye },
-  { tag: 'parenting', backgroundColor: '#6da870', icon: faBabyCarriage },
+  // { tag: 'peer pressure', backgroundColor: '#288046', icon: faEye },
+  // { tag: 'parenting', backgroundColor: '#6da870', icon: faBabyCarriage },
   { tag: 'other', backgroundColor: '#707571', icon: faQuestionCircle },
-  { tag: 'illegal drugs', backgroundColor: '#40073d', icon: faSyringe },
+  { tag: 'addiction', backgroundColor: '#40073d', icon: faSyringe },
 
 ]
 const chooseTagColor = (passed) => {

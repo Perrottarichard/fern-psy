@@ -7,10 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css'
 import App from './App';
 import { PersistGate } from 'redux-persist/integration/react';
+import SpinningLoader from './components/SpinningLoader';
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={<SpinningLoader />} persistor={persistor}>
       <App />
     </PersistGate>
   </Provider>
