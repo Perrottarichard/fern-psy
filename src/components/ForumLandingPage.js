@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faCocktail, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUserFriends, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear } from '@fortawesome/free-solid-svg-icons';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay'
@@ -22,8 +22,6 @@ const tagOptions = [
   { tag: 'mental health', backgroundColor: '#1e45a8', icon: faBrain },
   { tag: 'bullying', backgroundColor: '#5e320f', icon: faAngry },
   { tag: 'family', backgroundColor: '#ffa64d', icon: faHome },
-  // { tag: 'peer pressure', backgroundColor: '#288046', icon: faEye },
-  // { tag: 'parenting', backgroundColor: '#6da870', icon: faBabyCarriage },
   { tag: 'other', backgroundColor: '#707571', icon: faQuestionCircle },
   { tag: 'addiction', backgroundColor: '#40073d', icon: faSyringe },
 

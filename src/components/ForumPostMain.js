@@ -23,23 +23,38 @@ const buttonStyle = {
   fontFamily: 'Montserrat',
 }
 
+// const tagOptions = [
+//   { value: 'sex', label: 'Sex' },
+//   { value: 'dating', label: 'Dating' },
+//   { value: 'addiction', label: 'Addiction' },
+//   { value: 'friendship', label: 'Friendship' },
+//   { value: 'lgbt', label: 'LGBT' },
+//   { value: 'depression', label: 'Depression' },
+//   { value: 'anxiety', label: 'Anxiety' },
+//   { value: 'bipolar', label: 'Bipolar' },
+//   { value: 'relationships', label: 'Relationships' },
+//   { value: 'career', label: 'Career' },
+//   { value: 'mental health', label: 'Mental Health' },
+//   { value: 'bullying', label: 'Bullying' },
+//   { value: 'family', label: 'Family' },
+//   { value: 'other', label: 'Other' }
+// ]
+
 const tagOptions = [
-  { value: 'sex', label: 'Sex' },
-  { value: 'dating', label: 'Dating' },
-  { value: 'addiction', label: 'Addiction' },
-  { value: 'friendship', label: 'Friendship' },
+  { value: 'ปัญหาเรื่องเพศ', label: 'ปัญหาเรื่องเพศ' },
+  { value: 'การออกเดท', label: 'การออกเดท' },
+  { value: 'การเสพติด', label: 'การเสพติด' },
+  { value: 'ความสัมพันธ์กับเพื่อน', label: 'ความสัมพันธ์กับเพื่อน' },
   { value: 'lgbt', label: 'LGBT' },
-  { value: 'depression', label: 'Depression' },
-  { value: 'anxiety', label: 'Anxiety' },
-  { value: 'bipolar', label: 'Bipolar' },
+  { value: 'โรคซึมเศร้า', label: 'โรคซึมเศร้า' },
+  { value: 'ความวิตกกังวล', label: 'ความวิตกกังวล' },
+  { value: 'ไบโพลาร์', label: 'ไบโพลาร์' },
   { value: 'relationships', label: 'Relationships' },
-  { value: 'career', label: 'Career' },
-  { value: 'mental health', label: 'Mental Health' },
+  { value: 'การทำงาน', label: 'การทำงาน' },
+  { value: 'สุขภาพจิต', label: 'สุขภาพจิต' },
   { value: 'bullying', label: 'Bullying' },
-  { value: 'family', label: 'Family' },
-  // { value: 'peer pressure', label: 'Peer Pressure' },
-  // { value: 'parenting', label: 'Parenting' },
-  { value: 'other', label: 'Other' }
+  { value: 'ครอบครัว', label: 'ครอบครัว' },
+  { value: 'อื่นๆ', label: 'อื่นๆ' }
 ]
 const ForumPostMain = (props) => {
   const { activeUser } = props
@@ -63,14 +78,20 @@ const ForumPostMain = (props) => {
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
     if (!title || !question || !selectedTags) {
-      toast.warn('Please make sure you have a title, a question, and some tags')
+      toast.warn('กรุณาใส่หัวข้อคำถาม คำถามของคุณ และโปรดเลือกแท็กสองหัวข้อ', { autoClose: 5000 })
+      //'Please make sure you have a title, a question, and two tags'
+      // กรุณาใส่หัวข้อคำถาม คำถามของคุณ และโปรดเลือกแท็กสองหัวข้อ
     } else if (selectedTags.length !== 2) {
-      toast.warn('Please select 2 tags')
+      toast.warn('กรุณาเลือกแท็กสองหัวข้อค่ะ', { autoClose: 5000 })
+      //กรุณาเลือกแท็กสองหัวข้อค่ะ
+      //'Please select 2 tags'
     }
     else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
       toast.warn('Why are you trying to ask yourself a question?')
     } else if (!activeUser.username) {
-      toast.warn('You must be logged in to post to the forum')
+      toast.warn('กรุณาล็อคอินก่อนโพสคำถามค่ะ')
+      //กรุณาล็อคอินก่อนโพสคำถามค่ะ
+      //'You must be logged in to post to the forum'
       history.push('/login')
     } else {
       const postToAdd = {
@@ -88,7 +109,8 @@ const ForumPostMain = (props) => {
         setSelectedTags([])
         history.push('/forum')
       } catch (error) {
-        toast.error('You must be logged in to post to the forum')
+        toast.error('กรุณาล็อคอินก่อนโพสคำถามค่ะ')
+        //กรุณาล็อคอินก่อนโพสคำถามค่ะ
         console.log(error)
 
       }
@@ -99,9 +121,9 @@ const ForumPostMain = (props) => {
     <Container>
       <div id='forum-title-div'>
         <Label style={labelStyle}>Title:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p>
+        {/* <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p> */}
         <Input
-          placeholder='My Awesome Title!'
+          placeholder='คำถามของฉันคือ'
           onChange={handleTitleChange}
           value={title}
           style={{ marginBottom: '20px', fontFamily: 'Montserrat' }}
@@ -110,17 +132,18 @@ const ForumPostMain = (props) => {
 
       <div id='forum-question-div'>
         <Label style={labelStyle}>Question:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>Reminder: This forum is anonymous. Although you must have an account to post, your name and username will NOT show on the forum, so feel free to ask anything.</p>
+        <p style={{ fontFamily: 'Montserrat' }}>ชื่อที่คุณใช้ล็อคอินจะไม่ปรากฏในคำถามของคุณ คุณสามารถถามได้โดยไม่ต้องกังวลเรื่องของความเป็นส่วนตัว เนื่องจากตัวตนของคุณจะไม่ถูกเปิดเผยต่อสาธารณะ และจะมีการรักษาความลับของคุณตามจรรยาบรรณของนักจิตวิทยา</p>
+        {/* */}
         <Input
           type='textarea'
-          placeholder='I have a question about...'
+          placeholder='รายละเอียดของคำถาม'
           onChange={handleContentChange}
           value={question}
           onSubmit={handleEditorSubmit}
           style={{ fontFamily: 'Montserrat' }}
         />
         <Label style={labelStyle}>Tags:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>Select some tags to help other people know what your question is about! (choose 2)</p>
+        <p style={{ fontFamily: 'Montserrat' }}>กรุณาเลือกแท็กจำนวนสองแท็ก</p>
         <Select
           options={tagOptions}
           onChange={handleTagChange}
@@ -131,7 +154,7 @@ const ForumPostMain = (props) => {
           isMulti>
         </Select>
         <div style={{ display: 'block', textAlign: 'center' }}>
-          <Button style={buttonStyle} onClick={handleEditorSubmit}>Ask Fern!</Button>
+          <Button style={buttonStyle} onClick={handleEditorSubmit}>ส่ง</Button>
         </div>
       </div>
     </Container>
