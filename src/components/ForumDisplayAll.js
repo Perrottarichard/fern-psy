@@ -133,7 +133,7 @@ const ForumDisplayAll = (props) => {
             </CardBody>
             {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
             <div style={{ display: 'block' }}>
-              {f.tags.map(t => <Badge key={t} href={`/forum/${t}`} style={chooseTagColor(t)} >{t}</Badge>)}
+              {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
             </div>
           </Card>
         </div>)}

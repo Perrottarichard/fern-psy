@@ -1,5 +1,7 @@
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import forumReducer from './reducers/forumReducer'
@@ -8,13 +10,25 @@ import contactReducer from './reducers/contactReducer'
 import userInfoForAdminReducer from './reducers/userInfoForAdminReducer'
 
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   forum: forumReducer,
   activeUser: activeUserReducer,
   contact: contactReducer,
   userInfoForAdmin: userInfoForAdminReducer
 })
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+const persistConfig = {
+  key: 'root',
+  storage
+}
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export default store
+
+export const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
+
+export const persistor = persistStore(store)
+
+
+
+
+

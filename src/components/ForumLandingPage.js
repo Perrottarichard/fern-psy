@@ -1,16 +1,18 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faHandHoldingHeart, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faHandMiddleFinger, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUserFriends, faSadCry, faBolt, faDizzy, faBusinessTime, faBrain, faBabyCarriage, faEye, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faCocktail, faAngry } from '@fortawesome/free-solid-svg-icons';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
-// import { tagFilterSelected } from '../reducers/forumReducer'
+import { setTagFilter } from '../reducers/forumReducer'
+import SingleTagDisplay from './SingleTagDisplay'
 
 
 const tagOptions = [
   { tag: 'sex', backgroundColor: '#ff5c4d', icon: faVenusMars },
-  { tag: 'dating', backgroundColor: '#288046', icon: faHeartBroken },
-  { tag: 'relationships', backgroundColor: '#ffa64d', icon: faHandHoldingHeart },
+  { tag: 'dating', backgroundColor: '#288046', icon: faCocktail },
+  { tag: 'relationships', backgroundColor: '#ffa64d', icon: faHeartBroken },
   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },
   { tag: 'friendship', backgroundColor: '#5050ff', icon: faUserFriends },
   { tag: 'depression', backgroundColor: '#343a40', icon: faSadCry },
@@ -18,7 +20,7 @@ const tagOptions = [
   { tag: 'bipolar', backgroundColor: '#f347ff', icon: faDizzy },
   { tag: 'career', backgroundColor: '#8e2bff', icon: faBusinessTime },
   { tag: 'mental health', backgroundColor: '#1e45a8', icon: faBrain },
-  { tag: 'bullying', backgroundColor: '#5e320f', icon: faHandMiddleFinger },
+  { tag: 'bullying', backgroundColor: '#5e320f', icon: faAngry },
   { tag: 'family', backgroundColor: '#ffa64d', icon: faHome },
   { tag: 'peer pressure', backgroundColor: '#288046', icon: faEye },
   { tag: 'parenting', backgroundColor: '#6da870', icon: faBabyCarriage },
@@ -69,29 +71,36 @@ const divStyle = {
 
 const ForumLandingPage = (props) => {
   const dispatch = useDispatch()
-  const tag = useSelector(state => state.forum.tagFilter)
+  const history = useHistory()
+  const tag = useSelector(state => state.forum)
+  console.log(tag)
 
-  const { forumAnswered } = props
+  const { forumAnswered, activeUser } = props
 
+  const clickTag = (t) => {
+    dispatch(setTagFilter(t.tag))
+    history.push(`/forum/${t.tag}`)
+  }
   return (
     <Container style={divStyle}>
       {tagOptions.map(t =>
-        <div style={{ flexDirection: 'row' }}>
+        <div key={t.tag} style={{ flexDirection: 'row' }} >
           <Card body>
             <CardTitle style={textStyle}>{t.tag}
               <CardBody>
-                <a href={`/forum/${t.tag}`}>
+                <span onClick={() => clickTag(t)}>
                   <FontAwesomeIcon
                     style={chooseTagColor(t.tag)}
                     icon={chooseTagIcon(t.tag)}
                   >{t.tag}
                   </FontAwesomeIcon>
-                </a>
+                </span>
               </CardBody>
             </CardTitle>
           </Card>
         </div>
       )}
+      {/* <SingleTagDisplay activeUser={activeUser} forumAnswered={forumAnswered} /> */}
     </Container >
   )
 }

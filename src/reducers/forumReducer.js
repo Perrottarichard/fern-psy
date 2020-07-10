@@ -26,7 +26,7 @@ const forumReducer = (state = initialState, action) => {
       return state.map(s => s._id === answerId ? changedToAnswered : s)
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
-    case 'TAG_FILTER_SELECTED':
+    case 'SET_TAG_FILTER':
       return { ...state, tagFilter: action.data }
     default: return state
   }
@@ -90,9 +90,10 @@ export const initializeForumAnswered = () => {
     })
   }
 }
-export const tagFilterSelected = (tag) => {
+export const setTagFilter = (tag) => {
+  console.log(tag)
   return {
-    type: 'TAG_FILTER_SELECTED',
+    type: 'SET_TAG_FILTER',
     data: tag
   }
 }
