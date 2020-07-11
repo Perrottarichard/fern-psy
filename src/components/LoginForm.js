@@ -31,7 +31,10 @@ const labelStyle = {
 }
 const loginButtonStyle = {
   float: 'center',
-  width: '200px',
+  borderColor: '#343a40',
+  borderWidth: '3px',
+  borderStyle: 'solid',
+  width: '150px',
   backgroundColor: '#288046',
   fontFamily: 'Kanit'
 }

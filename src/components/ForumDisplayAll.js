@@ -91,6 +91,7 @@ const postButtonDivStyle = {
 const postButtonStyle = {
   borderColor: '#343a40',
   borderWidth: '3px',
+  width: '150px',
   borderStyle: 'solid',
   fontFamily: 'Kanit',
   backgroundColor: '#288046'

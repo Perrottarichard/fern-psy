@@ -38,7 +38,10 @@ const chooseTagColor = (passed) => {
       postition: 'relative',
       color: 'white',
       fontSize: '40px',
-      padding: '10px'
+      padding: '10px',
+      // borderColor: '#e0e0eb',
+      borderStyle: 'double',
+      borderWidth: '4px'
     }
   } else {
     return {
@@ -78,6 +81,7 @@ const postButtonDivStyle = {
 const postButtonStyle = {
   borderColor: '#343a40',
   borderWidth: '3px',
+  width: '150px',
   borderStyle: 'solid',
   fontFamily: 'Kanit',
   backgroundColor: '#288046'

@@ -15,6 +15,8 @@ const registerButtonStyle = {
   fontFamily: 'Kanit',
   float: 'center',
   width: '100px',
+  borderColor: '#343a40',
+  borderWidth: '3px',
 }
 const formDivStyle = {
   display: 'block',
@@ -147,7 +149,7 @@ const RegisterForm = () => {
           </div>
           :
           <div style={formDivStyle}>
-            <Button style={registerButtonStyle} color='secondary' onClick={toggle}>{'สมัครเลย'}</Button>
+            <Button style={registerButtonStyle} color='primary' onClick={toggle}>{'สมัครเลย'}</Button>
             <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
               <ModalBody>
                 <h2 style={textStyle}>สมัครเข้าใช้งาน</h2>

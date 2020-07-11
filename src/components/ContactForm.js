@@ -33,7 +33,10 @@ const labelStyle = {
 }
 const contactButtonStyle = {
   float: 'center',
-  width: '200px',
+  width: '150px',
+  borderColor: '#343a40',
+  borderWidth: '3px',
+  borderStyle: 'solid',
   marginBottom: '20px',
   fontFamily: 'Kanit',
   backgroundColor: '#288046'
