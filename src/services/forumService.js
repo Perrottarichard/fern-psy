@@ -23,11 +23,14 @@ const create = async newObject => {
   return response.data
 }
 
-const update = (newObject) => {
-  const response = axios.put(`${baseUrl}/${newObject._id}`, newObject)
+const update = async (newObject) => {
+  const response = await axios.put(`${baseUrl}/${newObject._id}`, newObject)
   return response.data
 }
-
+const addComment = async (comment, postToModify) => {
+  const response = await axios.put(`${baseUrl}/addcomment/${postToModify._id}`, { postToModify, comment })
+  return response.data
+}
 const remove = async question => {
   const config = {
     headers: { Authorization: token },
@@ -42,4 +45,4 @@ const like = async (toUpdate) => {
   return response.data
 }
 
-export default { getPending, getAnswered, create, update, setToken, remove, like }
+export default { getPending, getAnswered, create, update, setToken, remove, like, addComment }

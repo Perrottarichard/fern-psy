@@ -100,23 +100,28 @@ const SingleTagDisplay = () => {
       <Container>
         {tagged.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
           <div key={f._id}>
-            <Card >
-              <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-                <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
-              </CardHeader>
-              <CardBody style={cardBodyStyleQ}>
-                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {f.question}
-              </CardBody>
-              <CardBody style={cardBodyStyleA}>
-                <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {f.answer}
-              </CardBody>
-              {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
-              <div style={{ display: 'block' }}>
-                {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
-              </div>
-            </Card>
+            <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Card >
+                <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+                  <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
+                </CardHeader>
+                <CardBody style={cardBodyStyleQ}>
+
+                  <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                  {f.question}
+                </CardBody>
+                <CardBody style={cardBodyStyleA}>
+                  <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                  {f.answer}
+
+                </CardBody>
+
+                {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
+                <div style={{ display: 'block' }}>
+                  {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
+                </div>
+              </Card>
+            </a>
           </div>)}
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถาม<br />

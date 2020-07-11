@@ -18,12 +18,17 @@ const forumReducer = (state = initialState, action) => {
       const id = action.data.id
       const questionToChange = state.find(q => q.id === id)
       const changedQuestion = { ...questionToChange, likes: questionToChange.likes + 1 }
-      return state.map(q => q.id === id ? changedQuestion : q)
+      return { ...state, answered: state.answered.map(q => q.id === id ? changedQuestion : q) }
     case 'POST_ANSWER':
       const answerId = action.data._id
       const objectToModify = state.pending.find(s => s._id === answerId)
       const changedToAnswered = { ...objectToModify, isAnswered: true, answer: action.data.answer }
-      return state.pending.map(s => s._id === answerId ? changedToAnswered : s)
+      return { ...state, pending: state.pending.map(s => s._id === answerId ? changedToAnswered : s) }
+    case 'ADD_COMMENT':
+      const commentedOnId = action.data.postToModify._id
+      const postToModify = state.answered.find(s => s._id === commentedOnId)
+      const addedCommentPending = { ...postToModify, comments: postToModify.comments.concat({ content: 'comment pending approval', _id: Math.random() }) }
+      return { ...state, answered: state.answered.map(s => s._id === commentedOnId ? addedCommentPending : s) }
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
     case 'SET_TAG_FILTER':
@@ -50,6 +55,16 @@ export const answerQuestion = (answer) => {
       data: answer
     })
     toast.success('You answered a question!')
+  }
+}
+export const addComment = (comment, postToModify) => {
+  // console.log(comment, postId)
+  return async dispatch => {
+    await forumService.addComment(comment, postToModify)
+    dispatch({
+      type: 'ADD_COMMENT',
+      data: { postToModify, comment }
+    })
   }
 }
 export const addQuestion = data => {

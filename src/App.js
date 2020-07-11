@@ -20,6 +20,7 @@ import AdminForumDashboard from './components/AdminForumDashboard'
 import NoPage from './components/NoPage'
 import { Button, UncontrolledCollapse, Container } from 'reactstrap';
 import SingleTagDisplay from './components/SingleTagDisplay';
+import SinglePostDisplay from './components/SinglePostDisplay';
 
 //import { initializeQuestions } from './reducers/forumReducer';
 
@@ -77,6 +78,9 @@ const App = () => {
           </Route>
           <Route exact path="/">
             <ForumLandingPage activeUser={activeUser} forumAnswered={forumAnswered} />
+          </Route>
+          <Route path="/post/:id">
+            <SinglePostDisplay activeUser={activeUser} />
           </Route>
           <Route path="/addpost">
             <ForumPostMain activeUser={activeUser} />
