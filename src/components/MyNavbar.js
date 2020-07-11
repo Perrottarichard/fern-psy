@@ -15,6 +15,14 @@ import {
   Button
 } from 'reactstrap';
 
+const adminLoginButtonStyle = {
+  background: 'transparent',
+  color: 'transparent',
+  float: 'center',
+  border: 'none'
+
+}
+
 const MyNavbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { activeUser, setLoggedIn, loggedIn } = props
@@ -43,15 +51,15 @@ const MyNavbar = (props) => {
                   <NavLink tag={Link} id="NavLink" to="/admin/dashboard">Dashboard</NavLink>
               }
             </NavItem>
-            {/* {
+            {
               (!activeUser || !loggedIn)
                 ?
                 <NavItem>
-                  <NavLink tag={Link} id="NavLink" to="/admin">Admin</NavLink>
+                  <a style={adminLoginButtonStyle} href='/admin'>admin</a>
                 </NavItem>
                 :
                 null
-            } */}
+            }
           </Nav>
           {
             (!activeUser || !loggedIn)
