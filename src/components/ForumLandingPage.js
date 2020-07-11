@@ -3,7 +3,8 @@ import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay'
@@ -128,6 +129,10 @@ const ForumLandingPage = (props) => {
         <Link to='/addpost'><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
       <br />
+      <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
+        <span><FontAwesomeIcon icon={faCode} /></span>
+        <small ><a style={{ color: '#343a40' }} href="https://www.mangolatte.dev">engineered w/love by Richard</a></small>
+      </div>
     </div>
   )
 }
