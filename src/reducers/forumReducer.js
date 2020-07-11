@@ -21,9 +21,9 @@ const forumReducer = (state = initialState, action) => {
       return state.map(q => q.id === id ? changedQuestion : q)
     case 'POST_ANSWER':
       const answerId = action.data._id
-      const objectToModify = state.find(s => s._id === answerId)
+      const objectToModify = state.pending.find(s => s._id === answerId)
       const changedToAnswered = { ...objectToModify, isAnswered: true, answer: action.data.answer }
-      return state.map(s => s._id === answerId ? changedToAnswered : s)
+      return state.pending.map(s => s._id === answerId ? changedToAnswered : s)
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
     case 'SET_TAG_FILTER':
@@ -59,7 +59,7 @@ export const addQuestion = data => {
       type: 'NEW_QUESTION',
       data: newQuestion
     })
-    toast.success('You submitted a question! In order to keep the forum a great place for everyone, your post will not appear publicly until Fern answers it. Check back soon!', { autoClose: false })
+    toast.success('คำถามของคุณถูกส่งเรียบร้อยแล้ว อดใจรอสักนิด โพสของคุณจะปรากฏหลังได้รับการยืนยันจากแอดมินค่ะ', { autoClose: false })
   }
 }
 export const deleteQuestion = data => {
@@ -91,7 +91,6 @@ export const initializeForumAnswered = () => {
   }
 }
 export const setTagFilter = (tag) => {
-  console.log(tag)
   return {
     type: 'SET_TAG_FILTER',
     data: tag

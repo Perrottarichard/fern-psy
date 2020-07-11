@@ -8,29 +8,29 @@ import { toast } from 'react-toastify'
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Montserrat'
+  fontFamily: 'Kanit'
 }
 const registerButtonStyle = {
   display: 'inline-block',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   float: 'center',
   width: '100px',
 }
 const formDivStyle = {
   display: 'block',
   textAlign: 'center',
-  fontFamily: 'Montserrat'
+  fontFamily: 'Kanit'
 }
 const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Montserrat'
+  fontFamily: 'Kanit'
 }
 const genderSelectStyle = {
   marginRight: '20px',
   float: 'left',
-  fontFamily: 'Montserrat'
+  fontFamily: 'Kanit'
 }
 
 const RegisterForm = () => {
@@ -51,9 +51,11 @@ const RegisterForm = () => {
   const toggle = () => setModal(!modal);
 
   const genderOptions = [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-    { value: 'Other', label: 'Other' }
+    { value: 'ชาย', label: 'ชาย' },
+    { value: 'หญิง', label: 'หญิง' },
+    { value: 'ชายรักชาย', label: 'ชายรักชาย' },
+    { value: 'หญิงรักหญิง', label: 'หญิงรักหญิง' },
+    { value: 'อื่นๆ', label: 'อื่นๆ' }
   ]
 
   const handleChangeName = (event) => {
@@ -90,22 +92,25 @@ const RegisterForm = () => {
   const submitRegister = async event => {
     event.preventDefault()
     if (variations.includes(username) || variations.map(v => v.toLowerCase).includes(username)) {
-      toast.warn('Sorry, that username is restricted')
+      toast.warn('ขออภัยค่ะ ชื่อนี้มีผู้ใช้งานแล้ว')
     }
     else if (!name || !username || !selectedGender || !dateOfBirth || !password) {
-      toast.warn('You must fill all fields')
+      toast.warn('กรุณากรอกข้อมูลให้ครบถ้วน')
     }
-    else if (password.length < 5 || username.length < 5) {
-      toast.warn('Your username and password must be at least 5 characters long')
+    else if (!/^(?=.{5,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(username)) {
+      toast.warn('Username ต้องเป็นภาษาอังกฤษ ความยาวอย่างน้อย 5-16 ตัวอักษร และไม่ใช้อักขระพิเศษ ', { autoClose: 5000 })
+    }
+    else if (!/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(password)) {
+      toast.warn('Password ต้องเป็นภาษาอังกฤษ ความยาวอย่างน้อย 8-20 ตัวอักษร และไม่ใช้อักขระพิเศษ', { autoClose: 5000 })
     }
     else if (password !== confirmPassword) {
-      toast.warn('Your passwords are not the same. Try again.')
+      toast.warn('กรุณายืนยัน password ให้ถูกต้อง')
     }
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      toast.warn('Your email address is not valid')
+      toast.warn('กรุณากรอก Email ให้ถูกต้อง')
     }
     else if (!isVerified) {
-      toast.warn('Please verify that you are a human')
+      toast.warn('กรุณาเช็คในกล่องยืนยันว่าคุณไม่ใช่โปรแกรมหุ่นยนต์')
     }
 
     else {
@@ -114,7 +119,7 @@ const RegisterForm = () => {
       try {
         setLoading(true)
         await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
-        toast.success('Successfully registered. You can now log in.')
+        toast.success('สำเร็จแล้ว คุณสามารถล็อคอินและตั้งกระทู้ถามได้เลยค่ะ')
         setLoading(false)
         setUsername('')
         setPassword('')
@@ -126,7 +131,7 @@ const RegisterForm = () => {
       }
       catch (error) {
         console.log(error)
-        toast.error('Something went wrong...')
+        toast.error('มีข้อผิดพลาด กรุณาลองใหม่ค่ะ')
         setLoading(false)
       }
     }
@@ -142,29 +147,29 @@ const RegisterForm = () => {
           </div>
           :
           <div style={formDivStyle}>
-            <Button style={registerButtonStyle} color='secondary' onClick={toggle}>{'Sign up'}</Button>
+            <Button style={registerButtonStyle} color='secondary' onClick={toggle}>{'สมัครเลย'}</Button>
             <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
               <ModalBody>
-                <h2 style={textStyle}>Register</h2>
+                <h2 style={textStyle}>สมัครเข้าใช้งาน</h2>
                 <Form onSubmit={submitRegister} >
                   <FormGroup>
-                    <Label style={labelStyle}>Name:</Label>
+                    <Label style={labelStyle}>ชื่อ:</Label>
                     <Input onChange={handleChangeName} value={name}></Input><br />
-                    <Label style={labelStyle}>Username:</Label>
+                    <Label style={labelStyle}>Username: กรุณากรอกเป็นภาษาอังกฤษ</Label>
                     <Input onChange={handleChangeUsername} value={username}></Input><br />
-                    <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
-                    <Label style={labelStyle}>Confirm Password:</Label>
+                    <Label style={labelStyle}>Password: กรุณากรอกเป็นภาษาอังกฤษ</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
+                    <Label style={labelStyle}>ยืนยัน Password:</Label>
                     <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input><br />
                     <Label style={labelStyle}>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input><br />
-                    <Label style={genderSelectStyle}>Gender:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
-                    <Label style={labelStyle}>Date of Birth:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input><br />
+                    <Label style={genderSelectStyle}>เพศ:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
+                    <Label style={labelStyle}>วันเกิด:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input><br />
                   </FormGroup>
                 </Form>
               </ModalBody>
               <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
               <ModalFooter>
-                <Button type='submit' color='secondary' onClick={submitRegister}>Sign Up</Button>
-                <Button onClick={toggle}>Cancel</Button>
+                <Button style={{ fontFamily: 'Kanit' }} type='submit' color='primary' onClick={submitRegister}>สมัครเลย</Button>
+                <Button style={{ fontFamily: 'Kanit' }} onClick={toggle}>ยกเลิก</Button>
               </ModalFooter>
             </Modal></div>
       }

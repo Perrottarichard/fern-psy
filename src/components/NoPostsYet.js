@@ -10,14 +10,14 @@ const postButtonDivStyle = {
   textAlign: 'center',
   marginTop: '50px',
   marginBottom: '50px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontSize: '30px'
 }
 const postButtonStyle = {
   borderColor: '#343a40',
   borderWidth: '3px',
   borderStyle: 'solid',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   backgroundColor: '#288046'
 }
 
@@ -25,8 +25,8 @@ const postButtonStyle = {
 const NoPostsYet = () => {
 
   const textStyle = {
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: 'Kanit',
+    fontWeight: '400',
     textAlign: 'center',
     marginTop: '100px'
   }
@@ -38,12 +38,14 @@ const NoPostsYet = () => {
           style={{ fontSize: '100px', color: '#343a40' }}
         >
         </FontAwesomeIcon>
-        <h1>
-          Hmmm...looks like there aren't any questions with that tag yet
-      </h1>
+        <h3 style={{ marginTop: '20px', fontFamily: 'Kanit' }}>
+          อ๊ะ ยังไม่มีใครตั้งกระทู้ถามในหัวข้อนี้เลยค่ะ อยากให้มีคนมาตั้งกระทู้ถามเป็นคนแรกจัง
+        </h3>
+
+        <br />
         <div style={postButtonDivStyle}>
-          You can submit the first one!<br />
-          <Link to='/addpost'><Button style={postButtonStyle} >Submit a Post</Button></Link>
+          ตั้งกระทู้ถามเป็นคนแรก<br />
+          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
         </div>
       </div>
     </Container>

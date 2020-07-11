@@ -3,27 +3,28 @@ import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faUserFriends, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers } from '@fortawesome/free-solid-svg-icons';
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay'
 
 
 const tagOptions = [
-  { tag: 'sex', backgroundColor: '#ff5c4d', icon: faVenusMars },
-  { tag: 'dating', backgroundColor: '#288046', icon: faGlassCheers },
+  { tag: 'รวมทุกหัวข้อ', backgroundColor: '#8e2bff', icon: faGlobe },
+  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
+  { tag: 'การออกเดท', backgroundColor: '#288046', icon: faGlassCheers },
   { tag: 'relationships', backgroundColor: '#ffa64d', icon: faHeartBroken },
   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },
-  { tag: 'friendship', backgroundColor: '#5050ff', icon: faUserFriends },
-  { tag: 'depression', backgroundColor: '#343a40', icon: faSadTear },
-  { tag: 'anxiety', backgroundColor: '#5e320f', icon: faFlushed },
-  { tag: 'bipolar', backgroundColor: '#f347ff', icon: faTheaterMasks },
-  { tag: 'career', backgroundColor: '#8e2bff', icon: faBusinessTime },
-  { tag: 'mental health', backgroundColor: '#1e45a8', icon: faBrain },
+  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: faUsers },
+  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: faSadTear },
+  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: faFlushed },
+  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: faTheaterMasks },
+  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: faBusinessTime },
+  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: faBrain },
   { tag: 'bullying', backgroundColor: '#5e320f', icon: faAngry },
-  { tag: 'family', backgroundColor: '#ffa64d', icon: faHome },
-  { tag: 'other', backgroundColor: '#707571', icon: faQuestionCircle },
-  { tag: 'addiction', backgroundColor: '#40073d', icon: faSyringe },
+  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: faHome },
+  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: faQuestionCircle },
+  { tag: 'การเสพติด', backgroundColor: '#40073d', icon: faSyringe },
 
 ]
 const chooseTagColor = (passed) => {
@@ -56,7 +57,7 @@ const chooseTagIcon = (passed) => {
 }
 const textStyle = {
   color: 'black',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontSize: '16px',
   textAlign: 'center'
 }
@@ -71,28 +72,30 @@ const postButtonDivStyle = {
   textAlign: 'center',
   marginTop: '50px',
   marginBottom: '50px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontSize: '30px'
 }
 const postButtonStyle = {
   borderColor: '#343a40',
   borderWidth: '3px',
   borderStyle: 'solid',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   backgroundColor: '#288046'
 }
 
 const ForumLandingPage = (props) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const tag = useSelector(state => state.forum)
-  console.log(tag)
 
   const { forumAnswered, activeUser } = props
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))
-    history.push(`/forum/${t.tag}`)
+    if (t.tag === 'รวมทุกหัวข้อ') {
+      history.push(`/allquestions`)
+    } else {
+      history.push(`/forum/${t.tag}`)
+    }
   }
   return (
     <div>
@@ -117,8 +120,8 @@ const ForumLandingPage = (props) => {
       </Container >
       <hr />
       <div style={postButtonDivStyle}>
-        Have a question?<br />
-        <Link to='/addpost'><Button style={postButtonStyle}>Submit a Post</Button></Link>
+        ตั้งกระทู้ถาม<br />
+        <Link to='/addpost'><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
       <br />
     </div>

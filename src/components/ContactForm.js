@@ -11,14 +11,14 @@ import { toast } from 'react-toastify';
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontVariant: 'small-caps'
 }
 const formDivStyle = {
   display: 'block',
   textAlign: 'center',
   marginTop: '50px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
 }
 const formStyle = {
   width: '90%',
@@ -28,14 +28,14 @@ const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontVariant: 'small-caps'
 }
 const contactButtonStyle = {
   float: 'center',
   width: '200px',
   marginBottom: '20px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   backgroundColor: '#288046'
 }
 
@@ -88,18 +88,18 @@ const ContactForm = () => {
         }) => (
             <Container style={formDivStyle}>
               <p style={{
-                fontFamily: 'Montserrat'
-              }}> We understand if you don't want to post on the forum just yet.  Instead, you can use this form to contact Fern privately, or add her on social media.</p>
+                fontFamily: 'Kanit'
+              }}> ไม่อยากให้คนอื่นเห็นคำถามของคุณใช่ไหม? ส่งข้อความส่วนตัวถามได้เหมือนกันค่ะ</p>
               <div id='NavBarText'>
                 <a href="mailto:furbynilu@gmail.com"> <FontAwesomeIcon id='fa-contact-form' icon={faEnvelopeSquare} />
                 </a>
                 <a href="https://www.facebook.com/NiluAcounselor"> <FontAwesomeIcon id='fa-contact-form' icon={faFacebookSquare} /></a>
               </div>
               <br />
-              <h3 style={textStyle}>Enter your information: </h3>
+              <h5 style={textStyle}>กรอกแบบฟอร์มเพื่อส่งคำถาม</h5>
               <Form style={formStyle} onSubmit={handleSubmit} className='form-ui'>
                 <FormGroup style={{ marginBottom: '0' }}>
-                  <Label style={labelStyle} for='name'>Name</Label>
+                  <Label style={labelStyle} for='name'>ชื่อของคุณ</Label>
                   <Input
                     type="Name"
                     name="name"
@@ -125,7 +125,7 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.LINE}
                   /><br />
-                  <Label style={labelStyle} for='message'>Message</Label>
+                  <Label style={labelStyle} for='message'>ข้อความ</Label>
                   <Input
                     placeholder='I have a question about...'
                     type="Message"
@@ -136,7 +136,7 @@ const ContactForm = () => {
                   /><br />
                 </FormGroup>
                 <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
-                <Button style={contactButtonStyle} type='submit' >Send</Button><br />
+                <Button style={contactButtonStyle} type='submit' >ส่งข้อความ</Button><br />
               </Form>
             </Container>
           )}

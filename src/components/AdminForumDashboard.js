@@ -40,7 +40,7 @@ const AdminForumDashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {
+          {(forum.pending) ?
             forum.pending.map(c => c.isAnswered === false ?
               <tr key={c._id}>
                 <td style={{ fontFamily: 'Montserrat' }}><a href={`mailto:${c.user.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} /></a></td>
@@ -48,7 +48,7 @@ const AdminForumDashboard = () => {
                 <td style={{ fontFamily: 'Montserrat' }}>{c.question}</td>
                 <td><Button style={buttonStyle} onClick={() => setAnswering(c)}>Answer</Button></td>
               </tr>
-              : null)
+              : null) : null
           }
         </tbody>
       </Table>

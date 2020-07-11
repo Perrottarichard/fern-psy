@@ -11,7 +11,7 @@ import RegisterForm from './RegisterForm'
 
 const textStyle = {
   textAlign: 'center',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   color: 'black'
 }
 const formDivStyle = {
@@ -26,14 +26,14 @@ const labelStyle = {
   float: 'left',
   marginBottom: '0px',
   padding: '0px',
-  fontFamily: 'Montserrat',
-  color: 'white'
+  fontFamily: 'Kanit',
+  color: 'black'
 }
 const loginButtonStyle = {
   float: 'center',
   width: '200px',
   backgroundColor: '#288046',
-  fontFamily: 'Montserrat'
+  fontFamily: 'Kanit'
 }
 
 const LoginForm = (props) => {
@@ -52,7 +52,7 @@ const LoginForm = (props) => {
   const submitLogin = async event => {
     event.preventDefault()
     if (!username || !password) {
-      toast.warn('You must enter a username and password')
+      toast.warn('กรุณาใส่ username และ password')
     }
     else {
       try {
@@ -63,7 +63,7 @@ const LoginForm = (props) => {
         )
         forumService.setToken(user.token)
         dispatch(setUser(user))
-        toast.info(`Welcome back ${user.username}`)
+        toast.info(`ยินดีต้อนรับ คุณ ${user.username}`)
         setLoggedIn(true)
         setUsername('')
         setPassword('')
@@ -72,30 +72,30 @@ const LoginForm = (props) => {
       catch (error) {
         console.log(error.message)
         if (error.message.includes('401')) {
-          toast.error('Check your username and password again')
+          toast.error('กรุณาตรวจสอบความถูกต้องของ username และ password')
         } else {
-          toast.error('Something went wrong...')
+          toast.error('มีข้อผิดพลาด')
         }
       }
     }
   }
   return (
     <div className='container' id='login-form'>
-      <h2 style={textStyle}>Login</h2>
+      <h2 style={textStyle}>ล็อคอิน</h2>
       <div id='form-div' style={formDivStyle}>
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>
             <Label style={labelStyle}>Username:</Label>
             <Input onChange={handleChangeUser} value={username}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <Button style={loginButtonStyle} id='submit-login' type="submit">Enter</Button>
+            <Button style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</Button>
           </FormGroup>
         </Form>
       </div>
       <br />
       <hr />
       <div id='no-account-div'>
-        <p style={textStyle}>Don't have an account? </p>
+        <p style={textStyle}>ยังไม่มีแอคเคาท์ คลิก</p>
         <RegisterForm />
       </div>
     </div>

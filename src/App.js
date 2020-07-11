@@ -81,7 +81,7 @@ const App = () => {
           <Route path="/addpost">
             <ForumPostMain activeUser={activeUser} />
           </Route>
-          <Route path="/forum/all">
+          <Route path="/allquestions">
             <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
           <Route path="/login">

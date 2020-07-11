@@ -9,22 +9,21 @@ import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap
 // import SingleTagDisplay from './SingleTagDisplay';
 
 const tagColorOptions = [
-  { tag: 'sex', backgroundColor: '#ff5c4d' },
-  { tag: 'dating', backgroundColor: '#288046' },
+
+  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
+  { tag: 'การออกเดท', backgroundColor: '#288046' },
   { tag: 'relationships', backgroundColor: '#ffa64d' },
   { tag: 'lgbt', backgroundColor: '#ff4da6' },
-  { tag: 'friendship', backgroundColor: '#5050ff' },
-  { tag: 'depression', backgroundColor: '#343a40' },
-  { tag: 'anxiety', backgroundColor: '#5e320f' },
-  { tag: 'bipolar', backgroundColor: '#f347ff' },
-  { tag: 'career', backgroundColor: '#8e2bff' },
-  { tag: 'mental health', backgroundColor: '#1e45a8' },
+  { tag: 'เพื่อน', backgroundColor: '#5050ff' },
+  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40' },
+  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f' },
+  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff' },
+  { tag: 'การทำงาน', backgroundColor: '#8e2bff' },
+  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8' },
   { tag: 'bullying', backgroundColor: '#5e320f' },
-  { tag: 'family', backgroundColor: '#ffa64d' },
-  { tag: 'peer pressure', backgroundColor: '#288046' },
-  { tag: 'parenting', backgroundColor: '#6da870' },
-  { tag: 'other', backgroundColor: '#707571' },
-  { tag: 'illegal drugs', backgroundColor: '#40073d' },
+  { tag: 'ครอบครัว', backgroundColor: '#ffa64d' },
+  { tag: 'อื่นๆ', backgroundColor: '#707571' },
+  { tag: 'การเสพติด', backgroundColor: '#40073d' },
 
 ]
 const chooseTagColor = (passed) => {
@@ -44,7 +43,7 @@ const chooseTagColor = (passed) => {
   }
 }
 const cardHeaderStyle = {
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontSize: '14px',
   backgroundColor: '#343a40',
   color: 'white',
@@ -54,7 +53,7 @@ const cardHeaderStyle = {
 }
 const cardBodyStyleQ = {
   fontSize: '14px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
@@ -62,7 +61,7 @@ const cardBodyStyleQ = {
 }
 const cardBodyStyleA = {
   fontSize: '14px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   padding: '10px',
   backgroundColor: '#f0e1df' //super light pink
 }
@@ -82,16 +81,18 @@ const smallStyle = {
   color: 'white'
 }
 const postButtonDivStyle = {
+  display: 'block',
+  textAlign: 'center',
   marginTop: '50px',
   marginBottom: '50px',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontSize: '30px'
 }
 const postButtonStyle = {
   borderColor: '#343a40',
   borderWidth: '3px',
   borderStyle: 'solid',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   backgroundColor: '#288046'
 }
 // const likeButtonStyle = {
@@ -138,8 +139,8 @@ const ForumDisplayAll = (props) => {
           </Card>
         </div>)}
       <div style={postButtonDivStyle}>
-        Have a question?<br />
-        <Link to='/addpost'><Button style={postButtonStyle} block>Submit a Post</Button></Link>
+        ตั้งกระทู้ถาม<br />
+        <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
       </div>
     </Container>
   )

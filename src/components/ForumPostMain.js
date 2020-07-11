@@ -9,7 +9,7 @@ import { addQuestion } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
 
 const labelStyle = {
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
   fontVariant: 'small-caps',
   fontWeight: 400,
   fontSize: '1.5rem',
@@ -20,7 +20,7 @@ const buttonStyle = {
   marginTop: '20px',
   width: '200px',
   backgroundColor: '#288046',
-  fontFamily: 'Montserrat',
+  fontFamily: 'Kanit',
 }
 
 // const tagOptions = [
@@ -41,20 +41,20 @@ const buttonStyle = {
 // ]
 
 const tagOptions = [
-  { value: 'ปัญหาเรื่องเพศ', label: 'ปัญหาเรื่องเพศ' },
-  { value: 'การออกเดท', label: 'การออกเดท' },
-  { value: 'การเสพติด', label: 'การเสพติด' },
-  { value: 'ความสัมพันธ์กับเพื่อน', label: 'ความสัมพันธ์กับเพื่อน' },
+  { value: 'ปัญหาเรื่องเพศ', label: 'ปัญหาเรื่องเพศ' },  //sex
+  { value: 'การออกเดท', label: 'การออกเดท' }, //dating
+  { value: 'การเสพติด', label: 'การเสพติด' }, //addiction
+  { value: 'เพื่อน', label: 'เพื่อน' }, //friendship
   { value: 'lgbt', label: 'LGBT' },
-  { value: 'โรคซึมเศร้า', label: 'โรคซึมเศร้า' },
-  { value: 'ความวิตกกังวล', label: 'ความวิตกกังวล' },
-  { value: 'ไบโพลาร์', label: 'ไบโพลาร์' },
+  { value: 'โรคซึมเศร้า', label: 'โรคซึมเศร้า' }, //depression
+  { value: 'ความวิตกกังวล', label: 'ความวิตกกังวล' }, //anxiety
+  { value: 'ไบโพลาร์', label: 'ไบโพลาร์' }, //bipolar
   { value: 'relationships', label: 'Relationships' },
-  { value: 'การทำงาน', label: 'การทำงาน' },
-  { value: 'สุขภาพจิต', label: 'สุขภาพจิต' },
+  { value: 'การทำงาน', label: 'การทำงาน' }, //career
+  { value: 'สุขภาพจิต', label: 'สุขภาพจิต' }, //mental health
   { value: 'bullying', label: 'Bullying' },
-  { value: 'ครอบครัว', label: 'ครอบครัว' },
-  { value: 'อื่นๆ', label: 'อื่นๆ' }
+  { value: 'ครอบครัว', label: 'ครอบครัว' }, //family
+  { value: 'อื่นๆ', label: 'อื่นๆ' } //other
 ]
 const ForumPostMain = (props) => {
   const { activeUser } = props
@@ -126,13 +126,13 @@ const ForumPostMain = (props) => {
           placeholder='คำถามของฉันคือ'
           onChange={handleTitleChange}
           value={title}
-          style={{ marginBottom: '20px', fontFamily: 'Montserrat' }}
+          style={{ marginBottom: '20px', fontFamily: 'Kanit' }}
         />
       </div>
 
       <div id='forum-question-div'>
         <Label style={labelStyle}>Question:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>ชื่อที่คุณใช้ล็อคอินจะไม่ปรากฏในคำถามของคุณ คุณสามารถถามได้โดยไม่ต้องกังวลเรื่องของความเป็นส่วนตัว เนื่องจากตัวตนของคุณจะไม่ถูกเปิดเผยต่อสาธารณะ และจะมีการรักษาความลับของคุณตามจรรยาบรรณของนักจิตวิทยา</p>
+        <p style={{ fontFamily: 'Kanit' }}>ชื่อที่คุณใช้ล็อคอินจะไม่ปรากฏในคำถามของคุณ คุณสามารถถามได้โดยไม่ต้องกังวลเรื่องของความเป็นส่วนตัว เนื่องจากตัวตนของคุณจะไม่ถูกเปิดเผยต่อสาธารณะ และจะมีการรักษาความลับของคุณตามจรรยาบรรณของนักจิตวิทยา</p>
         {/* */}
         <Input
           type='textarea'
@@ -140,16 +140,16 @@ const ForumPostMain = (props) => {
           onChange={handleContentChange}
           value={question}
           onSubmit={handleEditorSubmit}
-          style={{ fontFamily: 'Montserrat' }}
+          style={{ fontFamily: 'Kanit' }}
         />
         <Label style={labelStyle}>Tags:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>กรุณาเลือกแท็กจำนวนสองแท็ก</p>
+        <p style={{ fontFamily: 'Kanit' }}>กรุณาเลือกแท็กจำนวนสองแท็ก</p>
         <Select
           options={tagOptions}
           onChange={handleTagChange}
           closeMenuOnSelect={false}
           components={animatedTags}
-          style={{ fontFamily: 'Montserrat' }}
+          style={{ fontFamily: 'Kanit' }}
           defaultValue={[]}
           isMulti>
         </Select>

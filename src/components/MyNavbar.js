@@ -57,7 +57,7 @@ const MyNavbar = (props) => {
             (!activeUser || !loggedIn)
               ?
               <div id='nav-login-button'>
-                <Link to="/login"><Button outline color='secondary' size='lg'>Login</Button></Link>
+                <Link to="/login"><Button outline color='secondary' size='sm'>Login</Button></Link>
               </div>
               :
               null
