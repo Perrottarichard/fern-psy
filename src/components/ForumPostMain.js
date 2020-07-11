@@ -7,6 +7,8 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComments } from '@fortawesome/free-solid-svg-icons'
 
 const labelStyle = {
   fontFamily: 'Kanit',
@@ -18,7 +20,10 @@ const labelStyle = {
 }
 const buttonStyle = {
   marginTop: '20px',
-  width: '200px',
+  width: '150px',
+  borderColor: '#343a40',
+  borderWidth: '3px',
+  borderStyle: 'solid',
   backgroundColor: '#288046',
   fontFamily: 'Kanit',
 }
@@ -119,6 +124,9 @@ const ForumPostMain = (props) => {
   }
   return (
     <Container>
+      <div style={{ display: 'block', textAlign: 'center', fontSize: '100px', color: '#343a40', marginBottom: '0px' }}>
+        <FontAwesomeIcon icon={faComments} />
+      </div>
       <div id='forum-title-div'>
         <Label style={labelStyle}>Title:</Label>
         {/* <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p> */}

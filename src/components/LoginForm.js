@@ -67,7 +67,7 @@ const LoginForm = (props) => {
         setLoggedIn(true)
         setUsername('')
         setPassword('')
-        history.push('/forum')
+        history.push('/')
       }
       catch (error) {
         console.log(error.message)

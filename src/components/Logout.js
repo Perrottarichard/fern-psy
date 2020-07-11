@@ -13,9 +13,9 @@ const Logout = (props) => {
   const logout = () => {
     window.localStorage.clear()
     setLoggedIn(false)
-    toast.info('Logged out')
+    toast.info('ออกจากระบบสำเร็จแล้ว')
     dispatch(clearUser())
-    history.push('/forum')
+    history.push('/')
   }
   return (
     <div id='nav-logout-button'>
