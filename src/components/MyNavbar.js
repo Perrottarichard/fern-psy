@@ -24,12 +24,12 @@ const MyNavbar = (props) => {
   return (
     <div>
       <Navbar color='dark' id="navbar" dark expand='md' >
-        <NavbarBrand id='navbrand' href="/forum">Fern's Counseling</NavbarBrand>
+        <NavbarBrand id='navbrand' href="/">Fern's Counseling</NavbarBrand>
         <NavbarToggler id="dropdownmenu" onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/forum">Forum</NavLink>
+              <NavLink tag={Link} id="NavLink" to="/">Home</NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} id="NavLink" to="/about">About</NavLink>

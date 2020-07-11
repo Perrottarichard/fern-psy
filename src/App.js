@@ -75,7 +75,7 @@ const App = () => {
           <Route path="/forum/:tag">
             <SingleTagDisplay activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
-          <Route exact path="/forum">
+          <Route exact path="/">
             <ForumLandingPage activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
           <Route path="/addpost">
