@@ -47,21 +47,15 @@ function About() {
         <p>
           และ..มีเมตตาต่อกันและกันนะคะ
         </p>
-        <p>Education:
-
-        </p>
+        <h5>Education:
+        </h5>
         <p>มหาวิทยาลัยเชียงใหม่
-        วิทยาศาสตร์มหาบัณฑิต สาขาจิตวิทยาการปรึกษา (2557 - 2559)
-          </p>
-        <br />
+        วิทยาศาสตร์มหาบัณฑิต สาขาจิตวิทยาการปรึกษา (2557 - 2559)<br />
+        Chiangmai University
+          Master of Science in Counseling Psychology (2014 - 2016)</p>
         <p>
-          Chiangmai University
-          Master of Science in Counseling Psychology (2014 - 2016)
           มหาวิทยาลัยเชียงใหม่
-          วิทยาศาสตร์บัณฑิต สาขาจิตวิทยา (2544 - 2547)
-          </p>
-        <br />
-        <p>
+          วิทยาศาสตร์บัณฑิต สาขาจิตวิทยา (2544 - 2547) <br />
           Chiangmai University
           Bachelor of Science in Counseling Psychology (2001 - 2004)
           </p>
