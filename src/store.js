@@ -10,12 +10,18 @@ import contactReducer from './reducers/contactReducer'
 import userInfoForAdminReducer from './reducers/userInfoForAdminReducer'
 
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   forum: forumReducer,
   activeUser: activeUserReducer,
   contact: contactReducer,
   userInfoForAdmin: userInfoForAdminReducer
 })
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+  return appReducer(state, action)
+}
 
 const persistConfig = {
   key: 'root',

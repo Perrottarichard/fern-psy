@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
-import { Container, Card, Button, CardHeader, CardBody, Badge, InputGroup, InputGroupAddon, Input } from 'reactstrap';
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { Container, Card, Button, CardHeader, CardBody, Badge, Form, InputGroupAddon, Input, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faComments, faHeart } from '@fortawesome/free-solid-svg-icons';
 import NoPostsYet from './NoPostsYet';
-import { addComment } from '../reducers/forumReducer'
+import { addComment, heart } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
-// import { initializeForumAnswered } from '../reducers/forumReducer'
+import { initializeForumAnswered } from '../reducers/forumReducer'
 
 const tagColorOptions = [
   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -41,9 +41,12 @@ const chooseTagColor = (passed) => {
     }
   }
 }
+const commentDivStyle = {
+  display: 'block'
+}
 const cardHeaderStyle = {
   fontFamily: 'Kanit',
-  fontSize: '14px',
+  fontSize: '18px',
   backgroundColor: '#343a40',
   color: 'white',
   marginTop: '10px',
@@ -51,28 +54,29 @@ const cardHeaderStyle = {
   paddingBottom: '6px'
 }
 const cardBodyStyleQ = {
-  fontSize: '14px',
+  fontSize: '16px',
   fontFamily: 'Kanit',
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
-  backgroundColor: 'white' //super light green
+  backgroundColor: 'white'
 }
 const cardBodyStyleA = {
-  fontSize: '14px',
+  fontSize: '16px',
   fontFamily: 'Kanit',
   padding: '10px',
   backgroundColor: '#f0e1df' //super light pink
 }
 const cardBodyStyleC = {
-  fontSize: '14px',
+  fontSize: '12px',
   fontFamily: 'Kanit',
   padding: '10px',
-  backgroundColor: '#ccdcff' //super light pink
+  backgroundColor: '#e6eeff' //super light blue
 }
 const smallStyle = {
   float: 'right',
-  color: 'white'
+  color: 'white',
+  marginLeft: '10px'
 }
 
 const commentButtonStyle = {
@@ -101,17 +105,42 @@ const SinglePostDisplay = () => {
   // const dispatch = useDispatch()
   // let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
 
-  // const chosenFilter = useSelector(state => state.forum.tagFilter)
+  const chosenFilter = useSelector(state => state.forum.tagFilter)
   let { id } = useParams()
   const [comment, setComment] = useState('')
   const dispatch = useDispatch()
   const post = useSelector(state => state.forum.answered.find(p => p._id === id))
+  const [sentHeart, setSentHeart] = useState(null)
 
-  const submitComment = (comment) => {
+  useEffect(() => {
+    dispatch(initializeForumAnswered())
+  }, [dispatch])
+
+  const submitComment = async (event) => {
+    event.preventDefault()
     let postToModifyId = post
-    dispatch(addComment(comment, postToModifyId))
-    setComment('')
-    toast.success('Your comment is pending approval')
+    try {
+      dispatch(addComment(comment, postToModifyId))
+      setComment('')
+
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong...')
+    }
+  }
+  const submitHeart = async () => {
+    let postToModify = post
+    try {
+      if (sentHeart === null) {
+        dispatch(heart(postToModify))
+        setSentHeart(post._id)
+      } else {
+        toast.warn('You already sent a heart for this post')
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong...')
+    }
   }
   const handleCommentChange = (event) => {
     setComment(event.target.value)
@@ -124,10 +153,19 @@ const SinglePostDisplay = () => {
   } else
     return (
       <Container>
-        <div key={post._id}>
+        <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
+          <Card body>
+            <CardBody>
+              <FontAwesomeIcon icon={faHeart} style={{ fontSize: '50px', color: '#ff99ff' }} />
+            </CardBody>
+            <Button onClick={() => submitHeart()}>Send a heart to show your support</Button>
+          </Card>
+        </div>
+        <div key={post._id} style={commentDivStyle}>
           <Card >
-            <CardHeader style={cardHeaderStyle} tag="h5">{post.title}
-              <small className="text-muted" style={smallStyle}>asked on {post.date.slice(0, 10)}</small>
+            <CardHeader style={cardHeaderStyle}>{post.title}
+              <span style={{ float: 'right' }}><FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '5px' }} />{post.likes}</span>
+              <small className="text-muted" style={smallStyle}>{post.date.slice(0, 10)}</small>
             </CardHeader>
             <CardBody style={cardBodyStyleQ}>
               <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
@@ -137,10 +175,14 @@ const SinglePostDisplay = () => {
               <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
               {post.answer}
             </CardBody>
-            {(post.comments.length > 0) ? post.comments.map(c =>
+            {(post.comments.length > 0) ? post.comments.sort((a, b) => new Date(b.date) - new Date(a.date)).map(c =>
               <CardBody key={c._id} style={cardBodyStyleC}>
-                <FontAwesomeIcon icon={faComments} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {c.content} {c.date}
+                <span>
+                  {/* {c.user.username} */}
+                  <FontAwesomeIcon icon={faComments} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                  {c.content}
+                </span>
+                <small className='text-muted' style={{ float: 'right' }}>{c.date.toString().slice(0, 10)}</small>
               </CardBody>) : null}
             {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
             <div style={{ display: 'block' }}>
@@ -152,12 +194,11 @@ const SinglePostDisplay = () => {
           <Link to='/forum/:tag'><Button style={postButtonStyle} >Go back</Button></Link>
         </div> */}
 
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <Button style={commentButtonStyle} onClick={() => submitComment(comment)}>Comment</Button>
-          </InputGroupAddon>
-          <Input onChange={handleCommentChange} />
-        </InputGroup>
+        <Form onSubmit={submitComment}>
+          <Label>Add a Comment</Label>
+          <Input type='textarea' onChange={handleCommentChange} value={comment} />
+          <Button type='submit' style={commentButtonStyle} >Comment</Button>
+        </Form>
       </Container>
     )
 }

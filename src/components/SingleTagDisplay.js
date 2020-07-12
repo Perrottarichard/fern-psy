@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import NoPostsYet from './NoPostsYet';
-// import { initializeForumAnswered } from '../reducers/forumReducer'
+import { initializeForumAnswered } from '../reducers/forumReducer'
 
 const tagColorOptions = [
   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -87,10 +87,15 @@ const postButtonStyle = {
 
 const SingleTagDisplay = () => {
   // const { activeUser, forumAnswered } = props
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
 
   const chosenFilter = useSelector(state => state.forum.tagFilter)
+
+  useEffect(() => {
+    dispatch(initializeForumAnswered())
+  }, [dispatch])
+
   if (tagged.length === 0) {
     return (
       <NoPostsYet />
@@ -103,7 +108,9 @@ const SingleTagDisplay = () => {
             <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <Card >
                 <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-                  <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
+                  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
+                  <small>{f.likes}</small>
+                  <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
                 </CardHeader>
                 <CardBody style={cardBodyStyleQ}>
 

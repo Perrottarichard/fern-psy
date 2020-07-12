@@ -3,7 +3,7 @@ const activeUserReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
       return action.data
-    case 'CLEAR_USER':
+    case 'USER_LOGOUT':
       return action.data
     default:
       return state
@@ -18,7 +18,7 @@ export const setUser = data => {
 }
 export const clearUser = () => {
   return {
-    type: 'CLEAR_USER',
+    type: 'USER_LOGOUT',
     data: null
   }
 }

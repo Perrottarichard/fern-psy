@@ -10,6 +10,8 @@ const getPending = async () => {
   const response = await axios.get(`${baseUrl}/pending`)
   return response.data
 }
+
+
 const getAnswered = async () => {
   const response = await axios.get(`${baseUrl}/answered`)
   return response.data
@@ -27,8 +29,13 @@ const update = async (newObject) => {
   const response = await axios.put(`${baseUrl}/${newObject._id}`, newObject)
   return response.data
 }
+
+
 const addComment = async (comment, postToModify) => {
-  const response = await axios.put(`${baseUrl}/addcomment/${postToModify._id}`, { postToModify, comment })
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.put(`${baseUrl}/addcomment/${postToModify._id}`, { postToModify, comment }, config)
   return response.data
 }
 const remove = async question => {
@@ -39,10 +46,10 @@ const remove = async question => {
   return response.data
 }
 
-const like = async (toUpdate) => {
-  const id = toUpdate.id
-  const response = await axios.put(`${baseUrl}/${id}`, toUpdate)
+const heartUp = async (toUpdate) => {
+  const id = toUpdate._id
+  const response = await axios.put(`${baseUrl}/${id}/heart`, toUpdate)
   return response.data
 }
 
-export default { getPending, getAnswered, create, update, setToken, remove, like, addComment }
+export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment }
