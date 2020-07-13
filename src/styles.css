@@ -171,7 +171,7 @@ background-color: #343a40
 }
 .heart-icon {
     font-size: 100px;
-    animation-duration: 1s;
+    animation-duration: 2s;
     animation-name: pulse;
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1;
