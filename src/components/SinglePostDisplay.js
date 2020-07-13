@@ -142,7 +142,7 @@ const SinglePostDisplay = (props) => {
         if (sentHeart === null) {
           setTimeout(() => {
             setPulseHeart('heart-icon')
-          }, 5000);
+          }, 2000);
           setSentHeart(post._id)
           dispatch(heart(postToModify))
         } else {
