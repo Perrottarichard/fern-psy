@@ -48,7 +48,7 @@ const remove = async question => {
 
 const heartUp = async (toUpdate) => {
   const id = toUpdate._id
-  const response = await axios.put(`${baseUrl}/${id}/heart`, toUpdate)
+  const response = await axios.put(`${baseUrl}/heart/${id}`, toUpdate)
   return response.data
 }
 

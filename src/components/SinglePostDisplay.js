@@ -54,7 +54,7 @@ const cardHeaderStyle = {
   paddingBottom: '6px'
 }
 const cardBodyStyleQ = {
-  fontSize: '16px',
+  fontSize: '18px',
   fontFamily: 'Kanit',
   padding: '10px',
   textAlign: 'left',
@@ -80,7 +80,8 @@ const smallStyle = {
 }
 
 const commentButtonStyle = {
-  backgroundColor: '#343a40'
+  backgroundColor: '#343a40',
+  fontFamily: 'Kanit'
 }
 // const postButtonDivStyle = {
 //   display: 'block',
@@ -100,8 +101,8 @@ const commentButtonStyle = {
 // }
 
 
-const SinglePostDisplay = () => {
-  // const { activeUser, forumAnswered } = props
+const SinglePostDisplay = (props) => {
+  const { activeUser } = props
   // const dispatch = useDispatch()
   // let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
 
@@ -111,36 +112,47 @@ const SinglePostDisplay = () => {
   const dispatch = useDispatch()
   const post = useSelector(state => state.forum.answered.find(p => p._id === id))
   const [sentHeart, setSentHeart] = useState(null)
+  const [pulseHeart, setPulseHeart] = useState('')
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
   }, [dispatch])
 
-  const submitComment = async (event) => {
-    event.preventDefault()
-    let postToModifyId = post
-    try {
-      dispatch(addComment(comment, postToModifyId))
-      setComment('')
 
-    } catch (error) {
-      console.log(error)
-      toast.error('Something went wrong...')
-    }
+  const submitComment = async (event) => {
+    let postToModifyId = post
+    if (!activeUser) {
+      toast.warn('You must be signed in to post a comment')
+    } else
+      try {
+        dispatch(addComment(comment, postToModifyId))
+        setComment('')
+
+      } catch (error) {
+        console.log(error)
+        toast.error('Something went wrong...')
+      }
   }
   const submitHeart = async () => {
     let postToModify = post
-    try {
-      if (sentHeart === null) {
-        dispatch(heart(postToModify))
-        setSentHeart(post._id)
-      } else {
-        toast.warn('You already sent a heart for this post')
+    if (!activeUser) {
+      toast.warn('You must be signed in to show support')
+    } else
+      try {
+        if (sentHeart === null) {
+          dispatch(heart(postToModify))
+          setPulseHeart('heart-icon')
+          setTimeout(() => {
+            setPulseHeart('')
+          }, 2000);
+          setSentHeart(post._id)
+        } else {
+          toast.warn('You already sent a heart for this post')
+        }
+      } catch (error) {
+        console.log(error)
+        toast.error('Something went wrong...')
       }
-    } catch (error) {
-      console.log(error)
-      toast.error('Something went wrong...')
-    }
   }
   const handleCommentChange = (event) => {
     setComment(event.target.value)
@@ -155,8 +167,8 @@ const SinglePostDisplay = () => {
       <Container>
         <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
           <Card body>
-            <CardBody>
-              <FontAwesomeIcon icon={faHeart} style={{ fontSize: '50px', color: '#ff99ff' }} />
+            <CardBody key={Math.random()}>
+              <FontAwesomeIcon className={pulseHeart} icon={faHeart} style={{ fontSize: '50px', color: 'pink' }} />
             </CardBody>
             <Button onClick={() => submitHeart()}>Send a heart to show your support</Button>
           </Card>
@@ -176,13 +188,13 @@ const SinglePostDisplay = () => {
               {post.answer}
             </CardBody>
             {(post.comments.length > 0) ? post.comments.sort((a, b) => new Date(b.date) - new Date(a.date)).map(c =>
-              <CardBody key={c._id} style={cardBodyStyleC}>
+              <CardBody key={(c._id) ? c._id : Math.random()} style={cardBodyStyleC}>
                 <span>
-                  {/* {c.user.username} */}
+                  {(c.user) ? <em>{c.user.username}{' '}</em> : 'You'}: {" "}
                   <FontAwesomeIcon icon={faComments} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                   {c.content}
                 </span>
-                <small className='text-muted' style={{ float: 'right' }}>{c.date.toString().slice(0, 10)}</small>
+                <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'}</small>
               </CardBody>) : null}
             {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
             <div style={{ display: 'block' }}>
@@ -195,7 +207,7 @@ const SinglePostDisplay = () => {
         </div> */}
 
         <Form onSubmit={submitComment}>
-          <Label>Add a Comment</Label>
+          <Label style={{ fontFamily: 'Kanit', marginTop: '10px' }}>Add a Comment</Label>
           <Input type='textarea' onChange={handleCommentChange} value={comment} />
           <Button type='submit' style={commentButtonStyle} >Comment</Button>
         </Form>

@@ -43,7 +43,6 @@ export const heart = (question) => {
       type: 'HEART',
       data: updatedObject
     })
-    toast.success('Thank you for the support')
   }
 }
 export const answerQuestion = (answer) => {
@@ -60,12 +59,11 @@ export const addComment = (comment, postToModify) => {
   // console.log(comment, postId)
   return async dispatch => {
     await forumService.addComment(comment, postToModify)
-    let now = new Date()
+    // let tempMessage = 'just now'
+    // let tempId = Math.random() * 100 / 16
     let postWithCommentAdded = {
       ...postToModify, comments: postToModify.comments.concat({
         content: comment,
-        date: now,
-        _id: Math.random()
       })
     }
     console.log(postWithCommentAdded)

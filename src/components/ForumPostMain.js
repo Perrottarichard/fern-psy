@@ -1,6 +1,6 @@
 /* eslint-disable no-multi-str */
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Container, Button, Input, Label } from 'reactstrap'
 import Select from 'react-select'
@@ -45,30 +45,37 @@ const buttonStyle = {
 //   { value: 'other', label: 'Other' }
 // ]
 
-const tagOptions = [
-  { value: 'ปัญหาเรื่องเพศ', label: 'ปัญหาเรื่องเพศ' },  //sex
-  { value: 'การออกเดท', label: 'การออกเดท' }, //dating
-  { value: 'การเสพติด', label: 'การเสพติด' }, //addiction
-  { value: 'เพื่อน', label: 'เพื่อน' }, //friendship
-  { value: 'lgbt', label: 'LGBT' },
-  { value: 'โรคซึมเศร้า', label: 'โรคซึมเศร้า' }, //depression
-  { value: 'ความวิตกกังวล', label: 'ความวิตกกังวล' }, //anxiety
-  { value: 'ไบโพลาร์', label: 'ไบโพลาร์' }, //bipolar
-  { value: 'relationships', label: 'Relationships' },
-  { value: 'การทำงาน', label: 'การทำงาน' }, //career
-  { value: 'สุขภาพจิต', label: 'สุขภาพจิต' }, //mental health
-  { value: 'bullying', label: 'Bullying' },
-  { value: 'ครอบครัว', label: 'ครอบครัว' }, //family
-  { value: 'อื่นๆ', label: 'อื่นๆ' } //other
-]
+
 const ForumPostMain = (props) => {
   const { activeUser } = props
   const [question, setQuestion] = useState('')
   const [title, setTitle] = useState('')
-  const [selectedTags, setSelectedTags] = useState([])
   const animatedTags = makeAnimated()
   const dispatch = useDispatch()
   const history = useHistory()
+
+  let chosenFilter = useSelector(state => state.forum.tagFilter)
+  if (chosenFilter === 'รวมทุกหัวข้อ' || chosenFilter === '') {
+    chosenFilter = undefined
+  }
+  const [selectedTags, setSelectedTags] = useState([])
+  const tagOptions = [
+    { value: chosenFilter, label: chosenFilter },
+    { value: 'ปัญหาเรื่องเพศ', label: 'ปัญหาเรื่องเพศ' },  //sex
+    { value: 'การออกเดท', label: 'การออกเดท' }, //dating
+    { value: 'การเสพติด', label: 'การเสพติด' }, //addiction
+    { value: 'เพื่อน', label: 'เพื่อน' }, //friendship
+    { value: 'lgbt', label: 'LGBT' },
+    { value: 'โรคซึมเศร้า', label: 'โรคซึมเศร้า' }, //depression
+    { value: 'ความวิตกกังวล', label: 'ความวิตกกังวล' }, //anxiety
+    { value: 'ไบโพลาร์', label: 'ไบโพลาร์' }, //bipolar
+    { value: 'relationships', label: 'Relationships' },
+    { value: 'การทำงาน', label: 'การทำงาน' }, //career
+    { value: 'สุขภาพจิต', label: 'สุขภาพจิต' }, //mental health
+    { value: 'bullying', label: 'Bullying' },
+    { value: 'ครอบครัว', label: 'ครอบครัว' }, //family
+    { value: 'อื่นๆ', label: 'อื่นๆ' } //other
+  ]
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value)
@@ -76,35 +83,38 @@ const ForumPostMain = (props) => {
   const handleContentChange = (event) => {
     setQuestion(event.target.value)
   }
-  const handleTagChange = (selectedTags) => {
-    setSelectedTags(selectedTags)
+  const handleTagChange = (selected) => {
+    setSelectedTags(selected)
   }
 
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
-    if (!title || !question || !selectedTags) {
+    if (!title || !question) {
       toast.warn('กรุณาใส่หัวข้อคำถาม คำถามของคุณ และโปรดเลือกแท็กสองหัวข้อ', { autoClose: 5000 })
       //'Please make sure you have a title, a question, and two tags'
       // กรุณาใส่หัวข้อคำถาม คำถามของคุณ และโปรดเลือกแท็กสองหัวข้อ
-    } else if (selectedTags.length !== 2) {
-      toast.warn('กรุณาเลือกแท็กสองหัวข้อค่ะ', { autoClose: 5000 })
+    }
+    else if ((selectedTags.length === 0 && !chosenFilter) || selectedTags.length > 3) {
+      toast.warn('You should have 1-3 tags', { autoClose: 5000 })
       //กรุณาเลือกแท็กสองหัวข้อค่ะ
       //'Please select 2 tags'
     }
-    else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
-      toast.warn('Why are you trying to ask yourself a question?')
-    } else if (!activeUser.username) {
+    else if (!activeUser) {
       toast.warn('กรุณาล็อคอินก่อนโพสคำถามค่ะ')
       //กรุณาล็อคอินก่อนโพสคำถามค่ะ
       //'You must be logged in to post to the forum'
       history.push('/login')
+    }
+    else if (activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin') {
+      toast.warn('Why are you trying to ask yourself a question?')
+
     } else {
       const postToAdd = {
         title: title,
         question: question,
         answer: '',
         isAnswered: false,
-        tags: selectedTags.map(t => t.value),
+        tags: chosenFilter === undefined ? selectedTags.map(t => t.value) : chosenFilter.concat(selectedTags.map(t => t.value)),
         likes: 0
       }
       try {
@@ -112,7 +122,7 @@ const ForumPostMain = (props) => {
         setTitle('')
         setQuestion('')
         setSelectedTags([])
-        history.push('/forum')
+        history.push('/')
       } catch (error) {
         toast.error('กรุณาล็อคอินก่อนโพสคำถามค่ะ')
         //กรุณาล็อคอินก่อนโพสคำถามค่ะ
@@ -153,19 +163,20 @@ const ForumPostMain = (props) => {
         <Label style={labelStyle}>Tags:</Label>
         <p style={{ fontFamily: 'Kanit' }}>กรุณาเลือกแท็กจำนวนสองแท็ก</p>
         <Select
+          isClearable={false}
           options={tagOptions}
           onChange={handleTagChange}
           closeMenuOnSelect={false}
           components={animatedTags}
           style={{ fontFamily: 'Kanit' }}
-          defaultValue={[]}
+          defaultValue={chosenFilter !== undefined ? tagOptions[0] : null}
           isMulti>
         </Select>
         <div style={{ display: 'block', textAlign: 'center' }}>
           <Button style={buttonStyle} onClick={handleEditorSubmit}>ส่ง</Button>
         </div>
       </div>
-    </Container>
+    </Container >
   )
 }
 export default ForumPostMain
