@@ -142,9 +142,6 @@ const SinglePostDisplay = (props) => {
         if (sentHeart === null) {
           dispatch(heart(postToModify))
           setPulseHeart('heart-icon')
-          setTimeout(() => {
-            setPulseHeart('')
-          }, 10000);
           setSentHeart(post._id)
         } else {
           toast.warn('You already sent a heart for this post')

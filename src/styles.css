@@ -181,14 +181,14 @@ background-color: #343a40
   @keyframes pulse {
     0%{
     
-    transform: scale(0);
+    transform: scale(1);
     color: pink;
     }
 
   
     50% {
       color: rgb(204, 31, 68);
-      transform: scale(1.6);
+      transform: scale(1.8);
 
     }
     100% {
