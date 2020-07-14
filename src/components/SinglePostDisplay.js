@@ -129,7 +129,7 @@ const SinglePostDisplay = (props) => {
     if (isLoading) {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 1500);
     }
   }, [isLoading])
 
@@ -138,6 +138,8 @@ const SinglePostDisplay = (props) => {
     let postToModifyId = post
     if (activeUser === null) {
       toast.warn('You must be signed in to post a comment')
+    } else if (comment === '') {
+      toast.warn('You forgot to write a comment')
     } else {
       try {
         dispatch(addComment(comment, postToModifyId))
