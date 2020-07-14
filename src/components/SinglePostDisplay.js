@@ -7,6 +7,7 @@ import { faQuestionCircle, faComment, faComments, faHeart } from '@fortawesome/f
 import { addComment, heart } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
 import { initializeForumAnswered } from '../reducers/forumReducer'
+import LoaderButton from './LoaderButton'
 
 const tagColorOptions = [
   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -112,6 +113,7 @@ const SinglePostDisplay = (props) => {
   // let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
   // const chosenFilter = useSelector(state => state.forum.tagFilter)
   let { id } = useParams()
+  const [isLoading, setIsLoading] = useState(false)
   const [comment, setComment] = useState('')
   const dispatch = useDispatch()
   const post = useSelector(state => state.forum.answered.find(p => p._id === id))
@@ -123,6 +125,13 @@ const SinglePostDisplay = (props) => {
     dispatch(initializeForumAnswered())
   }, [dispatch])
 
+  React.useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+  }, [isLoading])
 
   const submitComment = async (event) => {
     event.preventDefault()
@@ -209,7 +218,7 @@ const SinglePostDisplay = (props) => {
         <Form onSubmit={submitComment}>
           <Label style={{ fontFamily: 'Kanit', marginTop: '10px' }}>Add a Comment</Label>
           <Input type='textarea' onChange={handleCommentChange} value={comment} />
-          <Button type='submit' style={commentButtonStyle} >Comment</Button>
+          <LoaderButton isLoading={isLoading} onClick={() => setIsLoading(true)} type='submit' style={commentButtonStyle} >Comment</LoaderButton>
         </Form>
       </div>
     </Container>
