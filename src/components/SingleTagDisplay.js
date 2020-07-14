@@ -86,11 +86,10 @@ const postButtonStyle = {
 
 
 const SingleTagDisplay = () => {
-  // const { activeUser, forumAnswered } = props
   const dispatch = useDispatch()
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
 
-  const chosenFilter = useSelector(state => state.forum.tagFilter)
+  // const chosenFilter = useSelector(state => state.forum.tagFilter)
 
   useEffect(() => {
     dispatch(initializeForumAnswered())

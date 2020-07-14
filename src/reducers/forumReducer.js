@@ -26,8 +26,11 @@ const forumReducer = (state = initialState, action) => {
       return { ...state, pending: state.pending.map(s => s._id === answerId ? changedToAnswered : s) }
     case 'ADD_COMMENT':
       const commentedOnId = action.data._id
-      const postWithComment = action.data
-      return { ...state, answered: state.answered.map(s => s._id === commentedOnId ? postWithComment : s) }
+      console.log(action.data)
+      let postToChange = state.answered.find(p => p._id === commentedOnId)
+      const newPost = { ...postToChange, comments: postToChange.comments.concat(action.data.comments[action.data.comments.length - 1]) }
+      console.log(newPost)
+      return { ...state, answered: state.answered.map(s => s._id === commentedOnId ? newPost : s) }
     case 'DELETE_QUESTION':
       return state.filter(q => q.id !== action.data.id)
     case 'SET_TAG_FILTER':
@@ -47,41 +50,46 @@ export const heart = (question) => {
 }
 export const answerQuestion = (answer) => {
   return async dispatch => {
-    await forumService.update(answer)
-    dispatch({
-      type: 'POST_ANSWER',
-      data: answer
-    })
-    toast.success('You answered a question!')
+    try {
+      await forumService.update(answer)
+      dispatch({
+        type: 'POST_ANSWER',
+        data: answer
+      })
+      toast.success('You answered a question!')
+    } catch (error) {
+      toast.error('Something went wrong')
+    }
   }
 }
 export const addComment = (comment, postToModify) => {
-  // console.log(comment, postId)
   return async dispatch => {
-    await forumService.addComment(comment, postToModify)
-    // let tempMessage = 'just now'
-    // let tempId = Math.random() * 100 / 16
-    let postWithCommentAdded = {
-      ...postToModify, comments: postToModify.comments.concat({
-        content: comment,
+    try {
+      await forumService.addComment(comment, postToModify).then(res => {
+        dispatch({
+          type: 'ADD_COMMENT',
+          data: res
+        })
       })
+
+    } catch (error) {
+      console.log(error)
+      toast.error('Something went wrong')
     }
-    console.log(postWithCommentAdded)
-    dispatch({
-      type: 'ADD_COMMENT',
-      data: postWithCommentAdded
-    })
-    toast.success('You added a comment')
   }
 }
 export const addQuestion = data => {
   return async dispatch => {
-    const newQuestion = await forumService.create(data)
-    dispatch({
-      type: 'NEW_QUESTION',
-      data: newQuestion
-    })
-    toast.success('คำถามของคุณถูกส่งเรียบร้อยแล้ว อดใจรอสักนิด โพสของคุณจะปรากฏหลังได้รับการยืนยันจากแอดมินค่ะ', { autoClose: false })
+    try {
+      const newQuestion = await forumService.create(data)
+      dispatch({
+        type: 'NEW_QUESTION',
+        data: newQuestion
+      })
+      toast.success('คำถามของคุณถูกส่งเรียบร้อยแล้ว อดใจรอสักนิด โพสของคุณจะปรากฏหลังได้รับการยืนยันจากแอดมินค่ะ', { autoClose: false })
+    } catch (error) {
+      toast.error('Something went wrong...')
+    }
   }
 }
 export const deleteQuestion = data => {
@@ -118,4 +126,5 @@ export const setTagFilter = (tag) => {
     data: tag
   }
 }
+
 export default forumReducer

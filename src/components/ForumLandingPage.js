@@ -1,10 +1,10 @@
 import React from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
+// import { faGithub } from '@fortawesome/free-brands-svg-icons'
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay'
@@ -88,11 +88,9 @@ const postButtonStyle = {
   backgroundColor: '#288046'
 }
 
-const ForumLandingPage = (props) => {
+const ForumLandingPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-
-  const { forumAnswered, activeUser } = props
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))

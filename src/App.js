@@ -74,10 +74,10 @@ const App = () => {
             <ContactForm />
           </Route>
           <Route path="/forum/:tag">
-            <SingleTagDisplay activeUser={activeUser} forumAnswered={forumAnswered} />
+            <SingleTagDisplay activeUser={activeUser} />
           </Route>
           <Route exact path="/">
-            <ForumLandingPage activeUser={activeUser} forumAnswered={forumAnswered} />
+            <ForumLandingPage activeUser={activeUser} />
           </Route>
           <Route path="/post/:id">
             <SinglePostDisplay activeUser={activeUser} />
