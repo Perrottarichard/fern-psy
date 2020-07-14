@@ -142,6 +142,7 @@ const SinglePostDisplay = (props) => {
       toast.warn('You forgot to write a comment')
     } else {
       try {
+        setIsLoading(true)
         dispatch(addComment(comment, postToModifyId))
         setComment('')
       } catch (error) {
@@ -220,7 +221,7 @@ const SinglePostDisplay = (props) => {
         <Form onSubmit={submitComment}>
           <Label style={{ fontFamily: 'Kanit', marginTop: '10px' }}>Add a Comment</Label>
           <Input type='textarea' onChange={handleCommentChange} value={comment} />
-          <LoaderButton isLoading={isLoading} onClick={() => setIsLoading(true)} type='submit' style={commentButtonStyle} >Comment</LoaderButton>
+          <LoaderButton isLoading={isLoading} type='submit' style={commentButtonStyle} >Comment</LoaderButton>
         </Form>
       </div>
     </Container>
