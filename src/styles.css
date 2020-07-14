@@ -224,6 +224,7 @@ background-color: #343a40
     border-radius: 6px;
     color: white;
     padding: .5rem 1rem;
+    width: 150px;
   }
   
   .button > div {

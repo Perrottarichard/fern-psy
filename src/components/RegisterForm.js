@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import Recaptcha from 'react-recaptcha'
 import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } from 'reactstrap'
 import Select from 'react-select'
-import SpinningLoader from './SpinningLoader'
 import userService from '../services/userService'
 import { toast } from 'react-toastify'
+import LoaderButton from './LoaderButton'
 
 const textStyle = {
   textAlign: 'center',
@@ -38,10 +38,8 @@ const genderSelectStyle = {
 const RegisterForm = () => {
 
   const [modal, setModal] = useState(false);
-  const [loading, setLoading] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false)
   const [isVerified, setIsVerified] = useState(false)
-
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -50,7 +48,18 @@ const RegisterForm = () => {
   const [selectedGender, setSelectedGender] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState('')
 
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
+    }
+  }, [isLoading])
+
   const toggle = () => setModal(!modal);
+
+
 
   const genderOptions = [
     { value: 'ชาย', label: 'ชาย' },
@@ -114,15 +123,14 @@ const RegisterForm = () => {
     else if (!isVerified) {
       toast.warn('กรุณาเช็คในกล่องยืนยันว่าคุณไม่ใช่โปรแกรมหุ่นยนต์')
     }
-
     else {
-      //close modal
-      toggle()
+      setIsLoading(true)
+      setTimeout(() => {
+        toggle()
+      }, 1500);
       try {
-        setLoading(true)
         await userService.registerUser({ name, username, password, email, selectedGender, dateOfBirth })
         toast.success('สำเร็จแล้ว คุณสามารถล็อคอินและตั้งกระทู้ถามได้เลยค่ะ')
-        setLoading(false)
         setUsername('')
         setPassword('')
         setConfirmPassword('')
@@ -134,47 +142,38 @@ const RegisterForm = () => {
       catch (error) {
         console.log(error)
         toast.error('มีข้อผิดพลาด กรุณาลองใหม่ค่ะ')
-        setLoading(false)
       }
     }
   }
 
   return (
     <div className='container' id='register-form'>
-      {
-        (loading)
-          ?
-          <div>
-            <SpinningLoader />
-          </div>
-          :
-          <div style={formDivStyle}>
-            <Button style={registerButtonStyle} color='primary' onClick={toggle}>{'สมัครเลย'}</Button>
-            <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
-              <ModalBody>
-                <h2 style={textStyle}>สมัครเข้าใช้งาน</h2>
-                <Form onSubmit={submitRegister} >
-                  <FormGroup>
-                    <Label style={labelStyle}>ชื่อ:</Label>
-                    <Input onChange={handleChangeName} value={name}></Input><br />
-                    <Label style={labelStyle}>Username: กรุณากรอกเป็นภาษาอังกฤษ</Label>
-                    <Input onChange={handleChangeUsername} value={username}></Input><br />
-                    <Label style={labelStyle}>Password: กรุณากรอกเป็นภาษาอังกฤษ</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
-                    <Label style={labelStyle}>ยืนยัน Password:</Label>
-                    <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input><br />
-                    <Label style={labelStyle}>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input><br />
-                    <Label style={genderSelectStyle}>เพศ:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
-                    <Label style={labelStyle}>วันเกิด:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input><br />
-                  </FormGroup>
-                </Form>
-              </ModalBody>
-              <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
-              <ModalFooter>
-                <Button style={{ fontFamily: 'Kanit' }} type='submit' color='primary' onClick={submitRegister}>สมัครเลย</Button>
-                <Button style={{ fontFamily: 'Kanit' }} onClick={toggle}>ยกเลิก</Button>
-              </ModalFooter>
-            </Modal></div>
-      }
+      <div style={formDivStyle}>
+        <Button style={registerButtonStyle} color='primary' onClick={toggle}>{'สมัครเลย'}</Button>
+        <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
+          <ModalBody>
+            <h2 style={textStyle}>สมัครเข้าใช้งาน</h2>
+            <Form onSubmit={submitRegister} >
+              <FormGroup>
+                <Label style={labelStyle}>ชื่อ:</Label>
+                <Input onChange={handleChangeName} value={name}></Input><br />
+                <Label style={labelStyle}>Username: กรุณากรอกเป็นภาษาอังกฤษ</Label>
+                <Input onChange={handleChangeUsername} value={username}></Input><br />
+                <Label style={labelStyle}>Password: กรุณากรอกเป็นภาษาอังกฤษ</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
+                <Label style={labelStyle}>ยืนยัน Password:</Label>
+                <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input><br />
+                <Label style={labelStyle}>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input><br />
+                <Label style={genderSelectStyle}>เพศ:</Label><Select options={genderOptions} value={selectedGender} onChange={handleChangeGender}></Select><br />
+                <Label style={labelStyle}>วันเกิด:</Label> <Input id='dateOfBirth' type="date" onChange={handleChangeDateOfBirth} value={dateOfBirth}></Input><br />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
+          <ModalFooter>
+            <LoaderButton type='submit' onClick={submitRegister}>สมัครเลย</LoaderButton>
+            <Button style={{ fontFamily: 'Kanit', height: '43px' }} onClick={toggle}>ยกเลิก</Button>
+          </ModalFooter>
+        </Modal></div>
     </div >
   )
 }

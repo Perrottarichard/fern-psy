@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Container, Button, Input, Label } from 'reactstrap'
+import { Container, Input, Label } from 'reactstrap'
+import LoaderButton from './LoaderButton'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
@@ -48,11 +49,20 @@ const buttonStyle = {
 
 const ForumPostMain = (props) => {
   const { activeUser } = props
+  const [isLoading, setIsLoading] = useState(false)
   const [question, setQuestion] = useState('')
   const [title, setTitle] = useState('')
   const animatedTags = makeAnimated()
   const dispatch = useDispatch()
   const history = useHistory()
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
+    }
+  }, [isLoading])
 
   let chosenFilter = useSelector(state => state.forum.tagFilter)
   if (chosenFilter === 'รวมทุกหัวข้อ' || chosenFilter === '') {
@@ -118,6 +128,7 @@ const ForumPostMain = (props) => {
         likes: 0
       }
       try {
+        setIsLoading(true)
         dispatch(addQuestion(postToAdd))
         setTitle('')
         setQuestion('')
@@ -173,7 +184,7 @@ const ForumPostMain = (props) => {
           isMulti>
         </Select>
         <div style={{ display: 'block', textAlign: 'center' }}>
-          <Button style={buttonStyle} onClick={handleEditorSubmit}>ส่ง</Button>
+          <LoaderButton style={buttonStyle} onClick={handleEditorSubmit}>ส่ง</LoaderButton>
         </div>
       </div>
     </Container >

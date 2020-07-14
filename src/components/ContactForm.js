@@ -5,9 +5,10 @@ import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
-import { Container, Form, Label, Input, FormGroup, Button } from 'reactstrap'
+import { Container, Form, Label, Input, FormGroup } from 'reactstrap'
 import contactService from '../services/contactService'
 import { toast } from 'react-toastify';
+import LoaderButton from './LoaderButton'
 
 const textStyle = {
   textAlign: 'center',
@@ -44,7 +45,17 @@ const contactButtonStyle = {
 
 const ContactForm = () => {
   const [isVerified, setIsVerified] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
+    }
+  }, [isLoading])
+
   const recaptchaLoaded = () => {
     console.log('captcha loaded successfully')
   }
@@ -73,6 +84,7 @@ const ContactForm = () => {
             else if (!isVerified) {
               toast.warn('Please verify that you are a human')
             } else {
+              setIsLoading(true)
               await contactService.sendContact(values)
               toast.success('Request sent')
               setSubmitting(false)
@@ -139,7 +151,7 @@ const ContactForm = () => {
                   /><br />
                 </FormGroup>
                 <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
-                <Button style={contactButtonStyle} type='submit' >ส่งข้อความ</Button><br />
+                <LoaderButton style={contactButtonStyle} type='submit' >ส่งข้อความ</LoaderButton><br />
               </Form>
             </Container>
           )}

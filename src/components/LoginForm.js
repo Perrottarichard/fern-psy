@@ -5,8 +5,9 @@ import { toast } from "react-toastify"
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
+import LoaderButton from './LoaderButton'
 
-import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
+import { Form, Label, FormGroup, Input } from 'reactstrap'
 import RegisterForm from './RegisterForm'
 
 const textStyle = {
@@ -41,10 +42,19 @@ const loginButtonStyle = {
 
 const LoginForm = (props) => {
   const { setLoggedIn } = props
+  const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const history = useHistory()
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
+    }
+  }, [isLoading])
 
   const handleChangeUser = (event) => {
     setUsername(event.target.value)
@@ -59,8 +69,8 @@ const LoginForm = (props) => {
     }
     else {
       try {
-        const user =
-          await loginService.userlogin({ username, password })
+        setIsLoading(true)
+        const user = await loginService.userlogin({ username, password })
         window.localStorage.setItem(
           'loggedForumUser', JSON.stringify(user)
         )
@@ -91,7 +101,7 @@ const LoginForm = (props) => {
             <Label style={labelStyle}>Username:</Label>
             <Input onChange={handleChangeUser} value={username}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <Button style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</Button>
+            <LoaderButton style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</LoaderButton>
           </FormGroup>
         </Form>
       </div>
