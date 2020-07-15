@@ -1,16 +1,46 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import Fern from '../fern-logo-350.png'
+import { UncontrolledCarousel } from 'reactstrap';
+import Fern1 from '../fernanimal.jpg'
+import Fern2 from '../fernhippie500.jpg'
+import Fern3 from '../fernjapan.jpg'
 import '../about.css';
 
 
 function About() {
+
+
+  const items = [
+    {
+      src: `${Fern2}`,
+      altText: 'Slide 1',
+      key: '1',
+      caption: ''
+    },
+    {
+      src: `${Fern1}`,
+      altText: 'Slide 2',
+      key: '2',
+      caption: ''
+    },
+    {
+      src: `${Fern3}`,
+      altText: 'Slide 3',
+      key: '3',
+      caption: ''
+    }
+  ];
+
   return (
     <Container id='about' className="themed-container" fluid={true}>
       <div id='heading'>
         <h1 id='name'>Nilubon Sukawanich</h1>
         <h4 id='title'>Counselor</h4>
-        <img src={Fern} alt="fern" />
+        {/* <img src={Fern} alt="fern" /> */}
+        <div style={{ margin: 'auto', display: 'block', height: '65%', width: '65%', textAlign: 'center' }}>
+          <UncontrolledCarousel items={items} autoPlay={false} style={{ height: '500px', width: '500px', textAlign: 'center' }} />
+        </div>
+        {/* <img src={Fern2} alt="fern" style={{ maxWidth: '70%' }} /> */}
       </div>
       <hr />
       <Container style={{ textAlign: 'left' }}>
