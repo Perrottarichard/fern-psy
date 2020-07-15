@@ -21,6 +21,7 @@ import NoPage from './components/NoPage'
 import { Button, UncontrolledCollapse, Container } from 'reactstrap';
 import SingleTagDisplay from './components/SingleTagDisplay';
 import SinglePostDisplay from './components/SinglePostDisplay';
+import MyQuestions from './components/MyQuestions'
 
 //import { initializeQuestions } from './reducers/forumReducer';
 
@@ -46,7 +47,7 @@ const App = () => {
     }
   }, [dispatch])
 
-
+  console.log(activeUser)
   useEffect(() => {
     dispatch(initializeForumAnswered())
   }, [dispatch])
@@ -75,6 +76,9 @@ const App = () => {
           </Route>
           <Route path="/forum/:tag">
             <SingleTagDisplay activeUser={activeUser} />
+          </Route>
+          <Route path="/myquestions/:id">
+            <MyQuestions activeUser={activeUser} />
           </Route>
           <Route exact path="/">
             <ForumLandingPage activeUser={activeUser} />

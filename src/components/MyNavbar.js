@@ -60,6 +60,14 @@ const MyNavbar = (props) => {
                 :
                 null
             }
+            {(activeUser && (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
+              ?
+              <NavItem>
+                <NavLink tag={Link} id="NavLink" to={`/myquestions/${activeUser._id}`}>My Questions</NavLink>
+              </NavItem>
+              :
+              null
+            }
           </Nav>
           {
             (!activeUser || !loggedIn)
