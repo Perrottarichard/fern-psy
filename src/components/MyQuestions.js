@@ -88,7 +88,8 @@ const togglerButtonStyle = {
   width: '150px',
   marginTop: '20px',
   float: 'center',
-  marginRight: '20px'
+  marginRight: '10px',
+  marginLeft: '10px'
 }
 
 
@@ -99,6 +100,7 @@ const MyQuestions = (props) => {
   const [toggleAnswered, setToggleAnswered] = useState(false)
   const [togglePending, setTogglePending] = useState(false)
 
+  const user = useSelector(state => state.activeUser)
   const myAnsweredPosts = useSelector(state => state.forum.answered.filter(p => p.user === id))
   const myPendingPosts = useSelector(state => state.forum.pending.filter(p => p.user.id === id))
 
@@ -119,11 +121,23 @@ const MyQuestions = (props) => {
       default: return null
     }
   }
-
+  if (myAnsweredPosts.length === 0 && myPendingPosts.length === 0) {
+    return (
+      <Container style={{ display: 'block', textAlign: 'center' }}>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>Welcome back {user.username}</h3>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '100px' }}>...you haven't asked any questions yet</h3>
+        <div style={postButtonDivStyle}>
+          ตั้งกระทู้ถาม<br />
+          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+        </div>
+      </Container>
+    )
+  }
   return (
     <div>
-      <Container>
-        <div style={{ display: 'flex' }}>
+      <Container style={{ display: 'block', textAlign: 'center' }}>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>Welcome back {user.username}</h3>
+        <div style={{ display: 'block', textAlign: 'center' }}>
           <Button onClick={() => toggle('answered')} style={togglerButtonStyle}>Answered {`(${myAnsweredPosts.length})`}</Button>
           <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>Pending {`(${myPendingPosts.length})`}</Button>
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 // import { tagFilterSelected } from '../reducers/forumReducer'
@@ -124,6 +124,8 @@ const ForumDisplayAll = (props) => {
           <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Card >
               <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+                <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
+                <small>{f.likes}</small>
                 <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
               </CardHeader>
               <CardBody style={cardBodyStyleQ}>
