@@ -47,7 +47,6 @@ const App = () => {
     }
   }, [dispatch])
 
-  console.log(activeUser)
   useEffect(() => {
     dispatch(initializeForumAnswered())
   }, [dispatch])

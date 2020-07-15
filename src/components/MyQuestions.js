@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { Container, Card, Button, CardHeader, CardBody, Badge, Form, Input, Label } from 'reactstrap';
+import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faComments, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumPending, initializeForumAnswered } from '../reducers/forumReducer'
-import { toast } from 'react-toastify';
 
-import LoaderButton from './LoaderButton'
 
 const tagColorOptions = [
   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -85,20 +83,24 @@ const postButtonStyle = {
   fontFamily: 'Kanit',
   backgroundColor: '#288046'
 }
+const togglerButtonStyle = {
+  fontFamily: 'Kanit',
+  width: '150px',
+  marginTop: '20px',
+  float: 'center',
+  marginRight: '20px'
+}
 
 
 const MyQuestions = (props) => {
 
-  const { activeUser } = props
   let { id } = useParams()
-  // const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
+  const [toggleAnswered, setToggleAnswered] = useState(false)
+  const [togglePending, setTogglePending] = useState(false)
+
   const myAnsweredPosts = useSelector(state => state.forum.answered.filter(p => p.user === id))
   const myPendingPosts = useSelector(state => state.forum.pending.filter(p => p.user.id === id))
-
-  console.log('answered', myAnsweredPosts)
-  console.log('pending', myPendingPosts)
-
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
@@ -108,85 +110,85 @@ const MyQuestions = (props) => {
     dispatch(initializeForumPending())
   }, [dispatch])
 
-  // React.useEffect(() => {
-  //   if (isLoading) {
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 1500);
-  //   }
-  // }, [isLoading])
-  if (!myAnsweredPosts) {
-    return (
-      <div>
-        You have no answered questions
-      </div>
-    )
-  } else
-    return (
-      <div>
-        <Container>
-          <h3 style={{ marginTop: '20px', fontFamily: 'Kanit' }}>Answered</h3>
-          {myAnsweredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
+  const toggle = (type) => {
+    switch (type) {
+      case 'pending':
+        return setTogglePending(!togglePending)
+      case 'answered':
+        return setToggleAnswered(!toggleAnswered)
+      default: return null
+    }
+  }
+
+  return (
+    <div>
+      <Container>
+        <div style={{ display: 'flex' }}>
+          <Button onClick={() => toggle('answered')} style={togglerButtonStyle}>Answered {`(${myAnsweredPosts.length})`}</Button>
+          <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>Pending {`(${myPendingPosts.length})`}</Button>
+        </div>
+        {myAnsweredPosts && toggleAnswered ?
+          myAnsweredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
             <div key={f._id}>
               <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Card >
+
                   <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
                     <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
                     <small>{f.likes}</small>
                     <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
                   </CardHeader>
-                  <CardBody style={cardBodyStyleQ}>
 
+                  <CardBody style={cardBodyStyleQ}>
                     <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.question}
+
                   </CardBody>
                   <CardBody style={cardBodyStyleA}>
                     <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.answer}
 
                   </CardBody>
-
-                  {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
                   <div style={{ display: 'block' }}>
                     {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
                   </div>
                 </Card>
               </a>
-            </div>)}
-        </Container>
-        <Container>
-          <h3 style={{ marginTop: '20px', fontFamily: 'Kanit' }}>Pending</h3>
-          {myPendingPosts ? myPendingPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
-            <div key={f._id}>
-              <Card >
-                <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-                  <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
-                  <small>{f.likes}</small>
-                  <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
-                </CardHeader>
-                <CardBody style={cardBodyStyleQ}>
+            </div>)
+          : null
+        }
+      </Container>
+      <Container>
+        {myPendingPosts && togglePending ? myPendingPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
+          <div key={f._id}>
+            <Card >
+              <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+                <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
+                <small>{f.likes}</small>
+                <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
+              </CardHeader>
 
-                  <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                  {f.question}
-                </CardBody>
-                <CardBody style={cardBodyStyleA}>
-                  <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                  <small className="text-muted">Fern has not answered your question yet. Check again later.</small>
+              <CardBody style={cardBodyStyleQ}>
+                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                {f.question}
+              </CardBody>
 
-                </CardBody>
+              <CardBody style={cardBodyStyleA}>
+                <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                <small className="text-muted">Fern has not answered your question yet. Check again later.</small>
 
-                {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
-                <div style={{ display: 'block' }}>
-                  {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
-                </div>
-              </Card>
-            </div>) : 'You have no pending questions'}
-          <div style={postButtonDivStyle}>
-            ตั้งกระทู้ถาม<br />
-            <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
-          </div>
-        </Container>
-      </div >
-    )
+              </CardBody>
+              <div style={{ display: 'block' }}>
+                {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
+              </div>
+            </Card>
+          </div>) : null}
+        <div style={postButtonDivStyle}>
+          ตั้งกระทู้ถาม<br />
+          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+        </div>
+      </Container>
+    </div >
+  )
 }
 export default MyQuestions
