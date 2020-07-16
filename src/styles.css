@@ -169,6 +169,13 @@ background-color: #343a40
   padding-right: 15px;
   padding-left: 10px;
 }
+#flaggedToggler {
+  width: 80px;
+  font-size: 14px;
+  background-color: #ff4d4d;
+  padding-right: 15px;
+  padding-left: 10px;
+}
 .heart-icon {
     font-size: 100px;
     animation-duration: 2s;

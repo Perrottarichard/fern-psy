@@ -22,6 +22,7 @@ import { Button, UncontrolledCollapse, Container } from 'reactstrap';
 import SingleTagDisplay from './components/SingleTagDisplay';
 import SinglePostDisplay from './components/SinglePostDisplay';
 import MyQuestions from './components/MyQuestions'
+import AdminFlaggedComment from './components/AdminFlaggedComment';
 
 //import { initializeQuestions } from './reducers/forumReducer';
 
@@ -102,6 +103,7 @@ const App = () => {
                 </Button>
                 <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px' }}>Show Contacts</Button>
                 <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px' }}>Show Users</Button>
+                <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px' }}>Show Flagged</Button>
                 <UncontrolledCollapse toggler="#pendingToggler">
                   <AdminForumDashboard />
                 </UncontrolledCollapse>
@@ -110,6 +112,9 @@ const App = () => {
                 </UncontrolledCollapse>
                 <UncontrolledCollapse toggler="#usersToggler">
                   <AdminUsersDashboard />
+                </UncontrolledCollapse>
+                <UncontrolledCollapse toggler="#flaggedToggler">
+                  <AdminFlaggedComment />
                 </UncontrolledCollapse>
               </Container>
             }

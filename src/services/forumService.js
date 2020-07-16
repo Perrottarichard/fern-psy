@@ -11,6 +11,11 @@ const getPending = async () => {
   return response.data
 }
 
+const getFlagged = async () => {
+  const response = await axios.get(`${baseUrl}/flagged`)
+  return response.data
+}
+
 
 const getAnswered = async () => {
   const response = await axios.get(`${baseUrl}/answered`)
@@ -46,11 +51,22 @@ const remove = async idToDelete => {
   const response = await axios.delete(`${baseUrl}/${idToDelete}`, config)
   return response.data
 }
+const removeComment = async idToDelete => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.delete(`${baseUrl}/comment/${idToDelete}`, config)
+  return response.data
+}
 
 const heartUp = async (toUpdate) => {
   const id = toUpdate._id
   const response = await axios.put(`${baseUrl}/heart/${id}`, toUpdate)
   return response.data
 }
+const flagComment = async (c) => {
+  const response = await axios.put(`${baseUrl}/flag/${c._id}`)
+  return response.data
+}
 
-export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment }
+export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment }

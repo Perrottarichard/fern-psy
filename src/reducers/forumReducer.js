@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 const initialState = {
   answered: [],
   pending: [],
-  tagFilter: ''
+  tagFilter: '',
+  flagged: []
 }
 const forumReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -26,15 +27,19 @@ const forumReducer = (state = initialState, action) => {
       return { ...state, pending: state.pending.map(s => s._id === answerId ? changedToAnswered : s) }
     case 'ADD_COMMENT':
       const commentedOnId = action.data._id
-      console.log(action.data)
       let postToChange = state.answered.find(p => p._id === commentedOnId)
       const newPost = { ...postToChange, comments: postToChange.comments.concat(action.data.comments[action.data.comments.length - 1]) }
-      console.log(newPost)
       return { ...state, answered: state.answered.map(s => s._id === commentedOnId ? newPost : s) }
     case 'DELETE_QUESTION':
       return { ...state, pending: state.pending.filter(q => q._id !== action.data) }
+    case 'DELETE_COMMENT':
+      return { ...state, flagged: state.flagged.filter(c => c._id !== action.data) }
     case 'SET_TAG_FILTER':
       return { ...state, tagFilter: action.data }
+    case 'FLAG_COMMENT':
+      return state
+    case 'GET_FLAGGED':
+      return { ...state, flagged: action.data }
     default: return state
   }
 }
@@ -102,12 +107,30 @@ export const deleteQuestion = _id => {
     toast.success('Question deleted')
   }
 }
+export const deleteComment = _id => {
+  return async dispatch => {
+    await forumService.removeComment(_id)
+    dispatch({
+      type: 'DELETE_COMMENT',
+      data: _id
+    })
+  }
+}
 export const initializeForumPending = () => {
   return async dispatch => {
     const questions = await forumService.getPending()
     dispatch({
       type: 'INIT_FORUM_PENDING',
       data: questions
+    })
+  }
+}
+export const getFlaggedComments = () => {
+  return async dispatch => {
+    const flagged = await forumService.getFlagged()
+    dispatch({
+      type: 'GET_FLAGGED',
+      data: flagged
     })
   }
 }
@@ -126,5 +149,16 @@ export const setTagFilter = (tag) => {
     data: tag
   }
 }
+export const setFlaggedComment = (comment) => {
+  return async dispatch => {
+    const flaggedPost = await forumService.flagComment(comment)
+    dispatch({
+      type: 'FLAG_COMMENT',
+      data: flaggedPost
+    })
+    toast.success('Thanks for flagging a comment.  Admin will review it.')
+  }
+}
+
 
 export default forumReducer

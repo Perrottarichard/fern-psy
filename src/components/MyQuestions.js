@@ -48,8 +48,26 @@ const cardHeaderStyle = {
   paddingTop: '6px',
   paddingBottom: '6px'
 }
+const pendingCardHeaderStyle = {
+  fontFamily: 'Kanit',
+  fontSize: '14px',
+  backgroundColor: 'gray',
+  color: 'white',
+  marginTop: '10px',
+  paddingTop: '6px',
+  paddingBottom: '6px'
+}
 const cardBodyStyleQ = {
   fontSize: '14px',
+  fontFamily: 'Kanit',
+  padding: '10px',
+  textAlign: 'left',
+  paddingLeft: '10px',
+  backgroundColor: 'white' //super light green
+}
+const pendingCardBodyStyleQ = {
+  fontSize: '14px',
+  color: 'gray',
   fontFamily: 'Kanit',
   padding: '10px',
   textAlign: 'left',
@@ -60,6 +78,7 @@ const cardBodyStyleA = {
   fontSize: '14px',
   fontFamily: 'Kanit',
   padding: '10px',
+  textAlign: 'left',
   backgroundColor: '#f0e1df' //super light pink
 }
 
@@ -85,7 +104,7 @@ const postButtonStyle = {
 }
 const togglerButtonStyle = {
   fontFamily: 'Kanit',
-  width: '150px',
+  width: '100px',
   marginTop: '20px',
   float: 'center',
   marginRight: '10px',
@@ -176,19 +195,19 @@ const MyQuestions = (props) => {
         {myPendingPosts && togglePending ? myPendingPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
           <div key={f._id}>
             <Card >
-              <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-                <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
+              <CardHeader style={pendingCardHeaderStyle} tag="h5">{f.title}
+                <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: 'gray', marginLeft: '30px', marginRight: '10px' }} />
                 <small>{f.likes}</small>
                 <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
               </CardHeader>
 
-              <CardBody style={cardBodyStyleQ}>
-                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+              <CardBody style={pendingCardBodyStyleQ}>
+                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {f.question}
               </CardBody>
 
               <CardBody style={cardBodyStyleA}>
-                <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                <FontAwesomeIcon icon={faComment} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 <small className="text-muted">Fern has not answered your question yet. Check again later.</small>
 
               </CardBody>

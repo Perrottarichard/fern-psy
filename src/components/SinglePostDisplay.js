@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge, Form, Input, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faComments, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faComments, faHeart, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { addComment, heart } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
-import { initializeForumAnswered } from '../reducers/forumReducer'
+import { initializeForumAnswered, setFlaggedComment } from '../reducers/forumReducer'
 import LoaderButton from './LoaderButton'
 
 const tagColorOptions = [
@@ -177,6 +177,11 @@ const SinglePostDisplay = (props) => {
   const handleCommentChange = (event) => {
     setComment(event.target.value)
   }
+  const flag = (comment) => {
+    if (window.confirm('Are you sure you want to report this comment as abusive?')) {
+      dispatch(setFlaggedComment(comment))
+    }
+  }
 
   return (
     <Container>
@@ -209,7 +214,8 @@ const SinglePostDisplay = (props) => {
                 <FontAwesomeIcon icon={faComments} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {c.content}
               </span>
-              <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'}</small>
+              <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'} <FontAwesomeIcon icon={faFlag} onClick={() => flag(c)} /></small>
+
             </CardBody>) : null}
           {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
           <div style={{ display: 'block' }}>
