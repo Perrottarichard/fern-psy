@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode } from '@fortawesome/free-solid-svg-icons';
@@ -91,6 +91,7 @@ const postButtonStyle = {
 const ForumLandingPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const activeUser = useSelector(state => state.activeUser)
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))
@@ -124,7 +125,7 @@ const ForumLandingPage = () => {
       <hr />
       <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to='/addpost'><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? alert('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
       <br />
       <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>

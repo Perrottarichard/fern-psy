@@ -1,8 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify'
 
 
 const postButtonDivStyle = {
@@ -24,6 +26,7 @@ const postButtonStyle = {
 
 const NoPostsYet = () => {
 
+  const activeUser = useSelector(state => state.activeUser)
   const textStyle = {
     fontFamily: 'Kanit',
     fontWeight: '400',
@@ -45,7 +48,7 @@ const NoPostsYet = () => {
         <br />
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถามเป็นคนแรก<br />
-          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </div>
     </Container>

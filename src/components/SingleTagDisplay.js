@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import NoPostsYet from './NoPostsYet';
 import { initializeForumAnswered } from '../reducers/forumReducer'
+import { toast } from 'react-toastify';
 
 const tagColorOptions = [
   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -88,6 +89,7 @@ const postButtonStyle = {
 const SingleTagDisplay = () => {
   const dispatch = useDispatch()
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
+  const activeUser = useSelector(state => state.activeUser)
 
   // const chosenFilter = useSelector(state => state.forum.tagFilter)
 
@@ -131,7 +133,7 @@ const SingleTagDisplay = () => {
           </div>)}
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถาม<br />
-          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </Container>
     )

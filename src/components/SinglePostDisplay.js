@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge, Form, Input, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faComment, faComments, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -119,6 +119,7 @@ const SinglePostDisplay = (props) => {
   const post = useSelector(state => state.forum.answered.find(p => p._id === id))
   const [sentHeart, setSentHeart] = useState(null)
   const [pulseHeart, setPulseHeart] = useState('')
+  const history = useHistory()
 
 
   useEffect(() => {
@@ -138,6 +139,7 @@ const SinglePostDisplay = (props) => {
     let postToModifyId = post
     if (activeUser === null) {
       toast.warn('You must be signed in to post a comment')
+      history.push('/login')
     } else if (comment === '') {
       toast.warn('You forgot to write a comment')
     } else {
@@ -154,7 +156,8 @@ const SinglePostDisplay = (props) => {
   const submitHeart = async () => {
     let postToModify = post
     if (activeUser === null) {
-      toast.warn('You must be signed in to show support')
+      toast.warn('You must be signed in to send a heart')
+      history.push('/login')
     } else if (sentHeart !== null) {
       toast.warn('You sent a heart for this post already')
     } else {

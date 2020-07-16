@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
+import { toast } from 'react-toastify';
 // import { tagFilterSelected } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay';
 
@@ -112,6 +113,7 @@ const ForumDisplayAll = (props) => {
 
   const dispatch = useDispatch()
   const { forumAnswered } = props
+  const activeUser = useSelector(state => state.activeUser)
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
@@ -145,7 +147,7 @@ const ForumDisplayAll = (props) => {
         </div>)}
       <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
     </Container>
   )
