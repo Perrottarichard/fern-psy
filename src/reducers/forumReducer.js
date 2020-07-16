@@ -32,7 +32,7 @@ const forumReducer = (state = initialState, action) => {
       console.log(newPost)
       return { ...state, answered: state.answered.map(s => s._id === commentedOnId ? newPost : s) }
     case 'DELETE_QUESTION':
-      return state.filter(q => q.id !== action.data.id)
+      return { ...state, pending: state.pending.filter(q => q._id !== action.data) }
     case 'SET_TAG_FILTER':
       return { ...state, tagFilter: action.data }
     default: return state
@@ -92,12 +92,12 @@ export const addQuestion = data => {
     }
   }
 }
-export const deleteQuestion = data => {
+export const deleteQuestion = _id => {
   return async dispatch => {
-    await forumService.remove(data)
+    await forumService.remove(_id)
     dispatch({
       type: 'DELETE_QUESTION',
-      data
+      data: _id
     })
     toast.success('Question deleted')
   }

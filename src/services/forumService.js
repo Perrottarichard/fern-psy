@@ -38,11 +38,12 @@ const addComment = async (comment, postToModify) => {
   const response = await axios.put(`${baseUrl}/addcomment/${postToModify._id}`, { postToModify, comment }, config)
   return response.data
 }
-const remove = async question => {
+
+const remove = async idToDelete => {
   const config = {
     headers: { Authorization: token },
   }
-  const response = await axios.delete(`${baseUrl}/${question.id}`, config)
+  const response = await axios.delete(`${baseUrl}/${idToDelete}`, config)
   return response.data
 }
 

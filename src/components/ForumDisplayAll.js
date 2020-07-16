@@ -128,7 +128,7 @@ const ForumDisplayAll = (props) => {
               <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
                 <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
                 <small>{f.likes}</small>
-                <small className="text-muted" style={smallStyle}>asked on {f.date.slice(0, 10)}</small>
+                <small className="text-muted" style={smallStyle}>ถามเมื่อ {f.date.slice(0, 10)}</small>
               </CardHeader>
               <CardBody style={cardBodyStyleQ}>
                 <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />

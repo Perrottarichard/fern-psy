@@ -3,13 +3,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Table, Container, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
-import { initializeForumPending } from '../reducers/forumReducer'
+import { initializeForumPending, deleteQuestion } from '../reducers/forumReducer'
 import AdminForumAnswer from './AdminForumAnswer'
+import { toast } from 'react-toastify';
 
 
 const buttonStyle = {
   fontFamily: 'Montserrat',
   backgroundColor: '#343a40',
+  width: '50px',
+  paddingRight: '5px',
+  paddingLeft: '5px',
+  fontSize: '10px'
+}
+const deleteButtonStyle = {
+  fontFamily: 'Montserrat',
+  backgroundColor: 'red',
   width: '50px',
   paddingRight: '5px',
   paddingLeft: '5px',
@@ -29,6 +38,14 @@ const AdminForumDashboard = () => {
     dispatch(initializeForumPending())
   }, [dispatch])
 
+  const removeQuestion = (_id) => {
+    try {
+      dispatch(deleteQuestion(_id))
+    } catch (error) {
+      toast.error('Something went wrong')
+      console.log(error)
+    }
+  }
   return (
     <Container>
       <Table size='sm' hover responsive>
@@ -47,6 +64,7 @@ const AdminForumDashboard = () => {
                 <td style={{ fontFamily: 'Montserrat' }}>{c.date.slice(0, 10)}</td>
                 <td style={{ fontFamily: 'Montserrat' }}>{c.question}</td>
                 <td><Button style={buttonStyle} onClick={() => setAnswering(c)}>Answer</Button></td>
+                <td><Button style={deleteButtonStyle} onClick={() => removeQuestion(c._id)}>Delete</Button></td>
               </tr>
               : null) : null
           }

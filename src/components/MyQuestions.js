@@ -124,8 +124,8 @@ const MyQuestions = (props) => {
   if (myAnsweredPosts.length === 0 && myPendingPosts.length === 0) {
     return (
       <Container style={{ display: 'block', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>Welcome back {user.username}</h3>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '100px' }}>...you haven't asked any questions yet</h3>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับกลับสู่ {user.username}</h3>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '100px' }}>...คุณยังไม่ได้ถามคำถามใด ๆ</h3>
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถาม<br />
           <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
@@ -136,10 +136,10 @@ const MyQuestions = (props) => {
   return (
     <div>
       <Container style={{ display: 'block', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>Welcome back {user.username}</h3>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับกลับสู่ {user.username}</h3>
         <div style={{ display: 'block', textAlign: 'center' }}>
-          <Button onClick={() => toggle('answered')} style={togglerButtonStyle}>Answered {`(${myAnsweredPosts.length})`}</Button>
-          <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>Pending {`(${myPendingPosts.length})`}</Button>
+          <Button onClick={() => toggle('answered')} style={togglerButtonStyle}>ตอบคำถาม {`(${myAnsweredPosts.length})`}</Button>
+          <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>รอคำตอบ {`(${myPendingPosts.length})`}</Button>
         </div>
         {myAnsweredPosts && toggleAnswered ?
           myAnsweredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>

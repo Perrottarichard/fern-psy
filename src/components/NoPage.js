@@ -11,7 +11,7 @@ const NoPage = () => {
   return (
     <div style={textStyle}>
       <h1>
-        Sorry, but this page doesn't exist...
+        ขออภัย ... ไม่มีหน้าเลย
       </h1>
     </div>
   )

@@ -75,6 +75,9 @@ const AdminLoginForm = (props) => {
       }
       catch (error) {
         console.log(error.message)
+        if (error.message.includes('401')) {
+          toast.warn('check your username and password again')
+        }
       }
     }
   }

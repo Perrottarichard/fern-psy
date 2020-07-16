@@ -48,7 +48,7 @@ const NoPostsYet = () => {
         <br />
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถามเป็นคนแรก<br />
-          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </div>
     </Container>

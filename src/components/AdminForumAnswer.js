@@ -16,7 +16,17 @@ const buttonStyle = {
   fontFamily: 'Montserrat',
   backgroundColor: '#288046',
   marginTop: '15px',
-  marginBottom: '15px'
+  marginBottom: '15px',
+  width: '100px',
+  float: 'left'
+}
+const clearButtonStyle = {
+  fontFamily: 'Montserrat',
+  backgroundColor: 'gray',
+  marginTop: '15px',
+  marginBottom: '15px',
+  width: '100px',
+  float: 'right'
 }
 
 
@@ -60,6 +70,7 @@ const AdminForumAnswer = (props) => {
           onSubmit={handleEditorSubmit}
         />
         <Button style={buttonStyle} onClick={handleEditorSubmit}>Submit Answer</Button>
+        <Button style={clearButtonStyle} onClick={() => setAnswering('')}>Clear Selection</Button>
       </Container>
     </div>
   )

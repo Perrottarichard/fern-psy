@@ -138,10 +138,10 @@ const SinglePostDisplay = (props) => {
     event.preventDefault()
     let postToModifyId = post
     if (activeUser === null) {
-      toast.warn('You must be signed in to post a comment')
+      toast.warn('คุณต้องลงชื่อเพื่อแสดงความคิดเห็น')
       history.push('/login')
     } else if (comment === '') {
-      toast.warn('You forgot to write a comment')
+      toast.warn('คุณลืมที่จะเขียนความคิดเห็น')
     } else {
       try {
         setIsLoading(true)
@@ -156,10 +156,10 @@ const SinglePostDisplay = (props) => {
   const submitHeart = async () => {
     let postToModify = post
     if (activeUser === null) {
-      toast.warn('You must be signed in to send a heart')
+      toast.warn('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ')
       history.push('/login')
     } else if (sentHeart !== null) {
-      toast.warn('You sent a heart for this post already')
+      toast.warn('คุณได้ส่งหัวใจสำหรับโพสต์นี้แล้ว')
     } else {
       try {
         setPulseHeart('heart-icon')
