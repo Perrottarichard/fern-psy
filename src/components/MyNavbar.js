@@ -60,7 +60,7 @@ const MyNavbar = (props) => {
                 :
                 null
             }
-            {(activeUser && (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
+            {(activeUser !== null && loggedIn && (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
               ?
               <NavItem>
                 <NavLink tag={Link} id="NavLink" to={`/myquestions/${activeUser._id}`}>My Questions</NavLink>
@@ -70,7 +70,7 @@ const MyNavbar = (props) => {
             }
           </Nav>
           {
-            (!activeUser || !loggedIn)
+            (activeUser === null || !loggedIn)
               ?
               <div id='nav-login-button'>
                 <Link to="/login"><Button outline color='secondary' size='sm'>Login</Button></Link>
