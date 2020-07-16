@@ -70,26 +70,29 @@ const ContactForm = () => {
         initialValues={{ name: '', email: '', LINE: '', message: '' }}
         onSubmit={
           async (values, { setSubmitting, resetForm }) => {
-            if (!values.email) {
-              toast.warn('Email required')
+            if (!values.name) {
+              toast.warn('ชื่อของคุณ')
+            }
+            else if (!values.email) {
+              toast.warn('ต้องระบุอีเมล')
             }
             else if (!values.message) {
-              toast.warn('Message required')
+              toast.warn('เขียนข้อความ')
             }
             else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              toast.warn('Invalid email address')
+              toast.warn('อีเมลไม่ถูกต้อง')
             }
             else if (!isVerified) {
-              toast.warn('Please verify that you are a human')
+              toast.warn('โปรดยืนยันว่าคุณไม่ใช่หุ่นยนต์')
             } else {
               setIsLoading(true)
               await contactService.sendContact(values)
-              toast.success('Request sent')
+              toast.success('ส่งข้อความ')
               setSubmitting(false)
               resetForm({})
-              history.push('/forum')
+              history.push('/')
             }
           }
         }
@@ -122,7 +125,7 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.name}
                   /><br />
-                  <Label style={labelStyle} for='email'>Email</Label>
+                  <Label style={labelStyle} for='email'>อีเมล</Label>
                   <Input
                     placeholder='You@example.com'
                     type="Email"
@@ -142,7 +145,7 @@ const ContactForm = () => {
                   /><br />
                   <Label style={labelStyle} for='message'>ข้อความ</Label>
                   <Input
-                    placeholder='I have a question about...'
+                    placeholder='ฉันมีคำถามเกี่ยวกับ ...'
                     type="Message"
                     name="message"
                     onChange={handleChange}

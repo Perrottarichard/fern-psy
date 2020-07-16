@@ -7,6 +7,7 @@ import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBr
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
+import { toast } from 'react-toastify'
 // import SingleTagDisplay from './SingleTagDisplay'
 
 
@@ -125,7 +126,7 @@ const ForumLandingPage = () => {
       <hr />
       <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? alert('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
       <br />
       <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>

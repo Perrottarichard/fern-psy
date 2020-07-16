@@ -8,6 +8,20 @@
   #navbrand {
     font-size: 1.5rem;
   }
+  .about-image-div {
+    display: block;
+    margin: auto;
+    height: 100%;
+  width: 100%;
+  }
+}
+@media only screen and (max-width: 462px) {
+  .about-image-div {
+    display: block;
+    margin: auto;
+    height: 80%;
+    width: 80%;
+  }
 }
 #about {
 margin-top: 40px;
@@ -32,3 +46,21 @@ text-align: left;
 #title {
   color: rgb(187, 97, 157);
 }
+@media only screen and (min-width: 463px) {
+.about-image-div {
+  margin: auto;
+  display: block;
+  height: 60%;
+  width: 60%;
+  text-align: center;
+}
+}
+@media only screen and (min-width: 700px) {
+  .about-image-div {
+    margin: auto;
+    display: block;
+    height: 50%;
+    width: 50%;
+    text-align: center;
+  }
+  }

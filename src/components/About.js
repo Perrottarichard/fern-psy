@@ -37,7 +37,7 @@ function About() {
         <h1 id='name'>Nilubon Sukawanich</h1>
         <h4 id='title'>Counselor</h4>
         {/* <img src={Fern} alt="fern" /> */}
-        <div style={{ margin: 'auto', display: 'block', height: '70%', width: '70%', textAlign: 'center' }}>
+        <div className='about-image-div'>
           <UncontrolledCarousel items={items} autoPlay={false} style={{ height: '500px', width: '500px', textAlign: 'center' }} />
         </div>
         {/* <img src={Fern2} alt="fern" style={{ maxWidth: '70%' }} /> */}
