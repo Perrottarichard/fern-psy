@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumPending, initializeForumAnswered } from '../reducers/forumReducer'
 
 
@@ -79,7 +79,6 @@ const cardBodyStyleA = {
   fontFamily: 'Kanit',
   padding: '10px',
   textAlign: 'left',
-  backgroundColor: '#f0e1df' //super light pink
 }
 
 const smallStyle = {
@@ -92,15 +91,11 @@ const postButtonDivStyle = {
   marginTop: '50px',
   marginBottom: '50px',
   fontFamily: 'Kanit',
-  fontSize: '30px'
+  fontSize: '20px'
 }
 const postButtonStyle = {
-  borderColor: '#343a40',
-  borderWidth: '3px',
   width: '150px',
-  borderStyle: 'solid',
   fontFamily: 'Kanit',
-  backgroundColor: '#288046'
 }
 const togglerButtonStyle = {
   fontFamily: 'Kanit',
@@ -108,7 +103,23 @@ const togglerButtonStyle = {
   marginTop: '20px',
   float: 'center',
   marginRight: '10px',
-  marginLeft: '10px'
+  marginLeft: '10px',
+  borderColor: 'gray',
+  borderStyle: 'solid',
+  color: 'gray',
+  backgroundColor: 'white'
+}
+const answeredTogglerButtonStyle = {
+  fontFamily: 'Kanit',
+  width: '100px',
+  marginTop: '20px',
+  float: 'center',
+  marginRight: '10px',
+  marginLeft: '10px',
+  backgroundColor: 'white',
+  borderColor: '#1d8a17',
+  borderStyle: 'solid',
+  color: '#1d8a17'
 }
 
 
@@ -147,7 +158,7 @@ const MyQuestions = (props) => {
         <h3 style={{ fontFamily: 'Kanit', marginTop: '100px' }}>...คุณยังไม่ได้ถามคำถามใด ๆ</h3>
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถาม<br />
-          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+          <Link to='/addpost'><Button color='primary' style={postButtonStyle} >ส่งคำถาม</Button></Link>
         </div>
       </Container>
     )
@@ -155,9 +166,9 @@ const MyQuestions = (props) => {
   return (
     <div>
       <Container style={{ display: 'block', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับกลับสู่ {user.username}</h3>
+        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับคุณ {user.username}</h3>
         <div style={{ display: 'block', textAlign: 'center' }}>
-          <Button onClick={() => toggle('answered')} style={togglerButtonStyle}>ตอบคำถาม {`(${myAnsweredPosts.length})`}</Button>
+          <Button onClick={() => toggle('answered')} style={answeredTogglerButtonStyle}>ตอบแล้ว {`(${myAnsweredPosts.length})`}</Button>
           <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>รอคำตอบ {`(${myPendingPosts.length})`}</Button>
         </div>
         {myAnsweredPosts && toggleAnswered ?
@@ -173,16 +184,16 @@ const MyQuestions = (props) => {
                   </CardHeader>
 
                   <CardBody style={cardBodyStyleQ}>
-                    <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                    <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.question}
 
                   </CardBody>
                   <CardBody style={cardBodyStyleA}>
-                    <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                    <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.answer}
 
                   </CardBody>
-                  <div style={{ display: 'block' }}>
+                  <div style={{ display: 'block', textAlign: 'left' }}>
                     {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
                   </div>
                 </Card>
@@ -207,18 +218,18 @@ const MyQuestions = (props) => {
               </CardBody>
 
               <CardBody style={cardBodyStyleA}>
-                <FontAwesomeIcon icon={faComment} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                <small className="text-muted">Fern has not answered your question yet. Check again later.</small>
+                <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                <small className="text-muted">คำถามของคุณอยู่ระหว่างดำเนินการ</small>
 
               </CardBody>
-              <div style={{ display: 'block' }}>
+              <div style={{ display: 'block', textAlign: 'left' }}>
                 {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
               </div>
             </Card>
           </div>) : null}
         <div style={postButtonDivStyle}>
-          ตั้งกระทู้ถาม<br />
-          <Link to='/addpost'><Button style={postButtonStyle} >ส่งคำถาม</Button></Link>
+          ต้องการถาม คลิก<br />
+          <Link to='/addpost'><Button color='primary' style={postButtonStyle} >ส่งคำถาม</Button></Link>
         </div>
       </Container>
     </div >

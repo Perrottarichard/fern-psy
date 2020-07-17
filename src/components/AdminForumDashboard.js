@@ -10,7 +10,8 @@ import { toast } from 'react-toastify';
 
 const buttonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: '#343a40',
+  backgroundColor: 'white',
+  color: 'green',
   width: '50px',
   paddingRight: '5px',
   paddingLeft: '5px',
@@ -18,7 +19,8 @@ const buttonStyle = {
 }
 const deleteButtonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: 'red',
+  backgroundColor: 'white',
+  color: 'red',
   width: '50px',
   paddingRight: '5px',
   paddingLeft: '5px',
@@ -39,11 +41,13 @@ const AdminForumDashboard = () => {
   }, [dispatch])
 
   const removeQuestion = (_id) => {
-    try {
-      dispatch(deleteQuestion(_id))
-    } catch (error) {
-      toast.error('Something went wrong')
-      console.log(error)
+    if (window.confirm('Are you sure?')) {
+      try {
+        dispatch(deleteQuestion(_id))
+      } catch (error) {
+        toast.error('Something went wrong')
+        console.log(error)
+      }
     }
   }
   return (

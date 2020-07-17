@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Logout from './Logout'
 import { Link } from 'react-router-dom';
 import {
@@ -37,16 +37,16 @@ const MyNavbar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/">Home</NavLink>
+              <NavLink tag={Link} id="NavLink" to="/">หน้าหลัก</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} id="NavLink" to="/about">About</NavLink>
+              <NavLink tag={Link} id="NavLink" to="/about">เกี่ยวกับ Fern</NavLink>
             </NavItem>
             <NavItem>
               {
                 (!activeUser || (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
                   ?
-                  <NavLink tag={Link} id="NavLink" to="/contact">Contact Fern</NavLink>
+                  <NavLink tag={Link} id="NavLink" to="/contact">ติดต่อ Fern</NavLink>
                   :
                   <NavLink tag={Link} id="NavLink" to="/admin/dashboard">Dashboard</NavLink>
               }
@@ -63,7 +63,7 @@ const MyNavbar = (props) => {
             {(activeUser !== null && loggedIn && (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
               ?
               <NavItem>
-                <NavLink tag={Link} id="NavLink" to={`/myquestions/${activeUser._id}`}>My Questions</NavLink>
+                <NavLink tag={Link} id="NavLink" to={`/myquestions/${activeUser._id}`}>คำถามของฉัน</NavLink>
               </NavItem>
               :
               null
@@ -73,7 +73,7 @@ const MyNavbar = (props) => {
             (activeUser === null || !loggedIn)
               ?
               <div id='nav-login-button'>
-                <Link to="/login"><Button outline color='secondary' size='sm'>Login</Button></Link>
+                <Link to="/login"><Button outline color='secondary' size='sm'>เข้าสู่ระบบ</Button></Link>
               </div>
               :
               null
@@ -83,7 +83,7 @@ const MyNavbar = (props) => {
               ?
               <div>
                 <NavbarText id='NavBarText'>
-                  <FontAwesomeIcon id='fa-user-icon' icon={faUser} /><br />{activeUser.username}
+                  <FontAwesomeIcon id='fa-user-icon' icon={faUserCircle} /><br />{activeUser.username}
                 </NavbarText>
                 <Logout setLoggedIn={setLoggedIn} />
               </div>

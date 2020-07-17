@@ -9,9 +9,9 @@ import { initializeForumAnswered } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
 
 const tagColorOptions = [
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
+  { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d' },
   { tag: 'การออกเดท', backgroundColor: '#288046' },
-  { tag: 'relationships', backgroundColor: '#ffa64d' },
+  { tag: 'ความรัก', backgroundColor: '#ffa64d' },
   { tag: 'lgbt', backgroundColor: '#ff4da6' },
   { tag: 'เพื่อน', backgroundColor: '#5050ff' },
   { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40' },
@@ -19,7 +19,7 @@ const tagColorOptions = [
   { tag: 'ไบโพลาร์', backgroundColor: '#f347ff' },
   { tag: 'การทำงาน', backgroundColor: '#8e2bff' },
   { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8' },
-  { tag: 'bullying', backgroundColor: '#5e320f' },
+  { tag: 'การรังแก', backgroundColor: '#5e320f' },
   { tag: 'ครอบครัว', backgroundColor: '#ffa64d' },
   { tag: 'อื่นๆ', backgroundColor: '#707571' },
   { tag: 'การเสพติด', backgroundColor: '#40073d' },
@@ -77,12 +77,8 @@ const postButtonDivStyle = {
   fontSize: '30px'
 }
 const postButtonStyle = {
-  borderColor: '#343a40',
-  borderWidth: '3px',
   width: '150px',
-  borderStyle: 'solid',
   fontFamily: 'Kanit',
-  backgroundColor: '#288046'
 }
 
 
@@ -133,7 +129,7 @@ const SingleTagDisplay = () => {
           </div>)}
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ถาม<br />
-          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </Container>
     )

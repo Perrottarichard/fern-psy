@@ -4,7 +4,7 @@ import { Form, Label, FormGroup, Button, Input, Modal, ModalBody, ModalFooter } 
 import Select from 'react-select'
 import userService from '../services/userService'
 import { toast } from 'react-toastify'
-import LoaderButton from './LoaderButton'
+
 
 const textStyle = {
   textAlign: 'center',
@@ -15,8 +15,7 @@ const registerButtonStyle = {
   fontFamily: 'Kanit',
   float: 'center',
   width: '100px',
-  borderColor: '#343a40',
-  borderWidth: '3px',
+
 }
 const formDivStyle = {
   display: 'block',
@@ -149,7 +148,7 @@ const RegisterForm = () => {
   return (
     <div className='container' id='register-form'>
       <div style={formDivStyle}>
-        <Button style={registerButtonStyle} color='primary' onClick={toggle}>{'สมัครเลย'}</Button>
+        <Button style={registerButtonStyle} outline color='primary' onClick={toggle}>{'สมัครเลย'}</Button>
         <Modal autoFocus={true} isOpen={modal} toggle={toggle} modalTransition={{ timeout: 300 }} >
           <ModalBody>
             <h2 style={textStyle}>สมัครเข้าใช้งาน</h2>
@@ -157,9 +156,9 @@ const RegisterForm = () => {
               <FormGroup>
                 <Label style={labelStyle}>ชื่อ:</Label>
                 <Input onChange={handleChangeName} value={name}></Input><br />
-                <Label style={labelStyle}>Username: กรุณากรอกเป็นภาษาอังกฤษ</Label>
+                <Label style={labelStyle}>Username (ภาษาอังกฤษ ขั้นต่ำ 5 ตัวอักษร)</Label>
                 <Input onChange={handleChangeUsername} value={username}></Input><br />
-                <Label style={labelStyle}>Password: กรุณากรอกเป็นภาษาอังกฤษ</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
+                <Label style={labelStyle}>Password (ภาษาอังกฤษ 8-20 ตัวอักษร)</Label> <Input id='password' type="password" onChange={handleChangePassword} value={password}></Input><br />
                 <Label style={labelStyle}>ยืนยัน Password:</Label>
                 <Input onChange={handleChangeConfirmPassword} type='password' value={confirmPassword}></Input><br />
                 <Label style={labelStyle}>Email:</Label> <Input id='email' type="text" onChange={handleChangeEmail} value={email}></Input><br />
@@ -170,8 +169,8 @@ const RegisterForm = () => {
           </ModalBody>
           <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
           <ModalFooter>
-            <LoaderButton type='submit' onClick={submitRegister}>สมัครเลย</LoaderButton>
-            <Button style={{ fontFamily: 'Kanit', height: '43px' }} onClick={toggle}>ยกเลิก</Button>
+            <Button color='primary' style={{ fontFamily: 'Kanit' }} type='submit' onClick={submitRegister}>สมัครเลย</Button>
+            <Button style={{ fontFamily: 'Kanit' }} onClick={toggle}>ยกเลิก</Button>
           </ModalFooter>
         </Modal></div>
     </div >

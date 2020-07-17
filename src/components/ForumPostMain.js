@@ -9,7 +9,7 @@ import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComments } from '@fortawesome/free-solid-svg-icons'
+import { faComments, faCheckCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 const labelStyle = {
   fontFamily: 'Kanit',
@@ -146,13 +146,13 @@ const ForumPostMain = (props) => {
   return (
     <Container>
       <div style={{ display: 'block', textAlign: 'center', fontSize: '100px', color: '#343a40', marginBottom: '0px' }}>
-        <FontAwesomeIcon icon={faComments} />
+        <FontAwesomeIcon icon={faQuestionCircle} />
       </div>
       <div id='forum-title-div'>
-        <Label style={labelStyle}>Title:</Label>
+        <Label style={labelStyle}>หัวข้อ</Label>
         {/* <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p> */}
         <Input
-          placeholder='คำถามของฉันคือ'
+          placeholder='พิมพ์หัวข้อที่นี่'
           onChange={handleTitleChange}
           value={title}
           style={{ marginBottom: '20px', fontFamily: 'Kanit' }}
@@ -160,19 +160,19 @@ const ForumPostMain = (props) => {
       </div>
 
       <div id='forum-question-div'>
-        <Label style={labelStyle}>Question:</Label>
-        <p style={{ fontFamily: 'Kanit' }}>ชื่อที่คุณใช้ล็อคอินจะไม่ปรากฏในคำถามของคุณ คุณสามารถถามได้โดยไม่ต้องกังวลเรื่องของความเป็นส่วนตัว เนื่องจากตัวตนของคุณจะไม่ถูกเปิดเผยต่อสาธารณะ และจะมีการรักษาความลับของคุณตามจรรยาบรรณของนักจิตวิทยา</p>
+        <Label style={labelStyle}>คำถาม</Label>
+
         {/* */}
         <Input
           type='textarea'
-          placeholder='รายละเอียดของคำถาม'
+          placeholder='พิมพ์รายละเอียดคำถามของคุณ'
           onChange={handleContentChange}
           value={question}
           onSubmit={handleEditorSubmit}
           style={{ fontFamily: 'Kanit' }}
         />
-        <Label style={labelStyle}>Tags:</Label>
-        <p style={{ fontFamily: 'Kanit' }}>กรุณาเลือกแท็กจำนวนสองแท็ก</p>
+        <Label style={labelStyle}>เลือกแท็ก</Label>
+
         <Select
           isClearable={false}
           options={tagOptions}
@@ -183,8 +183,10 @@ const ForumPostMain = (props) => {
           defaultValue={chosenFilter !== undefined ? tagOptions[0] : null}
           isMulti>
         </Select>
+        <hr />
         <div style={{ display: 'block', textAlign: 'center' }}>
-          <LoaderButton style={buttonStyle} onClick={handleEditorSubmit}>ส่ง</LoaderButton>
+          <p style={{ fontFamily: 'Kanit' }}>ชื่อที่คุณใช้ล็อคอินจะไม่ปรากฏในคำถามของคุณ</p>
+          <LoaderButton style={buttonStyle} onClick={handleEditorSubmit}>ส่งคำถาม</LoaderButton>
         </div>
       </div>
     </Container >

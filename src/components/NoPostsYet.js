@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
 
 
@@ -13,14 +13,11 @@ const postButtonDivStyle = {
   marginTop: '50px',
   marginBottom: '50px',
   fontFamily: 'Kanit',
-  fontSize: '30px'
+  fontSize: '20px'
 }
 const postButtonStyle = {
-  borderColor: '#343a40',
-  borderWidth: '3px',
-  borderStyle: 'solid',
+  width: '150px',
   fontFamily: 'Kanit',
-  backgroundColor: '#288046'
 }
 
 
@@ -37,18 +34,18 @@ const NoPostsYet = () => {
     <Container>
       <div style={textStyle}>
         <FontAwesomeIcon
-          icon={faUserEdit}
-          style={{ fontSize: '100px', color: '#343a40' }}
+          icon={faExclamationCircle}
+          style={{ fontSize: '60px', color: '#d3dceb', float: 'center' }}
         >
         </FontAwesomeIcon>
-        <h3 style={{ marginTop: '20px', fontFamily: 'Kanit' }}>
-          อ๊ะ ยังไม่มีใครตั้งกระทู้ถามในหัวข้อนี้เลยค่ะ อยากให้มีคนมาตั้งกระทู้ถามเป็นคนแรกจัง
-        </h3>
+        <h5 style={{ marginTop: '20px', fontFamily: 'Kanit' }}>
+          ยังไม่มีคำถามในหัวข้อนี้
+        </h5>
 
         <br />
         <div style={postButtonDivStyle}>
-          ตั้งกระทู้ถามเป็นคนแรก<br />
-          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+          ตั้งกระทู้ คลิก<br />
+          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </div>
     </Container>

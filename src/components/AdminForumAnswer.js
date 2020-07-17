@@ -14,19 +14,21 @@ const labelStyle = {
 }
 const buttonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: '#288046',
+  backgroundColor: 'white',
   marginTop: '15px',
   marginBottom: '15px',
   width: '100px',
-  float: 'left'
+  float: 'left',
+  color: 'green'
 }
 const clearButtonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: 'gray',
+  backgroundColor: 'white',
   marginTop: '15px',
   marginBottom: '15px',
   width: '100px',
-  float: 'right'
+  float: 'right',
+  color: '#343a40'
 }
 
 

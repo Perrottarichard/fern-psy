@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons';
 // import { faGithub } from '@fortawesome/free-brands-svg-icons'
 // import { initializeForumAnswered } from '../reducers/forumReducer'
 import { setTagFilter } from '../reducers/forumReducer'
@@ -12,10 +12,10 @@ import { toast } from 'react-toastify'
 
 
 const tagOptions = [
-  { tag: 'รวมทุกหัวข้อ', backgroundColor: '#8e2bff', icon: faGlobe },
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
+  { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },
+  { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
   { tag: 'การออกเดท', backgroundColor: '#288046', icon: faGlassCheers },
-  { tag: 'relationships', backgroundColor: '#ffa64d', icon: faHeartBroken },
+  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: faHeartBroken },
   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },
   { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: faUsers },
   { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: faSadTear },
@@ -23,7 +23,7 @@ const tagOptions = [
   { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: faTheaterMasks },
   { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: faBusinessTime },
   { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: faBrain },
-  { tag: 'bullying', backgroundColor: '#5e320f', icon: faAngry },
+  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: faAngry },
   { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: faHome },
   { tag: 'อื่นๆ', backgroundColor: '#707571', icon: faQuestionCircle },
   { tag: 'การเสพติด', backgroundColor: '#40073d', icon: faSyringe },
@@ -81,12 +81,8 @@ const postButtonDivStyle = {
   fontSize: '30px'
 }
 const postButtonStyle = {
-  borderColor: '#343a40',
-  borderWidth: '3px',
   width: '150px',
-  borderStyle: 'solid',
   fontFamily: 'Kanit',
-  backgroundColor: '#288046'
 }
 
 const ForumLandingPage = () => {
@@ -96,7 +92,7 @@ const ForumLandingPage = () => {
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))
-    if (t.tag === 'รวมทุกหัวข้อ') {
+    if (t.tag === 'ทั้งหมด') {
       history.push(`/allquestions`)
     } else {
       history.push(`/forum/${t.tag}`)
@@ -124,14 +120,14 @@ const ForumLandingPage = () => {
         )}
       </Container >
       <hr />
-      <div style={postButtonDivStyle}>
+      {/* <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('กรุณาล็อคอินก่อนตั้งกระทู้ถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
-      <br />
+      <br /> */}
       <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
         <span><FontAwesomeIcon icon={faCode} /></span>
-        <small ><a style={{ color: '#343a40' }} href="https://www.mangolatte.dev">engineered w/love by Richard</a></small>
+        <small ><a style={{ color: '#343a40' }} href="https://www.mangolatte.dev"> with <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon> by Richard</a></small>
       </div>
     </div>
   )

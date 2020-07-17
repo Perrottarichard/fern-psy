@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button, Container } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
-// import { initializeUsers } from '../reducers/userInfoForAdminReducer'
-import { getFlaggedComments, deleteComment } from '../reducers/forumReducer';
+import { getFlaggedComments, deleteComment, removeCommentFlag } from '../reducers/forumReducer';
 import { toast } from 'react-toastify';
 
-const buttonStyle = {
-  fontFamily: 'Montserrat'
-}
 const mailIconStyle = {
   fontSize: '32px',
   backgroundColor: 'white',
@@ -23,11 +19,21 @@ const contentStyle = {
 }
 const deleteButtonStyle = {
   fontFamily: 'Montserrat',
-  backgroundColor: 'red',
+  backgroundColor: 'white',
+  color: 'red',
   width: '50px',
   paddingRight: '5px',
   paddingLeft: '5px',
   fontSize: '10px'
+}
+const unflagButtonStyle = {
+  fontFamily: 'Montserrat',
+  backgroundColor: 'white',
+  width: '50px',
+  paddingRight: '5px',
+  paddingLeft: '5px',
+  fontSize: '10px',
+  color: 'green'
 }
 
 const AdminFlaggedComment = () => {
@@ -47,6 +53,14 @@ const AdminFlaggedComment = () => {
       console.log(error)
     }
   }
+  const removeFlag = (_id) => {
+    try {
+      dispatch(removeCommentFlag(_id))
+    } catch (error) {
+      toast.error('Something went wrong')
+      console.log(error)
+    }
+  }
   console.log(flagged)
   return (
     <Container>
@@ -61,14 +75,16 @@ const AdminFlaggedComment = () => {
         <tbody>
           {
             flagged ? flagged.map(c =>
-              <tr key={c.id}>
+              <tr key={c._id}>
                 <td style={contentStyle}>{c.user.username}</td>
                 <td><a href={`mailto:${c.user.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
                 </a></td>
                 <td style={contentStyle}>{c.content}</td>
                 {/* <td style={contentStyle}>{c.dateOfBirth.slice(0, 10)}</td> */}
                 {/* <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td> */}
+                <td><Button style={unflagButtonStyle} onClick={() => removeFlag(c._id)}>Unflag</Button></td>
                 <td><Button style={deleteButtonStyle} onClick={() => removeQuestion(c._id)}>Delete</Button></td>
+
               </tr>)
               : null}
         </tbody>

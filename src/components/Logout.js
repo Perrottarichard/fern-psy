@@ -19,7 +19,7 @@ const Logout = (props) => {
   }
   return (
     <div id='nav-logout-button'>
-      <Button onClick={logout} outline color='secondary' size='sm'>Logout</Button>
+      <Button onClick={logout} outline color='secondary' size='sm'>ออกจากระบบ</Button>
     </div>
   )
 }

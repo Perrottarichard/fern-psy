@@ -34,6 +34,8 @@ const forumReducer = (state = initialState, action) => {
       return { ...state, pending: state.pending.filter(q => q._id !== action.data) }
     case 'DELETE_COMMENT':
       return { ...state, flagged: state.flagged.filter(c => c._id !== action.data) }
+    case 'UNFLAG_COMMENT':
+      return { ...state, flagged: state.flagged.filter(c => c._id !== action.data) }
     case 'SET_TAG_FILTER':
       return { ...state, tagFilter: action.data }
     case 'FLAG_COMMENT':
@@ -79,7 +81,7 @@ export const addComment = (comment, postToModify) => {
 
     } catch (error) {
       console.log(error)
-      toast.error('Something went wrong')
+      toast.error('กรุณาลองใหม่')
     }
   }
 }
@@ -93,7 +95,7 @@ export const addQuestion = data => {
       })
       toast.success('คำถามของคุณถูกส่งเรียบร้อยแล้ว อดใจรอสักนิด โพสของคุณจะปรากฏหลังได้รับการยืนยันจากแอดมินค่ะ', { autoClose: false })
     } catch (error) {
-      toast.error('Something went wrong...')
+      toast.error('กรุณาลองใหม่')
     }
   }
 }
@@ -112,6 +114,15 @@ export const deleteComment = _id => {
     await forumService.removeComment(_id)
     dispatch({
       type: 'DELETE_COMMENT',
+      data: _id
+    })
+  }
+}
+export const removeCommentFlag = _id => {
+  return async dispatch => {
+    await forumService.unflag(_id)
+    dispatch({
+      type: 'UNFLAG_COMMENT',
       data: _id
     })
   }
@@ -156,7 +167,7 @@ export const setFlaggedComment = (comment) => {
       type: 'FLAG_COMMENT',
       data: flaggedPost
     })
-    toast.success('Thanks for flagging a comment.  Admin will review it.')
+    toast.success('ขอบคุณที่ช่วยรายงานปัญหาให้แอดมินทราบค่ะ')
   }
 }
 

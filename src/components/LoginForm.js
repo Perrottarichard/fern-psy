@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { toast } from "react-toastify"
+import { Button } from 'reactstrap'
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
-import LoaderButton from './LoaderButton'
+// import LoaderButton from './LoaderButton'
 
 import { Form, Label, FormGroup, Input } from 'reactstrap'
 import RegisterForm from './RegisterForm'
@@ -32,11 +33,7 @@ const labelStyle = {
 }
 const loginButtonStyle = {
   float: 'center',
-  borderColor: '#343a40',
-  borderWidth: '3px',
-  borderStyle: 'solid',
-  width: '150px',
-  backgroundColor: '#288046',
+  width: '100px',
   fontFamily: 'Kanit'
 }
 
@@ -94,21 +91,21 @@ const LoginForm = (props) => {
   }
   return (
     <div className='container' id='login-form'>
-      <h2 style={textStyle}>ล็อคอิน</h2>
+      <h2 style={textStyle}>เข้าสู่ระบบ</h2>
       <div id='form-div' style={formDivStyle}>
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>
             <Label style={labelStyle}>Username:</Label>
             <Input onChange={handleChangeUser} value={username}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <LoaderButton style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</LoaderButton>
+            <Button color='primary' style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</Button>
           </FormGroup>
         </Form>
       </div>
       <br />
       <hr />
       <div id='no-account-div'>
-        <p style={textStyle}>ยังไม่มีแอคเคาท์ คลิก</p>
+        <p style={textStyle}>ยังไม่มีแอคเคาท์ คลิกที่นี่</p>
         <RegisterForm />
       </div>
     </div>

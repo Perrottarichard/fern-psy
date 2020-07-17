@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { toast } from 'react-toastify';
@@ -90,12 +90,8 @@ const postButtonDivStyle = {
   fontSize: '30px'
 }
 const postButtonStyle = {
-  borderColor: '#343a40',
-  borderWidth: '3px',
   width: '150px',
-  borderStyle: 'solid',
   fontFamily: 'Kanit',
-  backgroundColor: '#288046'
 }
 // const likeButtonStyle = {
 //   backgroundColor: '#4da6ff',
@@ -131,11 +127,11 @@ const ForumDisplayAll = (props) => {
                 <small className="text-muted" style={smallStyle}>ถามเมื่อ {f.date.slice(0, 10)}</small>
               </CardHeader>
               <CardBody style={cardBodyStyleQ}>
-                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {f.question}
               </CardBody>
               <CardBody style={cardBodyStyleA}>
-                <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {f.answer}
               </CardBody>
               {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
@@ -147,7 +143,7 @@ const ForumDisplayAll = (props) => {
         </div>)}
       <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button style={postButtonStyle}>ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
     </Container>
   )

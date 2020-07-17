@@ -58,6 +58,13 @@ const removeComment = async idToDelete => {
   const response = await axios.delete(`${baseUrl}/comment/${idToDelete}`, config)
   return response.data
 }
+const unflag = async idToUnflag => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.put(`${baseUrl}/comment/unflag/${idToUnflag}`, { idToUnflag }, config)
+  return response.data
+}
 
 const heartUp = async (toUpdate) => {
   const id = toUpdate._id
@@ -69,4 +76,4 @@ const flagComment = async (c) => {
   return response.data
 }
 
-export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment }
+export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment, unflag }
