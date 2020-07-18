@@ -98,15 +98,10 @@ const RegisterForm = () => {
       setIsVerified(true)
     }
   }
-  let recaptchaInstance;
-  const executeCaptcha = function () {
-    recaptchaInstance.execute()
-  }
   const variations = ['fern', 'Fern', 'admin', 'Admin', 'administrator', 'Administrator', 'nilubon', 'Nilubon', 'Fern-Admin', 'Fern-admin', 'fern-admin', 'fern-Admin', 'Fern Admin', 'fern Admin', 'Fern admin', 'fern admin', 'FernAdmin', 'fernAdmin', 'fern_admin', 'Fern_Admin']
 
   const submitRegister = async event => {
     event.preventDefault()
-    executeCaptcha()
     if (variations.includes(username) || variations.map(v => v.toLowerCase).includes(username)) {
       toast.warn('ขออภัยค่ะ ชื่อนี้มีผู้ใช้งานแล้ว')
     }
@@ -124,6 +119,9 @@ const RegisterForm = () => {
     }
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       toast.warn('กรุณากรอก Email ให้ถูกต้อง')
+    }
+    else if (!isVerified) {
+      toast.warn('Confirm reCaptcha')
     }
     else {
       setIsLoading(true)
@@ -171,10 +169,10 @@ const RegisterForm = () => {
             </Form>
           </ModalBody>
           <Recaptcha
-            ref={e => recaptchaInstance = e}
-            sitekey='6LcXvrIZAAAAANAp8ow0NuqPq4C1DGtRD2wqeO2S'
-            // render='explicit' 
-            size='invisible'
+            sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT'
+            render='explicit'
+            // size='invisible'
+            hl='th'
             onloadCallback={recaptchaLoaded}
             verifyCallback={verifyCallback}
           />

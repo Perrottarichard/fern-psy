@@ -87,7 +87,7 @@ function About() {
           มหาวิทยาลัยเชียงใหม่
           วิทยาศาสตร์บัณฑิต สาขาจิตวิทยา (2544 - 2547) <br />
           Chiangmai University
-          Bachelor of Science in Counseling Psychology (2001 - 2004)
+          Bachelor of Science in Psychology (2001 - 2004)
           </p>
       </Container>
 

@@ -65,17 +65,12 @@ const ContactForm = () => {
       setIsVerified(true);
     }
   }
-  let recaptchaInstance;
-  const executeCaptcha = function () {
-    recaptchaInstance.execute()
-  }
   return (
     <div>
       <Formik
         initialValues={{ name: '', email: '', LINE: '', message: '' }}
         onSubmit={
           async (values, { setSubmitting, resetForm }) => {
-            executeCaptcha()
             if (!values.name) {
               toast.warn('ชื่อของคุณ')
             }
@@ -89,6 +84,9 @@ const ContactForm = () => {
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
               toast.warn('อีเมลไม่ถูกต้อง')
+            }
+            else if (!isVerified) {
+              toast.warn('Confirm reCaptcha')
             }
             else {
               setIsLoading(true)
@@ -158,12 +156,11 @@ const ContactForm = () => {
                   /><br />
                 </FormGroup>
                 <Recaptcha
-                  ref={e => recaptchaInstance = e}
-                  sitekey='6LcXvrIZAAAAANAp8ow0NuqPq4C1DGtRD2wqeO2S'
-                  // render='explicit' 
-                  size='invisible'
+                  sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT'
+                  render='explicit'
                   onloadCallback={recaptchaLoaded}
                   verifyCallback={verifyCallback}
+                  hl='th'
                 />
                 <LoaderButton style={contactButtonStyle} type='submit' >ส่งข้อความ</LoaderButton><br />
               </Form>

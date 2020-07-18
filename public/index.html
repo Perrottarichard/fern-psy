@@ -16,8 +16,13 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-
-  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  <script type="text/javascript">
+    var RecaptchaOptions = {
+      lang: 'th',
+      theme: 'red'
+    };
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&hl=th" async defer></script>
 </body>
 
 </html>
