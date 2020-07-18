@@ -25,6 +25,12 @@ const forumReducer = (state = initialState, action) => {
       const objectToModify = state.pending.find(s => s._id === answerId)
       const changedToAnswered = { ...objectToModify, isAnswered: true, answer: action.data.answer }
       return { ...state, pending: state.pending.map(s => s._id === answerId ? changedToAnswered : s) }
+    case 'EDIT_ANSWER':
+      const editedId = action.data._id
+      const modifiedAnswer = state.answered.find(p => p.answer._id === editedId)
+      console.log(modifiedAnswer)
+      const withNewAnswer = { ...modifiedAnswer, answer: action.data }
+      return { ...state, answered: state.answered.map(a => a.answer._id !== editedId ? a : withNewAnswer) }
     case 'ADD_COMMENT':
       const commentedOnId = action.data._id
       let postToChange = state.answered.find(p => p._id === commentedOnId)
@@ -66,6 +72,19 @@ export const answerQuestion = (answer) => {
       toast.success('You answered a question!')
     } catch (error) {
       toast.error('Something went wrong')
+    }
+  }
+}
+export const editAnswer = (answer) => {
+  return async dispatch => {
+    try {
+      await forumService.updateEditedAnswer(answer)
+      dispatch({
+        type: 'EDIT_ANSWER',
+        data: answer
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 }

@@ -23,6 +23,7 @@ import SingleTagDisplay from './components/SingleTagDisplay';
 import SinglePostDisplay from './components/SinglePostDisplay';
 import MyQuestions from './components/MyQuestions'
 import AdminFlaggedComment from './components/AdminFlaggedComment';
+import AdminAnswers from './components/AdminAnswers'
 
 //import { initializeQuestions } from './reducers/forumReducer';
 
@@ -101,11 +102,15 @@ const App = () => {
               <Container>
                 <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Pending Questions
                 </Button>
+                <Button color='secondary' id='answersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>My Answers</Button>
                 <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Private Messages</Button>
                 <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
                 <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
                 <UncontrolledCollapse toggler="#pendingToggler">
                   <AdminForumDashboard />
+                </UncontrolledCollapse>
+                <UncontrolledCollapse toggler="#answersToggler">
+                  <AdminAnswers />
                 </UncontrolledCollapse>
                 <UncontrolledCollapse toggler="#contactsToggler">
                   <AdminContactsDashboard />

@@ -66,7 +66,6 @@ const LoginForm = (props) => {
     }
     else {
       try {
-        setIsLoading(true)
         const user = await loginService.userlogin({ username, password })
         window.localStorage.setItem(
           'loggedForumUser', JSON.stringify(user)

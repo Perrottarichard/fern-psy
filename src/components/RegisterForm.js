@@ -94,13 +94,18 @@ const RegisterForm = () => {
   }
   const verifyCallback = (response) => {
     if (response) {
-      setIsVerified(true);
+      setIsVerified(true)
     }
+  }
+  let recaptchaInstance;
+  const executeCaptcha = function () {
+    recaptchaInstance.execute()
   }
   const variations = ['fern', 'Fern', 'admin', 'Admin', 'administrator', 'Administrator', 'nilubon', 'Nilubon', 'Fern-Admin', 'Fern-admin', 'fern-admin', 'fern-Admin', 'Fern Admin', 'fern Admin', 'Fern admin', 'fern admin', 'FernAdmin', 'fernAdmin', 'fern_admin', 'Fern_Admin']
 
   const submitRegister = async event => {
     event.preventDefault()
+    executeCaptcha()
     if (variations.includes(username) || variations.map(v => v.toLowerCase).includes(username)) {
       toast.warn('ขออภัยค่ะ ชื่อนี้มีผู้ใช้งานแล้ว')
     }
@@ -118,9 +123,6 @@ const RegisterForm = () => {
     }
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       toast.warn('กรุณากรอก Email ให้ถูกต้อง')
-    }
-    else if (!isVerified) {
-      toast.warn('กรุณาเช็คในกล่องยืนยันว่าคุณไม่ใช่โปรแกรมหุ่นยนต์')
     }
     else {
       setIsLoading(true)
@@ -167,7 +169,14 @@ const RegisterForm = () => {
               </FormGroup>
             </Form>
           </ModalBody>
-          <Recaptcha sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT' render='explicit' onloadCallback={recaptchaLoaded} verifyCallback={verifyCallback} />
+          <Recaptcha
+            ref={e => recaptchaInstance = e}
+            sitekey='6LcXvrIZAAAAANAp8ow0NuqPq4C1DGtRD2wqeO2S'
+            // render='explicit' 
+            size='invisible'
+            onloadCallback={recaptchaLoaded}
+            verifyCallback={verifyCallback}
+          />
           <ModalFooter>
             <Button color='primary' style={{ fontFamily: 'Kanit' }} type='submit' onClick={submitRegister}>สมัครเลย</Button>
             <Button style={{ fontFamily: 'Kanit' }} onClick={toggle}>ยกเลิก</Button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,6 +6,7 @@ import { faQuestionCircle, faComment, faHeart, faCheckCircle } from '@fortawesom
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { toast } from 'react-toastify';
+import SpinningLoader from './SpinningLoader'
 // import { tagFilterSelected } from '../reducers/forumReducer'
 // import SingleTagDisplay from './SingleTagDisplay';
 
@@ -58,13 +59,15 @@ const cardBodyStyleQ = {
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
+  borderBottom: '1px solid gray',
   backgroundColor: 'white' //super light green
 }
 const cardBodyStyleA = {
   fontSize: '14px',
   fontFamily: 'Kanit',
   padding: '10px',
-  backgroundColor: '#f0e1df' //super light pink
+  borderBottom: '1px solid gray',
+  backgroundColor: 'white' //super light pink
 }
 // const cardTitleStyle = {
 //   fontFamily: 'Montserrat',
@@ -108,13 +111,21 @@ const postButtonStyle = {
 const ForumDisplayAll = (props) => {
 
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
   const { forumAnswered } = props
   const activeUser = useSelector(state => state.activeUser)
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500);
   }, [dispatch])
-
+  if (isLoading) {
+    return (
+      <SpinningLoader />
+    )
+  }
   return (
     <Container>
       {forumAnswered.map(f =>
@@ -132,7 +143,7 @@ const ForumDisplayAll = (props) => {
               </CardBody>
               <CardBody style={cardBodyStyleA}>
                 <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {f.answer}
+                {f.answer.answer}
               </CardBody>
               {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
               <div style={{ display: 'block' }}>

@@ -208,7 +208,7 @@ const SinglePostDisplay = (props) => {
           </CardBody>
           <CardBody style={cardBodyStyleA}>
             <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-            {post.answer}
+            {post.answer.answer}
           </CardBody>
           {(post.comments.length > 0) ? post.comments.sort((a, b) => new Date(b.date) - new Date(a.date)).map(c =>
             <CardBody key={(c._id) ? c._id : Math.random()} style={cardBodyStyleC}>

@@ -33,7 +33,7 @@ const mailIconStyle = {
 }
 const AdminForumDashboard = () => {
   const dispatch = useDispatch()
-  const [answering, setAnswering] = useState({})
+  const [answering, setAnswering] = useState('')
   const forum = useSelector(state => state.forum)
 
   useEffect(() => {

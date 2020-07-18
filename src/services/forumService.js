@@ -34,7 +34,10 @@ const update = async (newObject) => {
   const response = await axios.put(`${baseUrl}/${newObject._id}`, newObject)
   return response.data
 }
-
+const updateEditedAnswer = async (newObject) => {
+  const response = await axios.put(`${baseUrl}/editanswer/${newObject._id}`, newObject)
+  return response.data
+}
 
 const addComment = async (comment, postToModify) => {
   const config = {
@@ -76,4 +79,4 @@ const flagComment = async (c) => {
   return response.data
 }
 
-export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment, unflag }
+export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment, unflag, updateEditedAnswer }

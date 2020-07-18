@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Container, Button, Label, Input } from 'reactstrap'
-import { answerQuestion } from '../reducers/forumReducer'
+import { editAnswer } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
 
 const labelStyle = {
@@ -32,11 +32,11 @@ const clearButtonStyle = {
 }
 
 
-const AdminForumAnswer = (props) => {
-  const { setAnswering, answering } = props
+const AdminForumEditAnswer = (props) => {
+  const { setEditing, editing } = props
   const [answer, setAnswer] = useState('')
   const dispatch = useDispatch()
-
+  console.log(editing)
   const handleContentChange = (event) => {
     setAnswer(event.target.value)
   }
@@ -46,12 +46,12 @@ const AdminForumAnswer = (props) => {
       toast.warn('You must have an answer')
     } else {
       try {
-        const postToAnswer = {
-          ...answering, answer: answer, isAnswered: true
+        const answerToEdit = {
+          ...editing, answer: answer
         }
-        dispatch(answerQuestion(postToAnswer))
+        dispatch(editAnswer(answerToEdit))
         setAnswer('')
-        setAnswering('')
+        setEditing('')
       } catch (error) {
         console.log(error)
       }
@@ -60,22 +60,20 @@ const AdminForumAnswer = (props) => {
   return (
     <div id='forum-response-div'>
       <Container>
-        <Label style={labelStyle}>Question:</Label>
-        <p style={{ fontFamily: 'Montserrat' }}>Reminder: This forum is anonymous.</p>
-        {(!answering) ? <h3 style={{ color: 'red', fontFamily: 'Montserrat' }}>You must first select a post</h3> :
-          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Montserrat' }}><em>You are answering the following question:</em></p>{answering.question}</div>}
+        {(!editing.answer) ? <h3 style={{ color: 'red', fontFamily: 'Montserrat' }}>You must first select an answer to change</h3> :
+          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Montserrat' }}><em>You are editing the following answer:</em></p>{editing.answer}</div>}
         <Input
           style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
           type='textarea'
           onChange={handleContentChange}
           value={answer}
           onSubmit={handleEditorSubmit}
-          disabled={answering === '' ? true : false}
+          disabled={editing === '' ? true : false}
         />
         <Button style={buttonStyle} onClick={handleEditorSubmit}>Submit Answer</Button>
-        <Button style={clearButtonStyle} onClick={() => setAnswering('')}>Clear Selection</Button>
+        <Button style={clearButtonStyle} onClick={() => setEditing('')}>Clear Selection</Button>
       </Container>
     </div>
   )
 }
-export default AdminForumAnswer
+export default AdminForumEditAnswer

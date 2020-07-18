@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faComment, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import NoPostsYet from './NoPostsYet';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
+import SpinningLoader from './SpinningLoader';
 
 const tagColorOptions = [
   { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d' },
@@ -55,13 +56,15 @@ const cardBodyStyleQ = {
   padding: '10px',
   textAlign: 'left',
   paddingLeft: '10px',
+  borderBottom: '1px solid gray',
   backgroundColor: 'white' //super light green
 }
 const cardBodyStyleA = {
   fontSize: '14px',
   fontFamily: 'Kanit',
   padding: '10px',
-  backgroundColor: '#f0e1df' //super light pink
+  borderBottom: '1px solid gray',
+  backgroundColor: 'white' //super light pink
 }
 
 const smallStyle = {
@@ -84,6 +87,7 @@ const postButtonStyle = {
 
 const SingleTagDisplay = () => {
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
   const activeUser = useSelector(state => state.activeUser)
 
@@ -91,9 +95,17 @@ const SingleTagDisplay = () => {
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500);
   }, [dispatch])
 
-  if (tagged.length === 0) {
+  if (isLoading) {
+    return (
+      <SpinningLoader />
+    )
+  }
+  else if (tagged.length === 0) {
     return (
       <NoPostsYet />
     )
@@ -111,12 +123,12 @@ const SingleTagDisplay = () => {
                 </CardHeader>
                 <CardBody style={cardBodyStyleQ}>
 
-                  <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                  <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                   {f.question}
                 </CardBody>
                 <CardBody style={cardBodyStyleA}>
-                  <FontAwesomeIcon icon={faComment} style={{ color: '#343a40', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                  {f.answer}
+                  <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
+                  {f.answer.answer}
 
                 </CardBody>
 
