@@ -43,6 +43,7 @@ const AdminFlaggedComment = () => {
 
   useEffect(() => {
     dispatch(getFlaggedComments())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const removeQuestion = (_id) => {

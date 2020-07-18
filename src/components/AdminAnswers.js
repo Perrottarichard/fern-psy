@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Table, Button, Container } from 'reactstrap'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
-import { editAnswer, initializeForumAnswered } from '../reducers/forumReducer';
-import { toast } from 'react-toastify';
+import { initializeForumAnswered } from '../reducers/forumReducer';
 import AdminForumEditAnswer from './AdminForumEditAnswer'
 
 const headingStyle = {
@@ -31,6 +30,7 @@ const AdminAnswers = () => {
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // const removeQuestion = (_id) => {

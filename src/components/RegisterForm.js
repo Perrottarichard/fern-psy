@@ -38,6 +38,7 @@ const RegisterForm = () => {
 
   const [modal, setModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [isVerified, setIsVerified] = useState(false)
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')

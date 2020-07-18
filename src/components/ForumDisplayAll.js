@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { toast } from 'react-toastify';
@@ -154,7 +154,7 @@ const ForumDisplayAll = (props) => {
         </div>)}
       <div style={postButtonDivStyle}>
         ตั้งกระทู้ถาม<br />
-        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('You must be logged in to post') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
+        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
       </div>
     </Container>
   )

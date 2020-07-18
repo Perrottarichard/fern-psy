@@ -1,17 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Label, Input } from 'reactstrap'
+import { Container, Button, Input } from 'reactstrap'
 import { editAnswer } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
 
-const labelStyle = {
-  fontFamily: 'Montserrat',
-  fontVariant: 'small-caps',
-  fontWeight: 400,
-  fontSize: '1.5rem',
-  marginBottom: '0px',
-  marginTop: '30px'
-}
 const buttonStyle = {
   fontFamily: 'Montserrat',
   backgroundColor: 'white',

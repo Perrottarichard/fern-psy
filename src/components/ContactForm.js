@@ -44,6 +44,7 @@ const contactButtonStyle = {
 }
 
 const ContactForm = () => {
+  // eslint-disable-next-line no-unused-vars
   const [isVerified, setIsVerified] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()

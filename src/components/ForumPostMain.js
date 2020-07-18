@@ -9,7 +9,7 @@ import makeAnimated from 'react-select/animated'
 import { addQuestion } from '../reducers/forumReducer'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComments, faCheckCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 const labelStyle = {
   fontFamily: 'Kanit',

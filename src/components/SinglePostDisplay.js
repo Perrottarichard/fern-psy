@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { Container, Card, Button, CardHeader, CardBody, Badge, Form, Input, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faComment, faComments, faHeart, faFlag, faCheckCircle, faUserCircle, faUser, faCommentDots, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faHeart, faFlag, faCheckCircle, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { addComment, heart } from '../reducers/forumReducer'
 import { toast } from 'react-toastify';
 import { initializeForumAnswered, setFlaggedComment } from '../reducers/forumReducer'

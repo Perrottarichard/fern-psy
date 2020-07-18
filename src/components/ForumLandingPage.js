@@ -1,15 +1,10 @@
 import React from 'react'
-import { useHistory, Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { Container, Card, CardTitle, CardBody, Button } from 'reactstrap'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Container, Card, CardTitle, CardBody } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons';
-// import { faGithub } from '@fortawesome/free-brands-svg-icons'
-// import { initializeForumAnswered } from '../reducers/forumReducer'
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { setTagFilter } from '../reducers/forumReducer'
-import { toast } from 'react-toastify'
-// import SingleTagDisplay from './SingleTagDisplay'
-
 
 const tagOptions = [
   { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },
@@ -72,23 +67,11 @@ const divStyle = {
   justifyContent: 'center',
   marginTop: '40px'
 }
-const postButtonDivStyle = {
-  display: 'block',
-  textAlign: 'center',
-  marginTop: '50px',
-  marginBottom: '50px',
-  fontFamily: 'Kanit',
-  fontSize: '30px'
-}
-const postButtonStyle = {
-  width: '150px',
-  fontFamily: 'Kanit',
-}
 
 const ForumLandingPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const activeUser = useSelector(state => state.activeUser)
+  // const activeUser = useSelector(state => state.activeUser)
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))
