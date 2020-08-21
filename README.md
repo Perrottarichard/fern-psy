@@ -41,5 +41,12 @@ https://github.com/Perrottarichard/fern-psy-backend
 
 
 ## UI (desktop)
-![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/screenshotDesktop/home.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/homedesktop.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/contactdesktop.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/forumpost.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/logindesktop.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/registerdesktop.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/singlepostdesktop.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/fernpsyscreenshots/admindash2.png)
 
