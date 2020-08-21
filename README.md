@@ -2,6 +2,8 @@
 
 This demo project is meant to be an anonymous forum for people to post questions and comments about sensitive social/psychological topics.  Registration is required in order to post and comment, but anyone can view the forum.
 
+Translation to Thai language credit Nilubon Sukawanich.
+
 This project is the client side of a demo, MERN stack web app.
 
 The project is hosted at:
