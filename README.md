@@ -1,13 +1,14 @@
 # Fern's Counseling Forum Demo (client)
 
+This demo project is meant to be an anonymous forum for people to post questions and comments about sensitive social/psychological topics.  Registration is required in order to post and comment, but anyone can view the forum.
+
 This project is the client side of a demo, MERN stack web app.
 
 The project is hosted at:
 https://fern-counseling.herokuapp.com
 
-View the server repository here: https://github.com/Perrottarichard/fern-psy-backend
-
-Although arbitrary, the products are an assortment of popular soft drinks from around the world, as well as branded t-shirts.  Placeholder text and images were used where, if this were a live application, professionally written copy and product images would be.
+View the server repository here: 
+https://github.com/Perrottarichard/fern-psy-backend
 
 ## Core Technologies
 | Technology  | For |
