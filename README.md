@@ -1,6 +1,6 @@
 # Fern's Counseling Forum Demo (client)
 
-This project is the client side of a demo, full-stack Javascript/Node web app.
+This project is the client side of a demo, MERN stack web app.
 
 The project is hosted at:
 https://fern-counseling.herokuapp.com
