@@ -24,9 +24,9 @@ https://github.com/Perrottarichard/fern-psy-backend
 
 ## Client Features
 ### User
-* Token authentication / local storage caching
+* token authentication / local storage caching
 * recaptcha fraud and abuse security
-* Post to forum anonymously, or send private message to the counselor
+* post to forum anonymously, or send private message to the counselor
 * comment on posts
 * view only your posts
 * flag inappropriate commments for admin review
