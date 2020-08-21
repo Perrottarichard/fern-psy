@@ -1,4 +1,4 @@
-# Fern Counseling Forum Demo (client)
+# Fern's Counseling Forum Demo (client)
 
 This project is the client side of a demo, full-stack Javascript/Node web app.
 
@@ -37,13 +37,5 @@ Although arbitrary, the products are an assortment of popular soft drinks from a
 
 
 ## UI (desktop)
-![Alt text](https://raw.github.com/perrottarichard/pop-shop-client/master/screenshotDesktop/home.png)
-
-## Cart
-![Alt text](https://raw.github.com/perrottarichard/pop-shop-client/master/screenshotDesktop/cart.png)
-
-## Three-step Checkout
-![Alt text](https://raw.github.com/perrottarichard/pop-shop-client/master/screenshotDesktop/checkout1.png)
-![Alt text](https://raw.github.com/perrottarichard/pop-shop-client/master/screenshotDesktop/checkout2.png)
-![Alt text](https://raw.github.com/perrottarichard/pop-shop-client/master/screenshotDesktop/checkout3.png)
+![Alt text](https://raw.github.com/perrottarichard/fern-psy/master/screenshotDesktop/home.png)
 
