@@ -108,9 +108,6 @@ const RegisterForm = () => {
     else if (!name || !username || !selectedGender || !dateOfBirth || !password) {
       toast.warn('กรุณากรอกข้อมูลให้ครบถ้วน')
     }
-    else if (!/^(?=.{5,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i.test(username)) {
-      toast.warn('Username ต้องเป็นภาษาอังกฤษ ความยาวอย่างน้อย 5-16 ตัวอักษร และไม่ใช้อักขระพิเศษ ', { autoClose: 5000 })
-    }
     else if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/i.test(password)) {
       toast.warn('Password ต้องเป็นภาษาอังกฤษ ความยาวอย่างน้อย 8-20 ตัวอักษร และไม่ใช้อักขระพิเศษ Password must be at least 8 characters long, include an uppercase, a lowercase, and a number', { autoClose: 5000 })
     }
