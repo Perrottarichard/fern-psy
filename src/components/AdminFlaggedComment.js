@@ -39,7 +39,6 @@ const unflagButtonStyle = {
 const AdminFlaggedComment = () => {
   const dispatch = useDispatch()
   const flagged = useSelector(state => state.forum.flagged)
-  // const [questionToggle, setQuestionToggle] = useState(false)
 
   useEffect(() => {
     dispatch(getFlaggedComments())
@@ -81,8 +80,6 @@ const AdminFlaggedComment = () => {
                 <td><a href={`mailto:${c.user.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
                 </a></td>
                 <td style={contentStyle}>{c.content}</td>
-                {/* <td style={contentStyle}>{c.dateOfBirth.slice(0, 10)}</td> */}
-                {/* <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td> */}
                 <td><Button style={unflagButtonStyle} onClick={() => removeFlag(c._id)}>Unflag</Button></td>
                 <td><Button style={deleteButtonStyle} onClick={() => removeQuestion(c._id)}>Delete</Button></td>
 

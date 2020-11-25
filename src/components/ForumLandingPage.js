@@ -36,7 +36,6 @@ const chooseTagColor = (passed) => {
       color: 'white',
       fontSize: '40px',
       padding: '10px',
-      // borderColor: '#e0e0eb',
       borderStyle: 'double',
       borderWidth: '4px'
     }
@@ -71,7 +70,6 @@ const divStyle = {
 const ForumLandingPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  // const activeUser = useSelector(state => state.activeUser)
 
   const clickTag = (t) => {
     dispatch(setTagFilter(t.tag))
@@ -103,11 +101,6 @@ const ForumLandingPage = () => {
         )}
       </Container >
       <hr />
-      {/* <div style={postButtonDivStyle}>
-        ตั้งกระทู้ถาม<br />
-        <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('กรุณาล็อคอินก่อนตั้งกระทู้ถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
-      </div>
-      <br /> */}
       <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
         <span><FontAwesomeIcon icon={faCode} /></span>
         <small ><a style={{ color: '#343a40' }} href="https://www.mangolatte.dev"> with <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon> by Richard</a></small>

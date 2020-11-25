@@ -168,7 +168,6 @@ const RegisterForm = () => {
           <Recaptcha
             sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT'
             render='explicit'
-            // size='invisible'
             hl='th'
             onloadCallback={recaptchaLoaded}
             verifyCallback={verifyCallback}

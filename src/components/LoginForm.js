@@ -6,7 +6,6 @@ import { Button } from 'reactstrap'
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
-// import LoaderButton from './LoaderButton'
 
 import { Form, Label, FormGroup, Input } from 'reactstrap'
 import RegisterForm from './RegisterForm'

@@ -22,7 +22,6 @@ const mailIconStyle = {
 const AdminContactsDashboard = () => {
   const dispatch = useDispatch()
   const contact = useSelector(state => state.contact)
-  // const [toggle, setToggle] = useState(false)
 
   const setHidden = (c) => {
     dispatch(setContactHidden(c))

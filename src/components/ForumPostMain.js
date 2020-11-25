@@ -29,24 +29,6 @@ const buttonStyle = {
   fontFamily: 'Kanit',
 }
 
-// const tagOptions = [
-//   { value: 'sex', label: 'Sex' },
-//   { value: 'dating', label: 'Dating' },
-//   { value: 'addiction', label: 'Addiction' },
-//   { value: 'friendship', label: 'Friendship' },
-//   { value: 'lgbt', label: 'LGBT' },
-//   { value: 'depression', label: 'Depression' },
-//   { value: 'anxiety', label: 'Anxiety' },
-//   { value: 'bipolar', label: 'Bipolar' },
-//   { value: 'relationships', label: 'Relationships' },
-//   { value: 'career', label: 'Career' },
-//   { value: 'mental health', label: 'Mental Health' },
-//   { value: 'bullying', label: 'Bullying' },
-//   { value: 'family', label: 'Family' },
-//   { value: 'other', label: 'Other' }
-// ]
-
-
 const ForumPostMain = (props) => {
   const { activeUser } = props
   const [isLoading, setIsLoading] = useState(false)
@@ -150,7 +132,6 @@ const ForumPostMain = (props) => {
       </div>
       <div id='forum-title-div'>
         <Label style={labelStyle}>หัวข้อ</Label>
-        {/* <p style={{ fontFamily: 'Montserrat' }}>Give your post an interesting title.</p> */}
         <Input
           placeholder='พิมพ์หัวข้อที่นี่'
           onChange={handleTitleChange}
@@ -162,7 +143,6 @@ const ForumPostMain = (props) => {
       <div id='forum-question-div'>
         <Label style={labelStyle}>คำถาม</Label>
 
-        {/* */}
         <Input
           type='textarea'
           placeholder='พิมพ์รายละเอียดคำถามของคุณ'

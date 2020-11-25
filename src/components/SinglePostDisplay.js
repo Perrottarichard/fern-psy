@@ -85,33 +85,12 @@ const smallStyle = {
 }
 
 const commentButtonStyle = {
-  // backgroundColor: '#343a40',
   fontFamily: 'Kanit',
   marginTop: '5px',
   marginBottom: '5px'
 }
-// const postButtonDivStyle = {
-//   display: 'block',
-//   textAlign: 'center',
-//   marginTop: '50px',
-//   marginBottom: '50px',
-//   fontFamily: 'Kanit',
-//   fontSize: '30px'
-// }
-// const postButtonStyle = {
-//   borderColor: '#343a40',
-//   borderWidth: '3px',
-//   width: '150px',
-//   borderStyle: 'solid',
-//   fontFamily: 'Kanit',
-//   backgroundColor: '#288046'
-// }
 const SinglePostDisplay = (props) => {
   const { activeUser } = props
-  // const [loading, setLoading] = useState(false)
-  // const dispatch = useDispatch()
-  // let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
-  // const chosenFilter = useSelector(state => state.forum.tagFilter)
   let { id } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [comment, setComment] = useState('')
@@ -220,15 +199,11 @@ const SinglePostDisplay = (props) => {
               <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'} <FontAwesomeIcon icon={faFlag} onClick={() => flag(c)} /></small>
 
             </CardBody>) : null}
-          {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
           <div style={{ display: 'block' }}>
             {post.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
           </div>
         </Card>
       </div>
-      {/* <div style={postButtonDivStyle}>
-          <Link to='/forum/:tag'><Button style={postButtonStyle} >Go back</Button></Link>
-        </div> */}
       <div style={{ display: 'block', textAlign: 'center' }}>
         <Form onSubmit={submitComment}>
           <Label style={{ fontFamily: 'Kanit', marginTop: '10px' }}>แสดงความคิดเห็น</Label>

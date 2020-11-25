@@ -91,7 +91,6 @@ const SingleTagDisplay = () => {
   let tagged = useSelector(state => state.forum.answered.map(post => post.tags.includes(state.forum.tagFilter) ? post : null)).filter(t => t !== null)
   const activeUser = useSelector(state => state.activeUser)
 
-  // const chosenFilter = useSelector(state => state.forum.tagFilter)
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
@@ -132,7 +131,6 @@ const SingleTagDisplay = () => {
 
                 </CardBody>
 
-                {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
                 <div style={{ display: 'block' }}>
                   {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
                 </div>

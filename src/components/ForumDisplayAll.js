@@ -7,8 +7,6 @@ import { initializeForumAnswered } from '../reducers/forumReducer'
 import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
 import { toast } from 'react-toastify';
 import SpinningLoader from './SpinningLoader'
-// import { tagFilterSelected } from '../reducers/forumReducer'
-// import SingleTagDisplay from './SingleTagDisplay';
 
 const tagColorOptions = [
 
@@ -69,17 +67,6 @@ const cardBodyStyleA = {
   borderBottom: '1px solid gray',
   backgroundColor: 'white' //super light pink
 }
-// const cardTitleStyle = {
-//   fontFamily: 'Montserrat',
-
-// }
-// const cardTextStyle = {
-//   fontFamily: 'Montserrat',
-//   backgroundColor: '#e6b6b1', //pinkish
-// }
-// const cardFooterStyle = {
-//   fontFamily: 'Montserrat'
-// }
 const smallStyle = {
   float: 'right',
   color: 'white'
@@ -96,18 +83,7 @@ const postButtonStyle = {
   width: '150px',
   fontFamily: 'Kanit',
 }
-// const likeButtonStyle = {
-//   backgroundColor: '#4da6ff',
-//   height: '28px',
-//   width: '35px',
-//   lineHeight: '5px',
-//   paddingRight: '25px',
-//   borderRadius: '20px',
-// }
-// const tagBadgeStyle = {
-//   backgroundColor: '',
-//   width: '100px'
-// }
+
 const ForumDisplayAll = (props) => {
 
   const dispatch = useDispatch()
@@ -145,7 +121,6 @@ const ForumDisplayAll = (props) => {
                 <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {f.answer.answer}
               </CardBody>
-              {/* <Button style={likeButtonStyle}><FontAwesomeIcon icon={faThumbsUp} /></Button> */}
               <div style={{ display: 'block' }}>
                 {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
               </div>

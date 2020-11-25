@@ -123,7 +123,7 @@ const answeredTogglerButtonStyle = {
 }
 
 
-const MyQuestions = (props) => {
+const MyQuestions = () => {
 
   let { id } = useParams()
   const dispatch = useDispatch()

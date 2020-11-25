@@ -25,20 +25,12 @@ import MyQuestions from './components/MyQuestions'
 import AdminFlaggedComment from './components/AdminFlaggedComment';
 import AdminAnswers from './components/AdminAnswers'
 
-//import { initializeQuestions } from './reducers/forumReducer';
-
-
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
-  // const forum = useSelector(state => state.forum)
   const activeUser = useSelector(state => state.activeUser)
   const dispatch = useDispatch()
   const forumAnswered = useSelector(state => state.forum.answered)
 
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(initializeQuestions())
-  // }, [dispatch])
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedForumUser')
     if (loggedUserJSON) {
