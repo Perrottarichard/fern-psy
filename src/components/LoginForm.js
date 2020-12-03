@@ -39,7 +39,7 @@ const loginButtonStyle = {
 const LoginForm = (props) => {
   const { setLoggedIn } = props
   const [isLoading, setIsLoading] = useState(false)
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const history = useHistory()
@@ -52,35 +52,34 @@ const LoginForm = (props) => {
     }
   }, [isLoading])
 
-  const handleChangeUser = (event) => {
-    setUsername(event.target.value)
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value)
   }
   const handleChangePass = (event) => {
     setPassword(event.target.value)
   }
   const submitLogin = async event => {
     event.preventDefault()
-    if (!username || !password) {
-      toast.warn('กรุณาใส่ username และ password')
+    if (!email || !password) {
+      toast.warn('กรุณาใส่ email และ password')
     }
     else {
       try {
-        const user = await loginService.userlogin({ username, password })
+        const user = await loginService.userlogin({ email, password })
         window.localStorage.setItem(
           'loggedForumUser', JSON.stringify(user)
         )
         forumService.setToken(user.token)
         dispatch(setUser(user))
-        toast.info(`ยินดีต้อนรับ คุณ ${user.username}`)
         setLoggedIn(true)
-        setUsername('')
+        setEmail('')
         setPassword('')
         history.push('/')
       }
       catch (error) {
         console.log(error.message)
         if (error.message.includes('401')) {
-          toast.error('กรุณาตรวจสอบความถูกต้องของ username และ password')
+          toast.error('กรุณาตรวจสอบความถูกต้องของ email และ password')
         } else {
           toast.error('มีข้อผิดพลาด')
         }
@@ -93,8 +92,8 @@ const LoginForm = (props) => {
       <div id='form-div' style={formDivStyle}>
         <Form style={formStyle} onSubmit={submitLogin}>
           <FormGroup>
-            <Label style={labelStyle}>Username:</Label>
-            <Input onChange={handleChangeUser} value={username}></Input><br />
+            <Label style={labelStyle}>Email:</Label>
+            <Input onChange={handleChangeEmail} value={email}></Input><br />
             <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
             <Button color='primary' style={loginButtonStyle} id='submit-login' type="submit">เข้าสู่ระบบ</Button>
           </FormGroup>
