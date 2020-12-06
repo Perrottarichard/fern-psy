@@ -16,9 +16,6 @@ const mailIconStyle = {
 const headingStyle = {
   fontFamily: 'Montserrat'
 }
-const contentStyle = {
-  fontFamily: 'Montserrat'
-}
 
 const AdminUsersDashboard = () => {
   const dispatch = useDispatch()
@@ -34,10 +31,7 @@ const AdminUsersDashboard = () => {
       <Table size='sm' hover responsive>
         <thead>
           <tr>
-            <th style={headingStyle}>Name</th>
-            <th style={headingStyle}>Username</th>
             <th style={headingStyle}>Email</th>
-            <th style={headingStyle}>DOB(Y-M-D)</th>
             <th style={headingStyle}>Questions</th>
           </tr>
         </thead>
@@ -45,11 +39,8 @@ const AdminUsersDashboard = () => {
           {
             users.map(c =>
               <tr key={c.id}>
-                <td style={contentStyle}>{c.name}</td>
-                <td style={contentStyle}>{c.username}</td>
                 <td><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
                 </a></td>
-                <td style={contentStyle}>{c.dateOfBirth.slice(0, 10)}</td>
                 <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
               </tr>)
           }
