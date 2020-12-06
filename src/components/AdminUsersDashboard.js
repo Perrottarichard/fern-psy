@@ -40,7 +40,7 @@ const AdminUsersDashboard = () => {
             users.map(c =>
               <tr key={c.id}>
                 <td><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
-                </a></td>
+            </a><span>{c.email}</span></td>
                 <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
               </tr>)
           }
