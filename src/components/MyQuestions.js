@@ -190,7 +190,7 @@ const MyQuestions = () => {
                   </CardBody>
                   <CardBody style={cardBodyStyleA}>
                     <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                    {f.answer}
+                    {f.answer.answer}
 
                   </CardBody>
                   <div style={{ display: 'block', textAlign: 'left' }}>
