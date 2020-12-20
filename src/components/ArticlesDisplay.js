@@ -59,7 +59,10 @@ const ArticleDisplay = () => {
       {articles && articles.map(f =>
         <Col key={f._id}>
             <Card style={{width: 500, height: 400}}>
-            <CardImg top style={{width: '100%', height: 300}} src={`data:image/png;base64,${arrayBufferToBase64(f.image.data.data)}`} />
+            <CardImg top style={{width: '100%', height: 300}} 
+            // src={`data:image/png;base64,${arrayBufferToBase64(f.image.data.data)}`}
+            src={f.image} 
+            />
               <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
                 {/* <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
                 <small>{f.likes}</small>

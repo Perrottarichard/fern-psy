@@ -13,7 +13,7 @@ const forumReducer = (state = initialState, action) => {
     case 'NEW_QUESTION':
       return state
     case 'NEW_ARTICLE':
-        return {...state, articles: {...state.articles.concat(action.data)}}
+        return state;
     case 'INIT_FORUM_PENDING':
       return { ...state, pending: action.data }
     case 'INIT_FORUM_ANSWERED':
@@ -131,6 +131,7 @@ export const addArticle = article => {
         type: 'NEW_ARTICLE',
         data: newArticle
       })
+      console.log(newArticle)
       toast.success('new article posted', { autoClose: false })
     } catch (error) {
       toast.error('something went wrong')
