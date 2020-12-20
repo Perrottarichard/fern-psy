@@ -61,7 +61,6 @@ const AdminFlaggedComment = () => {
       console.log(error)
     }
   }
-  console.log(flagged)
   return (
     <Container>
       <Table size='sm' hover responsive>

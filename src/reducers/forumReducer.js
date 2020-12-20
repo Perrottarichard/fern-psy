@@ -5,16 +5,21 @@ const initialState = {
   answered: [],
   pending: [],
   tagFilter: '',
-  flagged: []
+  flagged: [],
+  articles: []
 }
 const forumReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'NEW_QUESTION':
       return state
+    case 'NEW_ARTICLE':
+        return {...state, articles: {...state.articles.concat(action.data)}}
     case 'INIT_FORUM_PENDING':
       return { ...state, pending: action.data }
     case 'INIT_FORUM_ANSWERED':
       return { ...state, answered: action.data }
+    case 'GET_ARTICLES':
+      return {...state, articles: action.data}
     case 'HEART':
       const id = action.data._id
       const questionToChange = state.answered.find(q => q._id === id)
@@ -118,6 +123,20 @@ export const addQuestion = data => {
     }
   }
 }
+export const addArticle = article => {
+  return async dispatch => {
+    try {
+      const newArticle = await forumService.createArticle(article)
+      dispatch({
+        type: 'NEW_ARTICLE',
+        data: newArticle
+      })
+      toast.success('new article posted', { autoClose: false })
+    } catch (error) {
+      toast.error('something went wrong')
+    }
+  }
+}
 export const deleteQuestion = _id => {
   return async dispatch => {
     await forumService.remove(_id)
@@ -161,6 +180,15 @@ export const getFlaggedComments = () => {
     dispatch({
       type: 'GET_FLAGGED',
       data: flagged
+    })
+  }
+}
+export const getAllArticles = () => {
+  return async dispatch => {
+    const articles = await forumService.getArticles()
+    dispatch({
+      type: 'GET_ARTICLES',
+      data: articles
     })
   }
 }

@@ -28,7 +28,6 @@ const AdminForumEditAnswer = (props) => {
   const { setEditing, editing } = props
   const [answer, setAnswer] = useState('')
   const dispatch = useDispatch()
-  console.log(editing)
   const handleContentChange = (event) => {
     setAnswer(event.target.value)
   }

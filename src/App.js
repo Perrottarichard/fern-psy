@@ -24,6 +24,8 @@ import SinglePostDisplay from './components/SinglePostDisplay';
 import MyQuestions from './components/MyQuestions'
 import AdminFlaggedComment from './components/AdminFlaggedComment';
 import AdminAnswers from './components/AdminAnswers'
+import AdminPostArticle from './components/AdminPostArticle';
+import ArticleDisplay from './components/ArticlesDisplay';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -76,6 +78,9 @@ const App = () => {
           <Route exact path="/">
             <ForumLandingPage activeUser={activeUser} />
           </Route>
+          <Route exact path="/articles">
+            <ArticleDisplay activeUser={activeUser} />
+          </Route>
           <Route path="/post/:id">
             <SinglePostDisplay activeUser={activeUser} />
           </Route>
@@ -98,6 +103,7 @@ const App = () => {
                 <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Private Messages</Button>
                 <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
                 <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
+                <Button color='secondary' id='articlesToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Post Articles</Button>
                 <UncontrolledCollapse toggler="#pendingToggler">
                   <AdminForumDashboard />
                 </UncontrolledCollapse>
@@ -112,6 +118,9 @@ const App = () => {
                 </UncontrolledCollapse>
                 <UncontrolledCollapse toggler="#flaggedToggler">
                   <AdminFlaggedComment />
+                </UncontrolledCollapse>
+                <UncontrolledCollapse toggler="#articlesToggler">
+                 <AdminPostArticle/>
                 </UncontrolledCollapse>
               </Container>
             }

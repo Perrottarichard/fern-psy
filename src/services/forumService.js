@@ -78,5 +78,13 @@ const flagComment = async (c) => {
   const response = await axios.put(`${baseUrl}/flag/${c._id}`)
   return response.data
 }
+const createArticle = async article => {
+  const response = await axios.post(`${baseUrl}/postarticle`, article)
+  return response.data
+}
+const getArticles = async () => {
+  const response = await axios.get(`${baseUrl}/getAllArticles`)
+  return response.data
+}
 
-export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment, unflag, updateEditedAnswer }
+export default { getPending, getAnswered, create, update, setToken, remove, heartUp, addComment, flagComment, getFlagged, removeComment, unflag, updateEditedAnswer, createArticle, getArticles }

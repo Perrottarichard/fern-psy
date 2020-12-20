@@ -32,7 +32,6 @@ const AdminAnswers = () => {
 
   return (
     <Container>
-      {console.log(answers)}
       <Table size='sm' hover responsive>
         <thead>
           <tr>

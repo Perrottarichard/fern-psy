@@ -43,6 +43,9 @@ const MyNavbar = (props) => {
               <NavLink tag={Link} id="NavLink" to="/about">เกี่ยวกับ Fern</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink tag={Link} id="NavLink" to="/articles">Articles</NavLink>
+            </NavItem>
+            <NavItem>
               {
                 (!activeUser || (activeUser.username !== "Fern-Admin" && activeUser.username !== "Richard-Admin"))
                   ?
