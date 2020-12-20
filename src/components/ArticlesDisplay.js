@@ -24,12 +24,12 @@ const cardBodyStyleQ = {
 }
 
 
-const arrayBufferToBase64 = (buffer) => {
-  var binary = '';
-  var bytes = [].slice.call(new Uint8Array(buffer));
-  bytes.forEach((b) => binary += String.fromCharCode(b));
-  return window.btoa(binary);
-};
+// const arrayBufferToBase64 = (buffer) => {
+//   var binary = '';
+//   var bytes = [].slice.call(new Uint8Array(buffer));
+//   bytes.forEach((b) => binary += String.fromCharCode(b));
+//   return window.btoa(binary);
+// };
 
 const ArticleDisplay = () => {
 
@@ -64,12 +64,8 @@ const ArticleDisplay = () => {
             src={f.image} 
             />
               <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
-                {/* <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
-                <small>{f.likes}</small>
-                <small className="text-muted" style={smallStyle}>ถามเมื่อ {f.date.slice(0, 10)}</small> */}
               </CardHeader>
               <CardBody style={cardBodyStyleQ}>
-                {/* <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} /> */}
                 {f.content}
               </CardBody>
             </Card>
