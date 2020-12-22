@@ -1,27 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllArticles } from '../reducers/forumReducer'
-import { Container, Col, Row, Card,CardHeader, CardBody, CardImg } from 'reactstrap';
+import { Container, Card,CardHeader, CardBody, CardImg } from 'reactstrap';
 import SpinningLoader from './SpinningLoader'
-
-const cardHeaderStyle = {
-  fontFamily: 'Kanit',
-  fontSize: '14px',
-  backgroundColor: '#343a40',
-  color: 'white',
-  marginTop: '10px',
-  paddingTop: '6px',
-  paddingBottom: '6px'
-}
-const cardBodyStyleQ = {
-  fontSize: '14px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  textAlign: 'left',
-  paddingLeft: '10px',
-  borderBottom: '1px solid gray',
-  backgroundColor: 'white' //super light green
-}
 
 
 // const arrayBufferToBase64 = (buffer) => {
@@ -36,8 +17,6 @@ const ArticleDisplay = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
   const articles = useSelector(state => state.forum.articles)
-
-  console.log(articles)
 
   useEffect(() => {
       dispatch(getAllArticles())
@@ -54,23 +33,18 @@ const ArticleDisplay = () => {
     )
   }
   return (
-    <Container >
-      <Row>
+    <Container style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', flexWrap: 'wrap', margin: 20}}>
       {articles && articles.map(f =>
-        <Col key={f._id}>
-            <Card style={{width: 500, height: 400}}>
-            <CardImg top style={{width: '100%', height: 300}} 
+        <div key={f._id} style={{width: 420, height: 360}}>
+            <Card style={{width: 400, height: 340, padding: 0}}>
+            <CardImg top style={{width: 400, height: 300}} 
             // src={`data:image/png;base64,${arrayBufferToBase64(f.image.data.data)}`}
             src={f.image} 
             />
-              <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+              <CardHeader  tag="h5">{f.title}
               </CardHeader>
-              <CardBody style={cardBodyStyleQ}>
-                {f.content}
-              </CardBody>
             </Card>
-        </Col>)}
-        </Row>
+            </div>)}
     </Container>
   )
 }

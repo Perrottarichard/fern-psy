@@ -131,7 +131,6 @@ export const addArticle = article => {
         type: 'NEW_ARTICLE',
         data: newArticle
       })
-      console.log(newArticle)
       toast.success('new article posted', { autoClose: false })
     } catch (error) {
       toast.error('something went wrong')
