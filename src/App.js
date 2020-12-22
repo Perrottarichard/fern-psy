@@ -93,7 +93,7 @@ const App = () => {
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
-          <Route exact path="/admin">
+          <Route path="/admin">
             <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
           <Route path='/admin/dashboard'>
