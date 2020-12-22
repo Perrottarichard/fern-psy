@@ -78,7 +78,7 @@ const App = () => {
           <Route exact path="/">
             <ForumLandingPage activeUser={activeUser} />
           </Route>
-          <Route exact path="/articles">
+          <Route path="/articles">
             <ArticleDisplay activeUser={activeUser} />
           </Route>
           <Route path="/post/:id">
@@ -92,6 +92,9 @@ const App = () => {
           </Route>
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
+          </Route>
+          <Route exact path="/admin">
+            <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
           <Route path='/admin/dashboard'>
             {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
@@ -124,9 +127,6 @@ const App = () => {
                 </UncontrolledCollapse>
               </Container>
             }
-          </Route>
-          <Route exact path="/admin">
-            <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
         </Switch>
       </div>
