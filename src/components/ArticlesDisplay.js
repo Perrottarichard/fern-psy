@@ -34,7 +34,7 @@ const ArticleDisplay = () => {
   }
   return (
     <Container style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', flexWrap: 'wrap', margin: 20}}>
-      {articles && articles.map(f =>
+      {articles.length > 0 ? articles.map(f =>
         <div key={f._id} style={{width: 420, height: 360}}>
             <Card style={{width: 400, height: 340, padding: 0}}>
             <CardImg top style={{width: 400, height: 300}} 
@@ -44,7 +44,7 @@ const ArticleDisplay = () => {
               <CardHeader  tag="h5">{f.title}
               </CardHeader>
             </Card>
-            </div>)}
+            </div>) : null}
     </Container>
   )
 }
