@@ -71,7 +71,7 @@ const AdminLoginForm = (props) => {
         setLoggedIn(true)
         setUsername('')
         setPassword('')
-        history.push('/admin/dashboard')
+        history.push('/adDash')
       }
       catch (error) {
         console.log(error.message)

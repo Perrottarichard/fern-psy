@@ -51,14 +51,14 @@ const MyNavbar = (props) => {
                   ?
                   <NavLink tag={Link} id="NavLink" to="/contact">ติดต่อ Fern</NavLink>
                   :
-                  <NavLink tag={Link} id="NavLink" to="/admin/dashboard">Dashboard</NavLink>
+                  <NavLink tag={Link} id="NavLink" to="/adDash">Dashboard</NavLink>
               }
             </NavItem>
             {
               (!activeUser || !loggedIn)
                 ?
                 <NavItem>
-                  <a style={adminLoginButtonStyle} href='/admin'>admin</a>
+                  <a style={adminLoginButtonStyle} href='/adLogin'>admin</a>
                 </NavItem>
                 :
                 null

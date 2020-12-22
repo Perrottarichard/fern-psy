@@ -93,10 +93,10 @@ const App = () => {
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
-          <Route path="/admin">
+          <Route path="/adLogin">
             <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
-          <Route path='/admin/dashboard'>
+          <Route path='/adDash'>
             {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
               <NoPage /> :
               <Container>
