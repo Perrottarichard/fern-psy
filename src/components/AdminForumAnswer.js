@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Label, Input } from 'reactstrap'
+import { Container, Button, Input } from '@material-ui/core'
 import { answerQuestion } from '../reducers/forumReducer'
-import { toast } from 'react-toastify'
 
 const labelStyle = {
   fontFamily: 'Montserrat',
@@ -43,7 +42,7 @@ const AdminForumAnswer = (props) => {
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
     if (!answer) {
-      toast.warn('You must have an answer')
+      // toast.warn('You must have an answer')
     } else {
       try {
         const postToAnswer = {
@@ -60,7 +59,7 @@ const AdminForumAnswer = (props) => {
   return (
     <div id='forum-response-div'>
       <Container>
-        <Label style={labelStyle}>Question:</Label>
+        <p style={labelStyle}>Question:</p>
         <p style={{ fontFamily: 'Montserrat' }}>Reminder: This forum is anonymous.</p>
         {(!answering) ? <h3 style={{ color: 'red', fontFamily: 'Montserrat' }}>You must first select a post</h3> :
           <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Montserrat' }}><em>You are answering the following question:</em></p>{answering.question}</div>}

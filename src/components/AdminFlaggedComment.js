@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button, Container } from 'reactstrap'
+import { Table, Button, Container } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { getFlaggedComments, deleteComment, removeCommentFlag } from '../reducers/forumReducer';
-import { toast } from 'react-toastify';
 
 const mailIconStyle = {
   fontSize: '32px',
@@ -49,7 +48,7 @@ const AdminFlaggedComment = () => {
     try {
       dispatch(deleteComment(_id))
     } catch (error) {
-      toast.error('Something went wrong')
+      // toast.error('Something went wrong')
       console.log(error)
     }
   }
@@ -57,7 +56,7 @@ const AdminFlaggedComment = () => {
     try {
       dispatch(removeCommentFlag(_id))
     } catch (error) {
-      toast.error('Something went wrong')
+      // toast.error('Something went wrong')
       console.log(error)
     }
   }

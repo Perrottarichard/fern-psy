@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Container, Button } from 'reactstrap'
+import { Table, Container, Button } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumPending, deleteQuestion } from '../reducers/forumReducer'
 import AdminForumAnswer from './AdminForumAnswer'
-import { toast } from 'react-toastify';
 
 
 const buttonStyle = {
@@ -45,7 +44,7 @@ const AdminForumDashboard = () => {
       try {
         dispatch(deleteQuestion(_id))
       } catch (error) {
-        toast.error('Something went wrong')
+        // toast.error('Something went wrong')
         console.log(error)
       }
     }

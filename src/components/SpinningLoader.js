@@ -1,10 +1,10 @@
 import React from 'react'
-import { Spinner } from 'reactstrap'
+import { CircularProgress } from '@material-ui/core'
 
 const SpinningLoader = () => {
   return (
     <div style={{ display: 'block', textAlign: 'center', marginTop: '200px' }}>
-      <Spinner color="primary" style={{ width: '3rem', height: '3rem' }} />
+      <CircularProgress color="primary" style={{ width: '3rem', height: '3rem' }} />
     </div>
   )
 }

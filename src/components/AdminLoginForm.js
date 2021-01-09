@@ -6,8 +6,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import { setUser } from '../reducers/activeUserReducer'
-import { Form, Label, FormGroup, Button, Input } from 'reactstrap'
-import { toast } from 'react-toastify'
+import { Button, Input } from '@material-ui/core'
 
 const textStyle = {
   textAlign: 'center',
@@ -57,7 +56,7 @@ const AdminLoginForm = (props) => {
   const submitLogin = async event => {
     event.preventDefault()
     if (!username || !password) {
-      toast.warn('You must enter a username and password')
+      // toast.warn('You must enter a username and password')
     }
     else {
       try {
@@ -76,7 +75,7 @@ const AdminLoginForm = (props) => {
       catch (error) {
         console.log(error.message)
         if (error.message.includes('401')) {
-          toast.warn('check your username and password again')
+          // toast.warn('check your username and password again')
         }
       }
     }
@@ -87,14 +86,12 @@ const AdminLoginForm = (props) => {
         <h2 style={textStyle}><FontAwesomeIcon icon={faLock} style={iconStyle} />{' '}Admin{' '}</h2>
       </div>
       <div id='form-div' style={formDivStyle}>
-        <Form style={formStyle} onSubmit={submitLogin}>
-          <FormGroup>
-            <Label style={labelStyle}>Username:</Label>
+        <form style={formStyle} onSubmit={submitLogin}>
+            <p style={labelStyle}>Username:</p>
             <Input onChange={handleChangeUser} value={username}></Input><br />
-            <Label style={labelStyle}>Password:</Label> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
+            <p style={labelStyle}>Password:</p> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
             <Button color='none' style={loginButtonStyle} id='admin-submit-login' type="submit">Enter</Button>
-          </FormGroup>
-        </Form>
+        </form>
       </div>
     </div>
   )

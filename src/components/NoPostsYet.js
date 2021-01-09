@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Button, Container } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { toast } from 'react-toastify'
 
 
 const postButtonDivStyle = {
@@ -45,7 +44,7 @@ const NoPostsYet = () => {
         <br />
         <div style={postButtonDivStyle}>
           ตั้งกระทู้ คลิก<br />
-          <Link to={activeUser === null ? '/login' : '/addpost'} onClick={() => activeUser === null ? toast.warn('คุณต้องเข้าสู่ระบบเพื่อโพสต์คำถาม') : null}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
+          <Link to={activeUser === null ? '/login' : '/addpost'}><Button color='primary' style={postButtonStyle}>ส่งคำถาม</Button></Link>
         </div>
       </div>
     </Container>

@@ -5,9 +5,8 @@ import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
-import { Container, Form, Label, Input, FormGroup } from 'reactstrap'
+import { Container, Input} from '@material-ui/core'
 import contactService from '../services/contactService'
-import { toast } from 'react-toastify';
 import LoaderButton from './LoaderButton'
 
 const textStyle = {
@@ -72,26 +71,26 @@ const ContactForm = () => {
         onSubmit={
           async (values, { setSubmitting, resetForm }) => {
             if (!values.name) {
-              toast.warn('ชื่อของคุณ')
+              // toast.warn('ชื่อของคุณ')
             }
             else if (!values.email) {
-              toast.warn('ต้องระบุอีเมล')
+              // toast.warn('ต้องระบุอีเมล')
             }
             else if (!values.message) {
-              toast.warn('เขียนข้อความ')
+              // toast.warn('เขียนข้อความ')
             }
             else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              toast.warn('อีเมลไม่ถูกต้อง')
+              // toast.warn('อีเมลไม่ถูกต้อง')
             }
             else if (!isVerified) {
-              toast.warn('Confirm reCaptcha')
+              // toast.warn('Confirm reCaptcha')
             }
             else {
               setIsLoading(true)
               await contactService.sendContact(values)
-              toast.success('ส่งข้อความ')
+              // toast.success('ส่งข้อความ')
               setSubmitting(false)
               resetForm({})
               history.push('/')
@@ -117,9 +116,8 @@ const ContactForm = () => {
               </div>
               <br />
               <h5 style={textStyle}>กรอกแบบฟอร์มเพื่อส่งคำถาม</h5>
-              <Form style={formStyle} onSubmit={handleSubmit} className='form-ui'>
-                <FormGroup style={{ marginBottom: '0' }}>
-                  <Label style={labelStyle} for='name'>ชื่อของคุณ</Label>
+              <form style={formStyle} onSubmit={handleSubmit} className='form-ui'>
+                  <p style={labelStyle} for='name'>ชื่อของคุณ</p>
                   <Input
                     type="Name"
                     name="name"
@@ -127,7 +125,7 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.name}
                   /><br />
-                  <Label style={labelStyle} for='email'>อีเมล</Label>
+                  <p style={labelStyle} for='email'>อีเมล</p>
                   <Input
                     placeholder='You@example.com'
                     type="Email"
@@ -136,7 +134,7 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.email}
                   /><br />
-                  <Label style={labelStyle} for='Line'>LINE</Label>
+                  <p style={labelStyle} for='Line'>LINE</p>
                   <Input
                     placeholder='Line ID'
                     type="Line"
@@ -145,7 +143,7 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.LINE}
                   /><br />
-                  <Label style={labelStyle} for='message'>ข้อความ</Label>
+                  <p style={labelStyle} for='message'>ข้อความ</p>
                   <Input
                     placeholder='ฉันมีคำถามเกี่ยวกับ ...'
                     type="Message"
@@ -154,7 +152,6 @@ const ContactForm = () => {
                     onBlur={handleBlur}
                     value={values.message}
                   /><br />
-                </FormGroup>
                 <Recaptcha
                   sitekey='6LcL060ZAAAAABmkdF8vTezZgafAVQo1WoGgGNDT'
                   render='explicit'
@@ -163,7 +160,7 @@ const ContactForm = () => {
                   hl='th'
                 />
                 <LoaderButton style={contactButtonStyle} type='submit' >ส่งข้อความ</LoaderButton><br />
-              </Form>
+              </form>
             </Container>
           )}
       </Formik>

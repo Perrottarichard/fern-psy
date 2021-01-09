@@ -1,5 +1,4 @@
 import contactService from '../services/contactService'
-import { toast } from 'react-toastify'
 
 const contactReducer = (state = [], action) => {
   switch (action.type) {
@@ -29,7 +28,6 @@ export const setContactHidden = (contact) => {
       type: 'SET_CONTACT_HIDDEN',
       data: hiddenContact
     })
-    toast.success('Contact hidden. Contact the IT department to restore')
   }
 }
 

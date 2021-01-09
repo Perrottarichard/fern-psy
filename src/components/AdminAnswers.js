@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button, Container } from 'reactstrap'
+import { Table, Button, Container } from '@material-ui/core'
 import { initializeForumAnswered } from '../reducers/forumReducer';
 import AdminForumEditAnswer from './AdminForumEditAnswer'
 

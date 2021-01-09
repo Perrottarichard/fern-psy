@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Label, Input, FormGroup, Form } from 'reactstrap'
+import { Container, Button, Input} from '@material-ui/core'
 import { addArticle } from '../reducers/forumReducer'
-import { toast } from 'react-toastify'
 
 
 const labelStyle = {
@@ -52,9 +51,9 @@ const AdminPostArticle = () => {
   const handleArticleSubmit = async (event) => {
     event.preventDefault()
     if (!title) {
-      toast.warn('You must have a title')
+      // toast.warn('You must have a title')
     } else if(!content){
-      toast.warn('Your article must have content')
+      // toast.warn('Your article must have content')
     }else{
       try {
         const article = new FormData()
@@ -80,38 +79,30 @@ const AdminPostArticle = () => {
   return (
     <div id='forum-response-div'>
       <Container>
-        <Form>
-          <FormGroup>
-        <Label style={labelStyle}>Title:</Label>
+        <form>
+        <p style={labelStyle}>Title:</p>
         <Input
           style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
           type='text'
           onChange={handleTitleChange}
           value={title}
         />
-        </FormGroup>
-
-        <FormGroup>
-        <Label style={labelStyle}>Content:</Label>
+        <p style={labelStyle}>Content:</p>
         <Input
           style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
           type='textarea'
           onChange={handleContentChange}
           value={content}
         />
-        </FormGroup>
-
-        <FormGroup>
-        <Label style={labelStyle}>File:</Label>
+        <p style={labelStyle}>File:</p>
           <Input
           style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
           type='file'
           name='myImage'
           onChange={handleFileChange}
         />
-        </FormGroup>
         <Button style={buttonStyle} onClick={handleArticleSubmit}>Submit Article</Button>
-        </Form>
+        </form>
       </Container>
     </div>
   )

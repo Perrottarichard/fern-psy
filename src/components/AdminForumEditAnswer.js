@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Input } from 'reactstrap'
+import { Container, Button, Input } from '@material-ui/core'
 import { editAnswer } from '../reducers/forumReducer'
-import { toast } from 'react-toastify'
 
 const buttonStyle = {
   fontFamily: 'Montserrat',
@@ -34,7 +33,7 @@ const AdminForumEditAnswer = (props) => {
   const handleEditorSubmit = async (event) => {
     event.preventDefault()
     if (!answer) {
-      toast.warn('You must have an answer')
+      // toast.warn('You must have an answer')
     } else {
       try {
         const answerToEdit = {

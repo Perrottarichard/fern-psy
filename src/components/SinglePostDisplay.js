@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
-import { Container, Card, Button, CardHeader, CardBody, Badge, Form, Input, Label } from 'reactstrap';
+import { Container, Card, Button, Typography, CardContent, Badge, Input } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faHeart, faFlag, faCheckCircle, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { addComment, heart } from '../reducers/forumReducer'
-import { toast } from 'react-toastify';
 import { initializeForumAnswered, setFlaggedComment } from '../reducers/forumReducer'
 import LoaderButton from './LoaderButton'
 
@@ -44,7 +43,7 @@ const chooseTagColor = (passed) => {
 const commentDivStyle = {
   display: 'block'
 }
-const cardHeaderStyle = {
+const TypographyStyle = {
   fontFamily: 'Kanit',
   fontSize: '16px',
   backgroundColor: '#343a40',
@@ -54,7 +53,7 @@ const cardHeaderStyle = {
   paddingBottom: '6px',
   textAlign: 'center'
 }
-const cardBodyStyleQ = {
+const CardContentStyleQ = {
   fontSize: '16px',
   fontFamily: 'Kanit',
   padding: '10px',
@@ -63,14 +62,14 @@ const cardBodyStyleQ = {
   borderBottom: '1px solid gray',
   backgroundColor: 'white'
 }
-const cardBodyStyleA = {
+const CardContentStyleA = {
   fontSize: '16px',
   fontFamily: 'Kanit',
   padding: '10px',
   borderBottom: '1px solid gray',
   backgroundColor: 'white' //super light pink
 }
-const cardBodyStyleC = {
+const CardContentStyleC = {
   fontSize: '12px',
   fontFamily: 'Kanit',
   padding: '10px',
@@ -117,10 +116,10 @@ const SinglePostDisplay = (props) => {
     event.preventDefault()
     let postToModifyId = post
     if (activeUser === null) {
-      toast.warn('คุณต้องลงชื่อเพื่อแสดงความคิดเห็น')
+      // toast.warn('คุณต้องลงชื่อเพื่อแสดงความคิดเห็น')
       history.push('/login')
     } else if (comment === '') {
-      toast.warn('คุณลืมที่จะเขียนความคิดเห็น')
+      // toast.warn('คุณลืมที่จะเขียนความคิดเห็น')
     } else {
       try {
         setIsLoading(true)
@@ -128,17 +127,17 @@ const SinglePostDisplay = (props) => {
         setComment('')
       } catch (error) {
         console.log('thisistheerrror', error)
-        toast.error('กรุณาลองใหม่')
+        // toast.error('กรุณาลองใหม่')
       }
     }
   }
   const submitHeart = async () => {
     let postToModify = post
     if (activeUser === null) {
-      toast.warn('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ')
+      // toast.warn('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ')
       history.push('/login')
     } else if (sentHeart !== null) {
-      toast.warn('คุณได้ส่งหัวใจสำหรับโพสต์นี้แล้ว')
+      // toast.warn('คุณได้ส่งหัวใจสำหรับโพสต์นี้แล้ว')
     } else {
       try {
         setPulseHeart('heart-icon')
@@ -149,7 +148,7 @@ const SinglePostDisplay = (props) => {
         }, 2000);
       } catch (error) {
         console.log(error)
-        toast.error('กรุณาลองใหม่')
+        // toast.error('กรุณาลองใหม่')
       }
     }
   }
@@ -158,7 +157,7 @@ const SinglePostDisplay = (props) => {
   }
   const flag = (comment) => {
     if (comment.isFlagged) {
-      return toast.warn('ความคิดเห็นนี้มีผู้รายงานให้แอดมินทราบปัญหาเรียบร้อยแล้ว')
+      return null
     }
     else if (window.confirm('คุณแน่ใจหรือไม่ว่าคุณต้องการรายงานความคิดเห็นนี้ให้แอดมินทราบ')) {
       dispatch(setFlaggedComment(comment))
@@ -169,28 +168,28 @@ const SinglePostDisplay = (props) => {
     <Container>
       <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
         <Card>
-          <CardBody key={Math.random()}>
+          <CardContent key={Math.random()}>
             <FontAwesomeIcon className={pulseHeart} icon={faHeart} style={{ fontSize: '50px', color: 'pink' }} />
-          </CardBody>
+          </CardContent>
           <Button style={{ color: '#343a40', backgroundColor: 'white', borderStyle: 'none', borderColor: 'none' }} onClick={() => submitHeart()}>ส่งหัวใจเพื่อให้กำลังใจเจ้าของกระทู้ คลิก</Button>
         </Card>
       </div>
       <div key={post._id} style={commentDivStyle}>
         <Card >
-          <CardHeader style={cardHeaderStyle}>{post.title}
+          <Typography style={TypographyStyle}>{post.title}
             <span style={{ float: 'right' }}><FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: 'pink', marginLeft: '30px', marginRight: '5px' }} />{post.likes}</span>
             <small className="text-muted" style={smallStyle}>{post.date.slice(0, 10)}</small>
-          </CardHeader>
-          <CardBody style={cardBodyStyleQ}>
+          </Typography>
+          <CardContent style={CardContentStyleQ}>
             <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
             {post.question}
-          </CardBody>
-          <CardBody style={cardBodyStyleA}>
+          </CardContent>
+          <CardContent style={CardContentStyleA}>
             <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
             {post.answer.answer}
-          </CardBody>
+          </CardContent>
           {(post.comments.length > 0) ? post.comments.sort((a, b) => new Date(b.date) - new Date(a.date)).map(c =>
-            <CardBody key={(c._id) ? c._id : Math.random()} style={cardBodyStyleC}>
+            <CardContent key={(c._id) ? c._id : Math.random()} style={CardContentStyleC}>
               <span style={{ fontWeight: '200' }}>
                 {c.user ? <em>{c.user.username}{' '}</em> : 'You'}: {" "}
                 <FontAwesomeIcon icon={faCommentDots} style={{ color: '#b9babd', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
@@ -198,18 +197,18 @@ const SinglePostDisplay = (props) => {
               </span>
               <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'} <FontAwesomeIcon icon={faFlag} onClick={() => flag(c)} /></small>
 
-            </CardBody>) : null}
+            </CardContent>) : null}
           <div style={{ display: 'block' }}>
             {post.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
           </div>
         </Card>
       </div>
       <div style={{ display: 'block', textAlign: 'center' }}>
-        <Form onSubmit={submitComment}>
-          <Label style={{ fontFamily: 'Kanit', marginTop: '10px' }}>แสดงความคิดเห็น</Label>
+        <form onSubmit={submitComment}>
+          <p style={{ fontFamily: 'Kanit', marginTop: '10px' }}>แสดงความคิดเห็น</p>
           <Input type='textarea' onChange={handleCommentChange} value={comment} />
           <LoaderButton isLoading={isLoading} type='submit' color='primary' style={commentButtonStyle} >ส่งความคิดเห็น</LoaderButton>
-        </Form>
+        </form>
       </div>
     </Container>
   )

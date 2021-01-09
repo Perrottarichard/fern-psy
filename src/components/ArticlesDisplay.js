@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllArticles } from '../reducers/forumReducer'
-import { Container, Card,CardHeader, CardImg } from 'reactstrap';
+import { Container, Card, CardMedia, Typography } from '@material-ui/core';
 import SpinningLoader from './SpinningLoader'
 
 
@@ -37,12 +37,12 @@ const ArticleDisplay = () => {
       {articles.length > 0 ? articles.map(f =>
         <div key={f._id} style={{width: 420, height: 360}}>
             <Card style={{width: 400, height: 340, padding: 0}}>
-            <CardImg top style={{width: 400, height: 300}} 
+            <CardMedia top style={{width: 400, height: 300}} 
             // src={`data:image/png;base64,${arrayBufferToBase64(f.image.data.data)}`}
             src={f.image} 
             />
-              <CardHeader  tag="h5">{f.title}
-              </CardHeader>
+              <Typography>{f.title}
+              </Typography>
             </Card>
             </div>) : null}
     </Container>

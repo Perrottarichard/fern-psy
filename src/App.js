@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+// import { ToastContainer } from 'react-toastify'
+// import 'react-toastify/dist/ReactToastify.css'
 import { setUser } from './reducers/activeUserReducer'
 import { initializeForumAnswered } from './reducers/forumReducer'
 import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
 import About from './components/About';
 import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 import ForumPostMain from './components/ForumPostMain';
 import ForumDisplayAll from './components/ForumDisplayAll'
 import ForumLandingPage from './components/ForumLandingPage'
@@ -18,7 +19,7 @@ import AdminContactsDashboard from './components/AdminContactsDashboard'
 import AdminUsersDashboard from './components/AdminUsersDashboard'
 import AdminForumDashboard from './components/AdminForumDashboard'
 import NoPage from './components/NoPage'
-import { Button, UncontrolledCollapse, Container } from 'reactstrap';
+import { Button, Accordion, Container } from '@material-ui/core';
 import SingleTagDisplay from './components/SingleTagDisplay';
 import SinglePostDisplay from './components/SinglePostDisplay';
 import MyQuestions from './components/MyQuestions'
@@ -26,10 +27,11 @@ import AdminFlaggedComment from './components/AdminFlaggedComment';
 import AdminAnswers from './components/AdminAnswers'
 import AdminPostArticle from './components/AdminPostArticle';
 import ArticleDisplay from './components/ArticlesDisplay';
+import userService from './services/userService';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
-  const activeUser = useSelector(state => state.activeUser)
+  const activeUser = useSelector(state => state.activeUser.user)
   const dispatch = useDispatch()
   const forumAnswered = useSelector(state => state.forum.answered)
 
@@ -40,6 +42,7 @@ const App = () => {
       dispatch(setUser(user))
       setLoggedIn(true)
       forumService.setToken(user.token)
+      userService.setToken(user.token)
     }
   }, [dispatch])
 
@@ -51,7 +54,7 @@ const App = () => {
     <Router>
       <div className="App">
         <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
-        <ToastContainer
+        {/* <ToastContainer
           position="top-center"
           autoClose={3000}
           hideProgressBar={false}
@@ -61,16 +64,13 @@ const App = () => {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-        />
+        /> */}
         <Switch>
           <Route exact path="/about">
             <About />
           </Route>
           <Route exact path="/contact">
             <ContactForm />
-          </Route>
-          <Route path="/forum/:tag">
-            <SingleTagDisplay activeUser={activeUser} />
           </Route>
           <Route path="/myquestions/:id">
             <MyQuestions activeUser={activeUser} />
@@ -93,6 +93,9 @@ const App = () => {
           <Route path="/login">
             <LoginForm setLoggedIn={setLoggedIn} />
           </Route>
+          <Route path="/register">
+            <RegisterForm setLoggedIn={setLoggedIn} />
+          </Route>
           <Route path="/adLogin">
             <AdminLoginForm setLoggedIn={setLoggedIn} />
           </Route>
@@ -107,24 +110,24 @@ const App = () => {
                 <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
                 <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
                 <Button color='secondary' id='articlesToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Post Articles</Button>
-                <UncontrolledCollapse toggler="#pendingToggler">
+                <Accordion toggler="#pendingToggler">
                   <AdminForumDashboard />
-                </UncontrolledCollapse>
-                <UncontrolledCollapse toggler="#answersToggler">
+                </Accordion>
+                <Accordion toggler="#answersToggler">
                   <AdminAnswers />
-                </UncontrolledCollapse>
-                <UncontrolledCollapse toggler="#contactsToggler">
+                </Accordion>
+                <Accordion toggler="#contactsToggler">
                   <AdminContactsDashboard />
-                </UncontrolledCollapse>
-                <UncontrolledCollapse toggler="#usersToggler">
+                </Accordion>
+                <Accordion toggler="#usersToggler">
                   <AdminUsersDashboard />
-                </UncontrolledCollapse>
-                <UncontrolledCollapse toggler="#flaggedToggler">
+                </Accordion>
+                <Accordion toggler="#flaggedToggler">
                   <AdminFlaggedComment />
-                </UncontrolledCollapse>
-                <UncontrolledCollapse toggler="#articlesToggler">
+                </Accordion>
+                <Accordion toggler="#articlesToggler">
                  <AdminPostArticle/>
-                </UncontrolledCollapse>
+                </Accordion>
               </Container>
             }
           </Route>

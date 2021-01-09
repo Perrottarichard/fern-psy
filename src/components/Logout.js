@@ -1,9 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Button } from 'reactstrap'
+import { Button } from '@material-ui/core'
 import { clearUser } from '../reducers/activeUserReducer'
-import { toast } from 'react-toastify'
 
 const Logout = (props) => {
   const { setLoggedIn } = props
@@ -13,7 +12,7 @@ const Logout = (props) => {
   const logout = () => {
     window.localStorage.clear()
     setLoggedIn(false)
-    toast.info('ออกจากระบบสำเร็จแล้ว')
+    // toast.info('ออกจากระบบสำเร็จแล้ว')
     dispatch(clearUser())
     history.push('/')
   }

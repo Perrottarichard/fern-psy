@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { Container, Card, Button, CardHeader, CardBody, Badge } from 'reactstrap';
+import { Container, Card, Button, Typography, CardContent, Badge } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { initializeForumPending, initializeForumAnswered } from '../reducers/forumReducer'
@@ -39,7 +39,7 @@ const chooseTagColor = (passed) => {
     }
   }
 }
-const cardHeaderStyle = {
+const TypographyStyle = {
   fontFamily: 'Kanit',
   fontSize: '14px',
   backgroundColor: '#343a40',
@@ -48,7 +48,7 @@ const cardHeaderStyle = {
   paddingTop: '6px',
   paddingBottom: '6px'
 }
-const pendingCardHeaderStyle = {
+const pendingTypographyStyle = {
   fontFamily: 'Kanit',
   fontSize: '14px',
   backgroundColor: 'gray',
@@ -57,7 +57,7 @@ const pendingCardHeaderStyle = {
   paddingTop: '6px',
   paddingBottom: '6px'
 }
-const cardBodyStyleQ = {
+const CardContentStyleQ = {
   fontSize: '14px',
   fontFamily: 'Kanit',
   padding: '10px',
@@ -65,7 +65,7 @@ const cardBodyStyleQ = {
   paddingLeft: '10px',
   backgroundColor: 'white' //super light green
 }
-const pendingCardBodyStyleQ = {
+const pendingCardContentStyleQ = {
   fontSize: '14px',
   color: 'gray',
   fontFamily: 'Kanit',
@@ -74,7 +74,7 @@ const pendingCardBodyStyleQ = {
   paddingLeft: '10px',
   backgroundColor: 'white' //super light green
 }
-const cardBodyStyleA = {
+const CardContentStyleA = {
   fontSize: '14px',
   fontFamily: 'Kanit',
   padding: '10px',
@@ -177,22 +177,22 @@ const MyQuestions = () => {
               <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Card >
 
-                  <CardHeader style={cardHeaderStyle} tag="h5">{f.title}
+                  <Typography style={TypographyStyle} tag="h5">{f.title}
                     <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
                     <small>{f.likes}</small>
                     <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
-                  </CardHeader>
+                  </Typography>
 
-                  <CardBody style={cardBodyStyleQ}>
+                  <CardContent style={CardContentStyleQ}>
                     <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.question}
 
-                  </CardBody>
-                  <CardBody style={cardBodyStyleA}>
+                  </CardContent>
+                  <CardContent style={CardContentStyleA}>
                     <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                     {f.answer.answer}
 
-                  </CardBody>
+                  </CardContent>
                   <div style={{ display: 'block', textAlign: 'left' }}>
                     {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
                   </div>
@@ -206,22 +206,22 @@ const MyQuestions = () => {
         {myPendingPosts && togglePending ? myPendingPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
           <div key={f._id}>
             <Card >
-              <CardHeader style={pendingCardHeaderStyle} tag="h5">{f.title}
+              <Typography style={pendingTypographyStyle} tag="h5">{f.title}
                 <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: 'gray', marginLeft: '30px', marginRight: '10px' }} />
                 <small>{f.likes}</small>
                 <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
-              </CardHeader>
+              </Typography>
 
-              <CardBody style={pendingCardBodyStyleQ}>
+              <CardContent style={pendingCardContentStyleQ}>
                 <FontAwesomeIcon icon={faQuestionCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 {f.question}
-              </CardBody>
+              </CardContent>
 
-              <CardBody style={cardBodyStyleA}>
+              <CardContent style={CardContentStyleA}>
                 <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
                 <small className="text-muted">คำถามของคุณอยู่ระหว่างดำเนินการ</small>
 
-              </CardBody>
+              </CardContent>
               <div style={{ display: 'block', textAlign: 'left' }}>
                 {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
               </div>

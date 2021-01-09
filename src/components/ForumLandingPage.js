@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Container, Card, CardTitle, CardBody } from 'reactstrap'
+import { Container, Card, Typography, CardContent } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { setTagFilter } from '../reducers/forumReducer'
@@ -85,8 +85,8 @@ const ForumLandingPage = () => {
         {tagOptions.map(t =>
           <div key={t.tag} style={{ flexDirection: 'row' }} >
             <Card body>
-              <CardTitle style={textStyle}>{t.tag}
-                <CardBody>
+              <Typography style={textStyle}>{t.tag}
+                <CardContent>
                   <span onClick={() => clickTag(t)}>
                     <FontAwesomeIcon
                       style={chooseTagColor(t.tag)}
@@ -94,8 +94,8 @@ const ForumLandingPage = () => {
                     >{t.tag}
                     </FontAwesomeIcon>
                   </span>
-                </CardBody>
-              </CardTitle>
+                </CardContent>
+              </Typography>
             </Card>
           </div>
         )}
