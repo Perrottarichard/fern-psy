@@ -1,7 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
+import {Button, Accordion} from '@material-ui/core'
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,18 +18,29 @@ import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MainListItems from '../components/MainListItems';
-import { useSelector, useDispatch } from 'react-redux'
-// import logo from '../assets/pizzapizza50trans.png'
-import { clearUser } from '../reducers/activeUserReducer'
-// import MainDashboard from '../components/MainDashboard';
-// import MainPlaceDetails from '../components/MainPlaceDetails';
-// import MainCart from '../components/MainCart';
-// import MainOrderHistory from '../components/MainOrderHistory';
-// import MainAccount from '../components/MainAccount';
-import Snackbar from '@material-ui/core/Snackbar';
-import { Alert } from '@material-ui/lab'
+import MainListItems from './MainListItems';
+import About from './About';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import ForumPostMain from './ForumPostMain';
+import Home from './Home';
+import ForumDisplayAll from './ForumDisplayAll';
+import ContactForm from './ContactForm';
+import AdminLoginForm from './AdminLoginForm';
+import AdminContactsDashboard from './AdminContactsDashboard';
+import AdminUsersDashboard from './AdminUsersDashboard';
+import AdminForumDashboard from './AdminForumDashboard';
+import NoPage from './NoPage'
+import SinglePostDisplay from './SinglePostDisplay';
+import MyQuestions from './MyQuestions';
+import AdminFlaggedComment from './AdminFlaggedComment';
+import AdminAnswers from './AdminAnswers';
+import AdminPostArticle from './AdminPostArticle';
+import ArticleDisplay from './ArticlesDisplay';
+
 import { closeNotify } from '../reducers/activeUserReducer'
+import { clearUser } from '../reducers/activeUserReducer';
+
 
 const drawerWidth = 240;
 
@@ -33,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     display: 'flex',
-    backgroundColor: 'black',
     fontWeight: 500
   },
   toolbar: {
@@ -48,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -56,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -65,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: 36,
+    color: 'lightpink'
   },
   menuButtonHidden: {
     display: 'none',
@@ -75,6 +90,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
+    backgroundColor: 'black',
+    color: 'white',
     whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -84,6 +101,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaperClose: {
     overflowX: 'hidden',
+    backgroundColor: 'black',
+    color: 'white',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -117,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MyNavbar() {
+export default function MyNavbar({activeUser, setLoggedIn, forumAnswered}) {
   const classes = useStyles();
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
@@ -167,7 +186,7 @@ export default function MyNavbar() {
         </Toolbar>
       </AppBar>
       <SwipeableDrawer
-        variant='temporary'
+        variant='permanent'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
@@ -180,7 +199,7 @@ export default function MyNavbar() {
         <div className={classes.toolbarIcon}>
           {/* <img alt='logo' src={logo} style={{ marginRight: 50 }}></img> */}
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon style={{color: 'lightpink'}}/>
           </IconButton>
         </div>
         <Divider />
@@ -188,18 +207,90 @@ export default function MyNavbar() {
           <MainListItems handleDrawerClose={handleDrawerClose} />
         </List>
       </SwipeableDrawer>
-      {/* <main className={classes.content}>
+      <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Switch>
-            <Route exact path='/dashboard' component={MainDashboard} />
-            <Route path='/dashboard/restaurant/:id' component={MainPlaceDetails} />
-            <Route path='/dashboard/orders' component={MainOrderHistory} />
-            <Route path='/dashboard/cart' component={MainCart} />
-            <Route path='/dashboard/account' component={MainAccount} />
-          </Switch>
+
+        <Switch>
+          <Route exact path="/">
+            <Home activeUser={activeUser} />
+          </Route>
+
+          <Route exact path="/about">
+            <About />
+          </Route>
+
+          <Route exact path="/contact">
+            <ContactForm />
+          </Route>
+
+          <Route path="/myquestions/:id">
+            <MyQuestions activeUser={activeUser} />
+          </Route>
+
+          <Route path="/articles">
+            <ArticleDisplay activeUser={activeUser} />
+          </Route>
+
+          <Route path="/post/:id">
+            <SinglePostDisplay activeUser={activeUser} />
+          </Route>
+
+          <Route path="/addpost">
+            <ForumPostMain activeUser={activeUser} />
+          </Route>
+
+          <Route path="/allquestions">
+            <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
+          </Route>
+
+          <Route path="/login">
+            <LoginForm setLoggedIn={setLoggedIn} />
+          </Route>
+
+          <Route path="/register">
+            <RegisterForm setLoggedIn={setLoggedIn} />
+          </Route>
+
+          <Route path="/adLogin">
+            <AdminLoginForm setLoggedIn={setLoggedIn} />
+          </Route>
+          
+          <Route path='/adDash'>
+            {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
+              <NoPage /> :
+              <Container>
+                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Pending Questions
+                </Button>
+                <Button color='secondary' id='answersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>My Answers</Button>
+                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Private Messages</Button>
+                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
+                <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
+                <Button color='secondary' id='articlesToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Post Articles</Button>
+                <Accordion toggler="#pendingToggler">
+                  <AdminForumDashboard />
+                </Accordion>
+                <Accordion toggler="#answersToggler">
+                  <AdminAnswers />
+                </Accordion>
+                <Accordion toggler="#contactsToggler">
+                  <AdminContactsDashboard />
+                </Accordion>
+                <Accordion toggler="#usersToggler">
+                  <AdminUsersDashboard />
+                </Accordion>
+                <Accordion toggler="#flaggedToggler">
+                  <AdminFlaggedComment />
+                </Accordion>
+                <Accordion toggler="#articlesToggler">
+                 <AdminPostArticle/>
+                </Accordion>
+              </Container>
+            }
+          </Route>
+        </Switch>
         </Container>
-      </main> */}
+      </main>
       <Snackbar
         open={notify && notify.open}
         autoHideDuration={2000}

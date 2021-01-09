@@ -3,44 +3,50 @@ import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Home, Forum, Info, BookTwoTone, PostAdd } from '@material-ui/icons';
 
 const MainListItems = ({ handleDrawerClose }) => {
 
+  const iconStyle = { color: 'white'}
+  const itemStyle = {marginTop: 15, marginBottom: 15}
+
   return (
     <div>
-      <ListItem button component={Link} to="/dashboard" onClick={() => handleDrawerClose()}>
-        <ListItemIcon>
-          <Home />
+      <ListItem style={itemStyle} button component={Link} to="/" onClick={() => handleDrawerClose()}>
+        <ListItemIcon style={iconStyle}>
+          <Home style={iconStyle} />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItem>
-      <ListItem button component={Link} to="/dashboard/cart" onClick={() => handleDrawerClose()}>
+
+      <ListItem style={itemStyle} button component={Link} to="/allquestions" onClick={() => handleDrawerClose()}>
         <ListItemIcon>
-          <Forum />
+          <Forum style={iconStyle}/>
         </ListItemIcon>
         <ListItemText primary="Forum" />
       </ListItem>
-      <ListItem button component={Link} to="/dashboard/orders" onClick={() => handleDrawerClose()}>
+
+      <ListItem style={itemStyle} button component={Link} to="/addpost" onClick={() => handleDrawerClose()}>
         <ListItemIcon>
-          <PostAdd />
+          <PostAdd style={iconStyle}/>
         </ListItemIcon>
         <ListItemText primary="Ask Fern" />
       </ListItem>
-      <ListItem button component={Link} to="/dashboard/account" onClick={() => handleDrawerClose()}>
+
+      <ListItem style={itemStyle} button component={Link} to="/articles" onClick={() => handleDrawerClose()}>
         <ListItemIcon>
-          <BookTwoTone />
+          <BookTwoTone style={iconStyle}/>
         </ListItemIcon>
         <ListItemText primary="Articles" />
       </ListItem>
-      <ListItem button>
+
+      <ListItem style={itemStyle} button component={Link} to="/about" onClick={() => handleDrawerClose()}>
       <ListItemIcon>
-        <Info />
+        <Info style={iconStyle}/>
       </ListItemIcon>
       <ListItemText primary="About" />
     </ListItem>
+
     </div>
   )
 }

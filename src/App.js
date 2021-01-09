@@ -7,26 +7,7 @@ import { setUser } from './reducers/activeUserReducer'
 import { initializeForumAnswered } from './reducers/forumReducer'
 import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
-import About from './components/About';
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
-import ForumPostMain from './components/ForumPostMain';
-import ForumDisplayAll from './components/ForumDisplayAll'
-import ForumLandingPage from './components/ForumLandingPage'
-import ContactForm from './components/ContactForm';
-import AdminLoginForm from './components/AdminLoginForm';
-import AdminContactsDashboard from './components/AdminContactsDashboard'
-import AdminUsersDashboard from './components/AdminUsersDashboard'
-import AdminForumDashboard from './components/AdminForumDashboard'
-import NoPage from './components/NoPage'
-import { Button, Accordion, Container } from '@material-ui/core';
-import SingleTagDisplay from './components/SingleTagDisplay';
-import SinglePostDisplay from './components/SinglePostDisplay';
-import MyQuestions from './components/MyQuestions'
-import AdminFlaggedComment from './components/AdminFlaggedComment';
-import AdminAnswers from './components/AdminAnswers'
-import AdminPostArticle from './components/AdminPostArticle';
-import ArticleDisplay from './components/ArticlesDisplay';
+
 import userService from './services/userService';
 
 const App = () => {
@@ -53,7 +34,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
+        <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} forumAnswered={forumAnswered} />
         {/* <ToastContainer
           position="top-center"
           autoClose={3000}
@@ -65,73 +46,7 @@ const App = () => {
           draggable
           pauseOnHover
         /> */}
-        <Switch>
-          <Route exact path="/about">
-            <About />
-          </Route>
-          <Route exact path="/contact">
-            <ContactForm />
-          </Route>
-          <Route path="/myquestions/:id">
-            <MyQuestions activeUser={activeUser} />
-          </Route>
-          <Route exact path="/">
-            <ForumLandingPage activeUser={activeUser} />
-          </Route>
-          <Route path="/articles">
-            <ArticleDisplay activeUser={activeUser} />
-          </Route>
-          <Route path="/post/:id">
-            <SinglePostDisplay activeUser={activeUser} />
-          </Route>
-          <Route path="/addpost">
-            <ForumPostMain activeUser={activeUser} />
-          </Route>
-          <Route path="/allquestions">
-            <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
-          </Route>
-          <Route path="/login">
-            <LoginForm setLoggedIn={setLoggedIn} />
-          </Route>
-          <Route path="/register">
-            <RegisterForm setLoggedIn={setLoggedIn} />
-          </Route>
-          <Route path="/adLogin">
-            <AdminLoginForm setLoggedIn={setLoggedIn} />
-          </Route>
-          <Route path='/adDash'>
-            {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
-              <NoPage /> :
-              <Container>
-                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Pending Questions
-                </Button>
-                <Button color='secondary' id='answersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>My Answers</Button>
-                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Private Messages</Button>
-                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
-                <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
-                <Button color='secondary' id='articlesToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Post Articles</Button>
-                <Accordion toggler="#pendingToggler">
-                  <AdminForumDashboard />
-                </Accordion>
-                <Accordion toggler="#answersToggler">
-                  <AdminAnswers />
-                </Accordion>
-                <Accordion toggler="#contactsToggler">
-                  <AdminContactsDashboard />
-                </Accordion>
-                <Accordion toggler="#usersToggler">
-                  <AdminUsersDashboard />
-                </Accordion>
-                <Accordion toggler="#flaggedToggler">
-                  <AdminFlaggedComment />
-                </Accordion>
-                <Accordion toggler="#articlesToggler">
-                 <AdminPostArticle/>
-                </Accordion>
-              </Container>
-            }
-          </Route>
-        </Switch>
+        
       </div>
     </Router >
   );

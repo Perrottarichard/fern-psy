@@ -1,23 +1,21 @@
 import React, { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {BigHead} from '@bigheads/core'
-import { Container, List, Chip, Typography, Card , Menu, MenuItem,Provider, Button, useTheme, CircularProgress} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles'
+import { Avatar, Container, List, ListItem, ListItemAvatar, ListItemText, Chip, Typography, Card , CardContent, CardHeader, CardActions, IconButton, Menu, MenuItem, Button, CircularProgress} from '@material-ui/core';
+import {Favorite} from '@material-ui/icons'
+import {makeStyles, useTheme} from '@material-ui/core/styles'
 import { initializeForumAnswered, activePost } from '../reducers/forumReducer';
 // import NoPostsYet from './NoPostsYet'
 
 const useStyles = makeStyles({
   container: {
-    flex: 1,
     padding: 5,
   },
   loadingContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   filterContainer: {
-    flex: 0.05,
     flexDirection: 'row',
     marginBottom: 0,
     paddingBottom: 10,
@@ -26,15 +24,12 @@ const useStyles = makeStyles({
     justifyContent: 'flex-start'
   },
   picker: {
-    flex: 1,
     width: 200,
     justifyContent: 'center'
   },
   scroll: {
-    flex: 1,
   },
   cardStyle: {
-    flex: 1,
     borderRadius: 10,
     paddingLeft: 0,
     paddingTop: 0,
@@ -171,84 +166,29 @@ const applyFilterByTag = (allAnsweredPosts, filter) => {
   }
   return allAnsweredPosts.filter(f => f.tags.includes(filter))
 }
-const Item = ({ item, onClick, styles}) => (
-  <Card
-    style={styles.cardStyle} key={item._id}
-  >
-    <List.Item
-      title={item.title}
-      description={`โพสต์ของ ${item.user?.avatarName} ${timeSince(item.date)} ที่ผ่านมา`}
-      left={() => <BigHead
-        {...item.user?.avatarProps} size={50}
-                  />}
-      titleStyle={styles.headTitle}
-      descriptionStyle={styles.descriptionStyle}
-      titleNumberOfLines={3}
-      descriptionNumberOfLines={2}
-      underlayColor='white'
-      rippleColor='#f2f2f2'
-      titleEllipsizeMode='tail'
-      onClick={onClick}
-      style={styles.listItemStyle}
-    />
-    <div
-      style={styles.bottomTags}
-    >
-      <Chip
-        key={item._id} mode='outlined' backgroundColor='white' icon={chooseIcon(item.tags[0])} style={styles.chip} textStyle={{ color: chooseTagColor(item.tags[0]), ...styles.chipText}}
-      >{item.tags[0]}
-      </Chip>
-      <Button
-        name='comment'
-        size={24}
-        style={styles.commentMiconButton}
-        color='lightgray'
-        underlayColor='transparent'
-        backgroundColor='transparent'
-      >
-        <Typography
-          style={styles.miconText}
-        >{item.comments.length}
-        </Typography>
-      </Button>
-      <Button
-        name="heart"
-        color="pink"
-        size={26}
-        style={styles.commentMiconButton}
-        underlayColor='transparent'
-        backgroundColor='transparent'
-        iconStyle={styles.fixHeartPosition}
-      >
-        <Typography
-          style={styles.miconText}
-        >
-          {item.likes}
-        </Typography>
-      </Button>
-    </div>
-  </Card>
-);
 
 const ForumDisplayAll = () => {
-  const styles = useStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const theme = useTheme()
+  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   let forumAnswered = useSelector((state) => state.forum.answered);
   const [selectedFilterTag, setSelectedFilterTag] = useState('แสดงทั้งหมด')
-  const [filterMenuVisible, setFilterMenuVisible] = useState(false)
 
   forumAnswered = applyFilterByTag(forumAnswered, selectedFilterTag)
   const DATA = forumAnswered.sort((a, b) => new Date(b.date) - new Date(a.date))
- 
-  const openMenu = () => setFilterMenuVisible(true);
 
-  const closeMenu = () => setFilterMenuVisible(false);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleSetFilter = (value) => {
     setSelectedFilterTag(value)
-    closeMenu(  )
+    handleClose()
   }
 
   useEffect(() => {
@@ -259,25 +199,12 @@ const ForumDisplayAll = () => {
     }
   }, [dispatch, forumAnswered]);
 
-  const renderItem = ({ item }) => {
-    return (
-      <Item
-        item={item}
-        styles={styles}
-        onClick={() => {
-          dispatch(activePost(item));
-        }}
-      />
-    );
-  };
-
   if (isLoading) {
     return (
       <Container
-        style={styles.loadingContainer}
+        // className={classes.loadingContainer}
       >
         <CircularProgress
-        color="secondary"
         />
       </Container>
     );
@@ -285,29 +212,29 @@ const ForumDisplayAll = () => {
   return (
     <Container>
       <div
-        style={{...styles.container, backgroundColor: theme.colors.background}}
+        // className={classes.container}
       >
         <div
-          style={styles.filterContainer}
+          // className={classes.filterContainer}
         >
-          <Menu
-            style={styles.picker}
-            visible={filterMenuVisible}
-            onDismiss={closeMenu}
-            anchor={<Button
-              mode='text'
-              onClick={openMenu}
+          <Button
+              variant='text'
+              onClick={handleClick}
                     ><Typography
-                      style={{color: theme.colors.accent}}>ตัวกรอง: </Typography><Typography
-                        > {selectedFilterTag}</Typography></Button>}
+                      style={{color: theme.palette.secondary}}>ตัวกรอง: </Typography><Typography
+                        > {selectedFilterTag}</Typography></Button>
+          <Menu
+            // className={classes.picker}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            anchorEl={anchorEl}
           >
-            <MenuItem
-              title='แสดงทั้งหมด' onClick={() => handleSetFilter('แสดงทั้งหมด')}
-            />
-            <MenuItem
-              title='ปัญหาเรื่องเพศ' value='ปัญหาเรื่องเพศ' onClick={() => handleSetFilter('ปัญหาเรื่องเพศ')}
-            />
-            <MenuItem
+            <MenuItem onClick={() => handleSetFilter('แสดงทั้งหมด')}>แสดงทั้งหมด</MenuItem>
+
+            
+            <MenuItem onClick={() => handleSetFilter('ปัญหาเรื่องเพศ')}>ปัญหาเรื่องเพศ</MenuItem>
+
+            {/* <MenuItem
               title='การเสพติด' value='การเสพติด' onClick={() => handleSetFilter('การเสพติด')}
             />
             <MenuItem
@@ -345,16 +272,35 @@ const ForumDisplayAll = () => {
             />
             <MenuItem
               title='ความรัก' value='ความรัก' onClick={() => handleSetFilter('ความรัก')}
-            />
+            /> */}
           </Menu>
         </div>
         <div>
-          {DATA.map(item => renderItem(item))}
+          {DATA.map(item => 
+              <Card
+              className={classes.cardStyle} key={item._id}
+            >
+              <div style={{width: 50, height: 50}}>
+              <BigHead
+                {...item.user?.avatarProps}/>
+                </div>
+              <CardHeader
+              title={item.title}
+              subheader={`โพสต์ของ ${item.user?.avatarName} ${timeSince(item.date)} ที่ผ่านมา`}>
+              </CardHeader>
+              <CardActions>
+              <IconButton>
+                <Favorite/>
+              </IconButton>
+              </CardActions>
+             <Typography>{item.title}</Typography>
+            </Card>
+            )}
         </div>
       </div>
     </Container>
   );
 };
 
-
 export default ForumDisplayAll;
+

@@ -1,34 +1,34 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
-import Fern1 from '../fernanimal.jpg'
-import Fern2 from '../fernhippie500.jpg'
-import Fern3 from '../fernjapan.jpg'
+// import Fern1 from '../fernanimal.jpg'
+// import Fern2 from '../fernhippie500.jpg'
+// import Fern3 from '../fernjapan.jpg'
 import '../about.css';
 
 
-function About() {
+const About = () => {
 
 
-  const items = [
-    {
-      src: `${Fern2}`,
-      altText: 'Slide 1',
-      key: '1',
-      caption: ''
-    },
-    {
-      src: `${Fern1}`,
-      altText: 'Slide 2',
-      key: '2',
-      caption: ''
-    },
-    {
-      src: `${Fern3}`,
-      altText: 'Slide 3',
-      key: '3',
-      caption: ''
-    }
-  ];
+  // const items = [
+  //   {
+  //     src: `${Fern2}`,
+  //     altText: 'Slide 1',
+  //     key: '1',
+  //     caption: ''
+  //   },
+  //   {
+  //     src: `${Fern1}`,
+  //     altText: 'Slide 2',
+  //     key: '2',
+  //     caption: ''
+  //   },
+  //   {
+  //     src: `${Fern3}`,
+  //     altText: 'Slide 3',
+  //     key: '3',
+  //     caption: ''
+  //   }
+  // ];
 
   return (
     <Container id='about' className="themed-container" fluid={true}>
