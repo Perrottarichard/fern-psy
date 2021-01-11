@@ -1,15 +1,19 @@
 import React, { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {useHistory} from 'react-router-dom'
 import {BigHead} from '@bigheads/core'
-import { Avatar, Container, List, ListItem, ListItemAvatar, ListItemText, Chip, Typography, Card , CardContent, CardHeader, CardActions, IconButton, Menu, MenuItem, Button, CircularProgress} from '@material-ui/core';
-import {Favorite} from '@material-ui/icons'
+import { Container, Chip, Typography, Card , CardContent, CardHeader, CardActions, CardActionArea,  Icon, Menu, MenuItem, Button, CircularProgress} from '@material-ui/core';
+import {Favorite, CommentOutlined} from '@material-ui/icons'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers} from '@fortawesome/free-solid-svg-icons'
 import { initializeForumAnswered, activePost } from '../reducers/forumReducer';
 // import NoPostsYet from './NoPostsYet'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: 5,
+    backgroundColor: theme.palette.background
   },
   loadingContainer: {
     justifyContent: 'center',
@@ -27,86 +31,70 @@ const useStyles = makeStyles({
     width: 200,
     justifyContent: 'center'
   },
-  scroll: {
+  avatarAndHeaderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  bigHeadContainer: {
+    width: 90, 
+    height: 90
   },
   cardStyle: {
+    width: '80%',
     borderRadius: 10,
-    paddingLeft: 0,
-    paddingTop: 0,
-    paddingBottom: 4,
-    paddingRight: 0,
     marginBottom: 14
   },
-  listItemStyle: {
-    paddingLeft: 5, 
-    margin: 0,
-    borderRadius: 10,
-  },
-  bottomTags: {
-    flexDirection: 'row-reverse',
+  cardActionsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 5,
-    paddingRight: 5,
-    alignItems: 'center',
-    height: 40,
+    marginLeft: 20,
+    marginRight: 20
   },
-  headTitle: {
-    fontWeight: 'bold',
-    padding: 0,
+  bottomIcons: {
+    display: 'flex',
+    flexDirection: 'row',
   },
-  descriptionStyle: {
-    color: 'gray',
-    fontSize: 10
-  },
-  chip: {
-    marginTop: 10,
-    marginRight: 5,
-    height: 20,
-    alignItems: 'center',
-    alignSelf: 'flex-start'
-  },
-  chipText: {
-    fontSize: 10,
-    marginLeft: 0,
-    marginRight: 2,
-    opacity: 0.7
-  },
-  commentMiconButton: {
-    backgroundColor: 'transparent',
-    borderRadius: 0,
-    borderColor: 'white',
-    alignSelf: 'center',
-    marginTop: 3,
-    height: 40,
-  },
-  miconText: {
-    color: 'gray',
-    padding: 0,
-    margin: 0,
-    fontSize: 11,
-    backgroundColor: 'transparent'
-  },
-  fixHeartPosition: {
-    paddingBottom: 2
-  },
-});
+  bottomIconCount: {
+    marginLeft: 10,
+    marginTop: 5
+  }
+}));
 
 const tagOptions = [
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: 'gender-male-female' },
-  { tag: 'relationships', backgroundColor: '#63ba90', icon: 'account-heart-outline' },
-  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: 'heart-broken' },
-  { tag: 'lgbt', backgroundColor: '#ff4da6', icon: 'gender-transgender' },
-  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: 'account-group' },
-  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: 'emoticon-sad-outline' },
-  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: 'lightning-bolt' },
-  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: 'arrow-up-down' },
-  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: 'cash' },
-  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: 'brain' },
-  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: 'emoticon-angry-outline' },
-  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: 'home-heart' },
-  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
-  { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
-];
+  { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },	  
+  { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
+  { tag: 'การออกเดท', backgroundColor: '#288046', icon: faGlassCheers },
+  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: faHeartBroken },
+  { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },	 
+  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: faUsers },	
+  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: faSadTear },
+  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: faFlushed },
+  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: faTheaterMasks },
+  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: faBusinessTime },
+  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: faBrain },
+  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: faAngry },	
+  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: faHome },
+  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: faQuestionCircle },	
+  { tag: 'การเสพติด', backgroundColor: '#40073d', icon: faSyringe },
+]
+
+// const tagOptions = [
+//   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: 'gender-male-female' },
+//   { tag: 'relationships', backgroundColor: '#63ba90', icon: 'account-heart-outline' },
+//   { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: 'heart-broken' },
+//   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: 'gender-transgender' },
+//   { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: 'account-group' },
+//   { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: 'emoticon-sad-outline' },
+//   { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: 'lightning-bolt' },
+//   { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: 'arrow-up-down' },
+//   { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: 'cash' },
+//   { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: 'brain' },
+//   { tag: 'การรังแก', backgroundColor: '#5e320f', icon: 'emoticon-angry-outline' },
+//   { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: 'home-heart' },
+//   { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
+//   { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
+// ];
 const chooseTagColor = (passed) => {
   const color = tagOptions.find((t) => t.tag === passed);
   if (color) {
@@ -120,7 +108,7 @@ const chooseIcon = (passed) => {
   if(icon) {
     return icon.icon;
   }
-  return 'star'
+  return faQuestionCircle
 }
 
 export const timeSince = (date) => {
@@ -170,6 +158,7 @@ const applyFilterByTag = (allAnsweredPosts, filter) => {
 const ForumDisplayAll = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -202,7 +191,7 @@ const ForumDisplayAll = () => {
   if (isLoading) {
     return (
       <Container
-        // className={classes.loadingContainer}
+        className={classes.loadingContainer}
       >
         <CircularProgress
         />
@@ -212,10 +201,10 @@ const ForumDisplayAll = () => {
   return (
     <Container>
       <div
-        // className={classes.container}
+        className={classes.container}
       >
         <div
-          // className={classes.filterContainer}
+          className={classes.filterContainer}
         >
           <Button
               variant='text'
@@ -224,7 +213,7 @@ const ForumDisplayAll = () => {
                       style={{color: theme.palette.secondary}}>ตัวกรอง: </Typography><Typography
                         > {selectedFilterTag}</Typography></Button>
           <Menu
-            // className={classes.picker}
+            className={classes.picker}
             open={Boolean(anchorEl)}
             onClose={handleClose}
             anchorEl={anchorEl}
@@ -234,45 +223,45 @@ const ForumDisplayAll = () => {
             
             <MenuItem onClick={() => handleSetFilter('ปัญหาเรื่องเพศ')}>ปัญหาเรื่องเพศ</MenuItem>
 
-            {/* <MenuItem
-              title='การเสพติด' value='การเสพติด' onClick={() => handleSetFilter('การเสพติด')}
-            />
             <MenuItem
-              title='เพื่อน' value='เพื่อน' onClick={() => handleSetFilter('เพื่อน')}
-            />
+              onClick={() => handleSetFilter('การเสพติด')}
+            >การเสพติด</MenuItem>
             <MenuItem
-              title='lgbt' value='lgbt' onClick={() => handleSetFilter('lgbt')}
-            />
+              onClick={() => handleSetFilter('เพื่อน')}
+            >เพื่อน</MenuItem>
             <MenuItem
-              title='โรคซึมเศร้า' value='โรคซึมเศร้า' onClick={() => handleSetFilter('โรคซึมเศร้า')}
-            />
+              onClick={() => handleSetFilter('lgbt')}
+            >lgbt</MenuItem>
             <MenuItem
-              title='ความวิตกกังวล' value='ความวิตกกังวล' onClick={() => handleSetFilter('ความวิตกกังวล')}
-            />
+              onClick={() => handleSetFilter('โรคซึมเศร้า')}
+            >โรคซึมเศร้า</MenuItem>
             <MenuItem
-              title='ไบโพลาร์' value='ไบโพลาร์' onClick={() => handleSetFilter('ไบโพลาร์')}
-            />
+              onClick={() => handleSetFilter('ความวิตกกังวล')}
+            >ความวิตกกังวล</MenuItem>
             <MenuItem
-              title='relationships' value='relationships' onClick={() => handleSetFilter('relationships')}
-            />
+              onClick={() => handleSetFilter('ไบโพลาร์')}
+            >ไบโพลาร์</MenuItem>
             <MenuItem
-              title='การทำงาน' value='การทำงาน' onClick={() => handleSetFilter('การทำงาน')}
-            />
+              onClick={() => handleSetFilter('relationships')}
+            >relationships</MenuItem>
             <MenuItem
-              title='สุขภาพจิต' value='สุขภาพจิต' onClick={() => handleSetFilter('สุขภาพจิต')}
-            />
+             onClick={() => handleSetFilter('การทำงาน')}
+            >การทำงาน</MenuItem>
             <MenuItem
-              title='การรังแก' value='การรังแก' onClick={() => handleSetFilter('การรังแก')}
-            />
+              onClick={() => handleSetFilter('สุขภาพจิต')}
+            >สุขภาพจิต</MenuItem>
             <MenuItem
-              title='ครอบครัว' value='ครอบครัว' onClick={() => handleSetFilter('ครอบครัว')}
-            />
+              onClick={() => handleSetFilter('การรังแก')}
+            >การรังแก</MenuItem>
             <MenuItem
-              title='อื่นๆ' value='อื่นๆ' onClick={() => handleSetFilter('อื่นๆ')}
-            />
+              onClick={() => handleSetFilter('ครอบครัว')}
+            >ครอบครัว</MenuItem>
             <MenuItem
-              title='ความรัก' value='ความรัก' onClick={() => handleSetFilter('ความรัก')}
-            /> */}
+              onClick={() => handleSetFilter('อื่นๆ')}
+            >อื่นๆ</MenuItem>
+            <MenuItem
+              onClick={() => handleSetFilter('ความรัก')}
+            >ความรัก</MenuItem>
           </Menu>
         </div>
         <div>
@@ -280,20 +269,35 @@ const ForumDisplayAll = () => {
               <Card
               className={classes.cardStyle} key={item._id}
             >
-              <div style={{width: 50, height: 50}}>
+              <CardActionArea onClick={() => {
+                dispatch(activePost(item))
+                history.push(`/post/${item._id}`) 
+              }}>
+              <div className={classes.avatarAndHeaderContainer}>
+              <div className={classes.bigHeadContainer}>
               <BigHead
-                {...item.user?.avatarProps}/>
+                {...item.user?.avatarProps}
+                faceMask={false}/>
                 </div>
               <CardHeader
               title={item.title}
+              titleTypographyProps={{variant: 'body1'}}
               subheader={`โพสต์ของ ${item.user?.avatarName} ${timeSince(item.date)} ที่ผ่านมา`}>
               </CardHeader>
-              <CardActions>
-              <IconButton>
-                <Favorite/>
-              </IconButton>
+              </div>
+              <CardActions className={classes.cardActionsContainer}>
+                <div className={classes.bottomIcons}>
+                <Favorite style={{color: 'lightpink'}} fontSize={'large'}/>
+                <Typography className={classes.bottomIconCount} color='textPrimary'>{item.likes}</Typography>
+                </div>
+                <div className={classes.bottomIcons}>
+                <CommentOutlined style={{color: 'gray'}} fontSize={'large'}/>
+                <Typography className={classes.bottomIconCount} color='textPrimary'>{item.comments.length}</Typography>
+                </div>
+              <Chip variant='outlined' size='medium' icon={<FontAwesomeIcon size={'2x'} icon={chooseIcon(item.tags[0])}/>}
+              label={item.tags[0]}/>
               </CardActions>
-             <Typography>{item.title}</Typography>
+              </CardActionArea>
             </Card>
             )}
         </div>

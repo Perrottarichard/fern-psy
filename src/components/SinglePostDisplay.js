@@ -1,216 +1,254 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useHistory } from 'react-router-dom'
-import { Container, Card, Button, Typography, CardContent, Badge, Input } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faHeart, faFlag, faCheckCircle, faCommentDots } from '@fortawesome/free-solid-svg-icons';
-import { addComment, heart } from '../reducers/forumReducer'
-import { initializeForumAnswered, setFlaggedComment } from '../reducers/forumReducer'
-import LoaderButton from './LoaderButton'
+import React, {useState} from 'react';
+import {BigHead} from '@bigheads/core'
+import { List, Chip, Card, Avatar, Container, Typography, IconButton} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import {makeStyles, useTheme} from '@material-ui/core/styles'
+import { heart } from '../reducers/forumReducer';
+import {timeSince} from './ForumDisplayAll'
 
-const tagColorOptions = [
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
-  { tag: 'การออกเดท', backgroundColor: '#288046' },
-  { tag: 'relationships', backgroundColor: '#ffa64d' },
-  { tag: 'lgbt', backgroundColor: '#ff4da6' },
-  { tag: 'เพื่อน', backgroundColor: '#5050ff' },
-  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40' },
-  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f' },
-  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff' },
-  { tag: 'การทำงาน', backgroundColor: '#8e2bff' },
-  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8' },
-  { tag: 'bullying', backgroundColor: '#5e320f' },
-  { tag: 'ครอบครัว', backgroundColor: '#ffa64d' },
-  { tag: 'อื่นๆ', backgroundColor: '#707571' },
-  { tag: 'การเสพติด', backgroundColor: '#40073d' },
-]
+
+const useclasses = makeStyles((theme) => ({
+  container: {
+    flex: 1,
+    padding: 5,
+    marginBottom: 20,
+  },
+  containerDark: {
+    flex: 1,
+    padding: 5,
+    marginBottom: 20,
+  },
+  cardStylePost: {
+    flex: 1,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 4,
+    paddingRight: 0,
+    marginBottom: 5,
+  },
+  questionListItem: {
+    paddingBottom: 0
+  },
+  fernAvatar: {
+    marginLeft: 6,
+    marginTop: 8
+  },
+  questionContainer: {
+    padding: 10,
+  },
+  questionText: {
+    fontSize: 16,
+    marginLeft: 62,
+    marginRight: 5,
+  },
+  answerHeadTitle: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    marginLeft: 5,
+    marginRight: 10
+  },
+  bottomTags: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    paddingLeft: 5,
+    paddingRight: 5,
+    alignItems: 'center',
+    height: 50,
+  },
+  heartIconStyle: {
+    alignSelf: 'flex-end',
+    height: 40,
+  },
+  likeTextStyle: {
+    alignSelf: 'flex-end',
+    color: 'gray',
+  },
+  headTitle: {
+    fontWeight: 'bold',
+    padding: 0,
+  },
+  descriptionStyle: {
+    fontSize: 10
+  },
+  chip: {
+    marginTop: 14,
+    height: 20,
+    alignItems: 'center',
+    alignSelf: 'flex-start'
+  },
+  chipText: {
+    fontSize: 10,
+    marginLeft: 0,
+    marginRight: 2,
+    opacity: 0.7
+  },
+  commentMiconButton: {
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderColor: 'transparent',
+    alignSelf: 'center',
+    marginTop: 3,
+    height: 40
+  },
+  miconText: {
+    color: 'gray',
+    padding: 0,
+    margin: 0,
+    fontSize: 11
+  },
+}))
+
+const tagOptions = [
+  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: 'gender-male-female' },
+  { tag: 'relationships', backgroundColor: '#63ba90', icon: 'account-heart-outline' },
+  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: 'heart-broken' },
+  { tag: 'lgbt', backgroundColor: '#ff4da6', icon: 'gender-transgender' },
+  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: 'account-group' },
+  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: 'emoticon-sad-outline' },
+  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: 'lightning-bolt' },
+  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: 'arrow-up-down' },
+  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: 'cash' },
+  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: 'brain' },
+  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: 'emoticon-angry-outline' },
+  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: 'home-heart' },
+  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
+  { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
+];
 const chooseTagColor = (passed) => {
-  let color = tagColorOptions.find(t => t.tag === passed)
+  const color = tagOptions.find((t) => t.tag === passed);
   if (color) {
-    return {
-      backgroundColor: color.backgroundColor,
-      width: '90px',
-      verticalAlign: 'middle',
-      postition: 'relative'
-    }
-  } else {
-    return {
-      backgroundColor: 'magenta',
-      width: '80px'
-    }
+    return color.backgroundColor;
   }
-}
-const commentDivStyle = {
-  display: 'block'
-}
-const TypographyStyle = {
-  fontFamily: 'Kanit',
-  fontSize: '16px',
-  backgroundColor: '#343a40',
-  color: 'white',
-  marginTop: '10px',
-  paddingTop: '6px',
-  paddingBottom: '6px',
-  textAlign: 'center'
-}
-const CardContentStyleQ = {
-  fontSize: '16px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  textAlign: 'left',
-  paddingLeft: '10px',
-  borderBottom: '1px solid gray',
-  backgroundColor: 'white'
-}
-const CardContentStyleA = {
-  fontSize: '16px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  borderBottom: '1px solid gray',
-  backgroundColor: 'white' //super light pink
-}
-const CardContentStyleC = {
-  fontSize: '12px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  borderBottom: '1px solid gray',
-  backgroundColor: 'white' //super light blue
-}
-const smallStyle = {
-  fontSize: '10px',
-  float: 'left',
-  color: 'white',
-  marginLeft: '0'
+  return 'magenta';
+};
+
+const chooseIcon = (passed) => {
+  const icon = tagOptions.find(t => t.tag === passed);
+  if(icon) {
+    return icon.icon;
+  }
+  return 'star'
 }
 
-const commentButtonStyle = {
-  fontFamily: 'Kanit',
-  marginTop: '5px',
-  marginBottom: '5px'
-}
-const SinglePostDisplay = (props) => {
-  const { activeUser } = props
-  let { id } = useParams()
-  const [isLoading, setIsLoading] = useState(false)
-  const [comment, setComment] = useState('')
+const SinglePostDisplay = ({isLoading}) => {
+
+  const classes = useclasses();
+  const user = useSelector(state => state.activeUser.user)
+  const heartedByUser = useSelector(state => state.forum.heartedByUser)
+  const post = useSelector(state => state.forum.activePost)
+  const [showHeartAnimation, setShowHeartAnimation] = useState(false)
   const dispatch = useDispatch()
-  const post = useSelector(state => state.forum.answered.find(p => p._id === id))
-  const [sentHeart, setSentHeart] = useState(null)
-  const [pulseHeart, setPulseHeart] = useState('')
-  const history = useHistory()
 
-
-  useEffect(() => {
-    dispatch(initializeForumAnswered())
-  }, [dispatch])
-
-  React.useEffect(() => {
-    if (isLoading) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1500);
-    }
-  }, [isLoading])
-
-  const submitComment = async (event) => {
-    event.preventDefault()
-    let postToModifyId = post
-    if (activeUser === null) {
-      // toast.warn('คุณต้องลงชื่อเพื่อแสดงความคิดเห็น')
-      history.push('/login')
-    } else if (comment === '') {
-      // toast.warn('คุณลืมที่จะเขียนความคิดเห็น')
-    } else {
-      try {
-        setIsLoading(true)
-        dispatch(addComment(comment, postToModifyId))
-        setComment('')
-      } catch (error) {
-        console.log('thisistheerrror', error)
-        // toast.error('กรุณาลองใหม่')
-      }
-    }
-  }
   const submitHeart = async () => {
-    let postToModify = post
-    if (activeUser === null) {
-      // toast.warn('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ')
-      history.push('/login')
-    } else if (sentHeart !== null) {
-      // toast.warn('คุณได้ส่งหัวใจสำหรับโพสต์นี้แล้ว')
+    if (user === null) {
+      // ToastAndroid.show('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ', ToastAndroid.SHORT);
+      // navigation.navigate('LoginForm');
     } else {
       try {
-        setPulseHeart('heart-icon')
+        dispatch(heart(post._id));
+        setShowHeartAnimation(true)
         setTimeout(() => {
-          setSentHeart(post._id)
-          dispatch(heart(postToModify))
-          setPulseHeart('')
-        }, 2000);
+          setShowHeartAnimation(false)
+        }, 2500);
       } catch (error) {
-        console.log(error)
-        // toast.error('กรุณาลองใหม่')
+        console.log(error);
+        // ToastAndroid.show('กรุณาลองใหม่', ToastAndroid.SHORT);
       }
     }
-  }
-  const handleCommentChange = (event) => {
-    setComment(event.target.value)
-  }
-  const flag = (comment) => {
-    if (comment.isFlagged) {
-      return null
-    }
-    else if (window.confirm('คุณแน่ใจหรือไม่ว่าคุณต้องการรายงานความคิดเห็นนี้ให้แอดมินทราบ')) {
-      dispatch(setFlaggedComment(comment))
-    }
-  }
+  };
 
   return (
-    <Container>
-      <div style={{ display: 'block', textAlign: 'center', fontFamily: 'Kanit' }}>
-        <Card>
-          <CardContent key={Math.random()}>
-            <FontAwesomeIcon className={pulseHeart} icon={faHeart} style={{ fontSize: '50px', color: 'pink' }} />
-          </CardContent>
-          <Button style={{ color: '#343a40', backgroundColor: 'white', borderStyle: 'none', borderColor: 'none' }} onClick={() => submitHeart()}>ส่งหัวใจเพื่อให้กำลังใจเจ้าของกระทู้ คลิก</Button>
-        </Card>
-      </div>
-      <div key={post._id} style={commentDivStyle}>
-        <Card >
-          <Typography style={TypographyStyle}>{post.title}
-            <span style={{ float: 'right' }}><FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: 'pink', marginLeft: '30px', marginRight: '5px' }} />{post.likes}</span>
-            <small className="text-muted" style={smallStyle}>{post.date.slice(0, 10)}</small>
-          </Typography>
-          <CardContent style={CardContentStyleQ}>
-            <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-            {post.question}
-          </CardContent>
-          <CardContent style={CardContentStyleA}>
-            <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-            {post.answer.answer}
-          </CardContent>
-          {(post.comments.length > 0) ? post.comments.sort((a, b) => new Date(b.date) - new Date(a.date)).map(c =>
-            <CardContent key={(c._id) ? c._id : Math.random()} style={CardContentStyleC}>
-              <span style={{ fontWeight: '200' }}>
-                {c.user ? <em>{c.user.username}{' '}</em> : 'You'}: {" "}
-                <FontAwesomeIcon icon={faCommentDots} style={{ color: '#b9babd', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {c.content}
-              </span>
-              <small className='text-muted' style={{ float: 'right' }}>{(c.date) ? c.date.slice(0, 10) : 'just now'} <FontAwesomeIcon icon={faFlag} onClick={() => flag(c)} /></small>
+    <Container
+     
+    >
+      {/* {showHeartAnimation ?
+        <Lottiediv
+          source={require('../assets/heartUpAnimation.json')}
+          autoPlay
+          loop={false}
+          style={{zIndex: 99}}/>
+      : null} */}
+      {post && (
+        <Card
+          className={{...classes.cardStylePost, opacity: showHeartAnimation ? 0.2 : 1}} key={post._id}
+        >
 
-            </CardContent>) : null}
-          <div style={{ display: 'block' }}>
-            {post.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
+          <div
+            className={classes.questionContainer}
+          >
+            <Typography
+              className={classes.questionText}
+            >
+              {post.question}
+            </Typography>
+          </div>
+
+          <div
+            className={classes.bottomTags}
+          >
+            <Chip
+              key={post._id} variant='outlined' icon={chooseIcon(post.tags[0])}/>
+            <IconButton
+              name='comment-plus'
+              size={28}
+              className={classes.commentMiconButton}
+              color='lightgray'
+              disabled={post.answer === null} 
+              // onPress={() => {
+              //   if(!user){
+              //     // ToastAndroid.show('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ', ToastAndroid.SHORT);
+              //     navigation.navigate('LoginForm')
+              //   }else{
+              //     navigation.navigate('AddComment', {
+              //       postId: post._id,
+              //       postTitle: post.title,
+              //     });
+              //   }
+              // }}
+            >
+              {/* <Typography
+              >ความคิดเห็น
+              </Typography> */}
+            </IconButton>
+
+              <IconButton
+                name="heart-plus-outline"
+                color="pink"
+                size={28}
+                disabled={post.answer === null}
+                className={classes.heartIconStyle}
+                onClick={submitHeart}
+              >
+                <Typography
+                  className={classes.likeTextStyle}
+                >
+                  {post.likes}
+                </Typography>
+              </IconButton>
+
+          <IconButton
+            name="heart"
+            color="pink"
+            size={28}
+            className={classes.heartIconStyle}
+            disabled
+          >
+            <Typography
+              className={classes.likeTextStyle}
+            >
+              {post.likes}
+            </Typography>
+          </IconButton>
+
           </div>
         </Card>
-      </div>
-      <div style={{ display: 'block', textAlign: 'center' }}>
-        <form onSubmit={submitComment}>
-          <p style={{ fontFamily: 'Kanit', marginTop: '10px' }}>แสดงความคิดเห็น</p>
-          <Input type='textarea' onChange={handleCommentChange} value={comment} />
-          <LoaderButton isLoading={isLoading} type='submit' color='primary' style={commentButtonStyle} >ส่งความคิดเห็น</LoaderButton>
-        </form>
-      </div>
+      )}
     </Container>
-  )
-}
-export default SinglePostDisplay
+  );
+};
+
+
+
+export default SinglePostDisplay;
