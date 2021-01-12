@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 import {Favorite, FavoriteBorder, CommentOutlined} from '@material-ui/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers} from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faUsers} from '@fortawesome/free-solid-svg-icons'
 import { heart } from '../reducers/forumReducer';
 import {timeSince} from './ForumDisplayAll'
 
@@ -33,10 +33,9 @@ const useclasses = makeStyles((theme) => ({
   }
 }))
 
-const tagOptions = [
-  { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },	  
-  { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
-  { tag: 'การออกเดท', backgroundColor: '#288046', icon: faGlassCheers },
+const tagOptions = [	  
+  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
+  { tag: 'relationships', backgroundColor: '#288046', icon: faGlassCheers },
   { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: faHeartBroken },
   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },	 
   { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: faUsers },	
