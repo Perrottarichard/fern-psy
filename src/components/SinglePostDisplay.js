@@ -3,119 +3,70 @@ import {BigHead} from '@bigheads/core'
 import { List, Chip, Card, Avatar, Container, Typography, IconButton} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {makeStyles, useTheme} from '@material-ui/core/styles'
+import {Favorite, FavoriteBorder, CommentOutlined} from '@material-ui/icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers} from '@fortawesome/free-solid-svg-icons'
 import { heart } from '../reducers/forumReducer';
 import {timeSince} from './ForumDisplayAll'
 
 
 const useclasses = makeStyles((theme) => ({
   container: {
-    flex: 1,
     padding: 5,
-    marginBottom: 20,
-  },
-  containerDark: {
-    flex: 1,
-    padding: 5,
-    marginBottom: 20,
+    backgroundColor: theme.palette.background
   },
   cardStylePost: {
-    flex: 1,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    paddingLeft: 0,
-    paddingTop: 0,
-    paddingBottom: 4,
-    paddingRight: 0,
     marginBottom: 5,
   },
-  questionListItem: {
-    paddingBottom: 0
-  },
-  fernAvatar: {
-    marginLeft: 6,
-    marginTop: 8
-  },
-  questionContainer: {
-    padding: 10,
-  },
-  questionText: {
-    fontSize: 16,
-    marginLeft: 62,
-    marginRight: 5,
-  },
-  answerHeadTitle: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    marginLeft: 5,
-    marginRight: 10
-  },
   bottomTags: {
-    flexDirection: 'row-reverse',
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: 5,
-    paddingRight: 5,
-    alignItems: 'center',
-    height: 50,
+    marginLeft: 20,
+    marginRight: 20
   },
-  heartIconStyle: {
-    alignSelf: 'flex-end',
-    height: 40,
-  },
-  likeTextStyle: {
-    alignSelf: 'flex-end',
-    color: 'gray',
-  },
-  headTitle: {
-    fontWeight: 'bold',
-    padding: 0,
-  },
-  descriptionStyle: {
-    fontSize: 10
-  },
-  chip: {
-    marginTop: 14,
-    height: 20,
-    alignItems: 'center',
-    alignSelf: 'flex-start'
-  },
-  chipText: {
-    fontSize: 10,
-    marginLeft: 0,
-    marginRight: 2,
-    opacity: 0.7
-  },
-  commentMiconButton: {
-    backgroundColor: 'transparent',
-    borderRadius: 0,
-    borderColor: 'transparent',
-    alignSelf: 'center',
-    marginTop: 3,
-    height: 40
-  },
-  miconText: {
-    color: 'gray',
-    padding: 0,
-    margin: 0,
-    fontSize: 11
-  },
+  bottomIconCount: {
+    marginLeft: 10,
+    marginTop: 5
+  }
 }))
 
 const tagOptions = [
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: 'gender-male-female' },
-  { tag: 'relationships', backgroundColor: '#63ba90', icon: 'account-heart-outline' },
-  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: 'heart-broken' },
-  { tag: 'lgbt', backgroundColor: '#ff4da6', icon: 'gender-transgender' },
-  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: 'account-group' },
-  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: 'emoticon-sad-outline' },
-  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: 'lightning-bolt' },
-  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: 'arrow-up-down' },
-  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: 'cash' },
-  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: 'brain' },
-  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: 'emoticon-angry-outline' },
-  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: 'home-heart' },
-  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
-  { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
-];
+  { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },	  
+  { tag: 'เรื่องเพศ', backgroundColor: '#ff5c4d', icon: faVenusMars },
+  { tag: 'การออกเดท', backgroundColor: '#288046', icon: faGlassCheers },
+  { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: faHeartBroken },
+  { tag: 'lgbt', backgroundColor: '#ff4da6', icon: faTransgender },	 
+  { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: faUsers },	
+  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: faSadTear },
+  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: faFlushed },
+  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: faTheaterMasks },
+  { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: faBusinessTime },
+  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: faBrain },
+  { tag: 'การรังแก', backgroundColor: '#5e320f', icon: faAngry },	
+  { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: faHome },
+  { tag: 'อื่นๆ', backgroundColor: '#707571', icon: faQuestionCircle },	
+  { tag: 'การเสพติด', backgroundColor: '#40073d', icon: faSyringe },
+]
+
+// const tagOptions = [
+//   { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d', icon: 'gender-male-female' },
+//   { tag: 'relationships', backgroundColor: '#63ba90', icon: 'account-heart-outline' },
+//   { tag: 'ความรัก', backgroundColor: '#ffa64d', icon: 'heart-broken' },
+//   { tag: 'lgbt', backgroundColor: '#ff4da6', icon: 'gender-transgender' },
+//   { tag: 'เพื่อน', backgroundColor: '#5050ff', icon: 'account-group' },
+//   { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40', icon: 'emoticon-sad-outline' },
+//   { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f', icon: 'lightning-bolt' },
+//   { tag: 'ไบโพลาร์', backgroundColor: '#f347ff', icon: 'arrow-up-down' },
+//   { tag: 'การทำงาน', backgroundColor: '#8e2bff', icon: 'cash' },
+//   { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8', icon: 'brain' },
+//   { tag: 'การรังแก', backgroundColor: '#5e320f', icon: 'emoticon-angry-outline' },
+//   { tag: 'ครอบครัว', backgroundColor: '#ffa64d', icon: 'home-heart' },
+//   { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
+//   { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
+// ];
 const chooseTagColor = (passed) => {
   const color = tagOptions.find((t) => t.tag === passed);
   if (color) {
@@ -129,7 +80,7 @@ const chooseIcon = (passed) => {
   if(icon) {
     return icon.icon;
   }
-  return 'star'
+  return faQuestionCircle
 }
 
 const SinglePostDisplay = ({isLoading}) => {
@@ -172,14 +123,12 @@ const SinglePostDisplay = ({isLoading}) => {
       : null} */}
       {post && (
         <Card
-          className={{...classes.cardStylePost, opacity: showHeartAnimation ? 0.2 : 1}} key={post._id}
+          className={classes.cardStylePost} key={post._id}
         >
 
           <div
-            className={classes.questionContainer}
           >
             <Typography
-              className={classes.questionText}
             >
               {post.question}
             </Typography>
@@ -188,13 +137,28 @@ const SinglePostDisplay = ({isLoading}) => {
           <div
             className={classes.bottomTags}
           >
-            <Chip
-              key={post._id} variant='outlined' icon={chooseIcon(post.tags[0])}/>
-            <IconButton
-              name='comment-plus'
-              size={28}
-              className={classes.commentMiconButton}
-              color='lightgray'
+            {!user?.heartedPosts?.includes(post._id) && !heartedByUser.includes(post._id) ? (
+              <IconButton
+                disabled={post.answer === null}
+                onClick={submitHeart}
+              >
+                <FavoriteBorder style={{color: 'lightpink'}} fontSize={'large'}/>
+                <Typography
+                  className={classes.bottomIconCount}
+                >
+                  {post.likes}
+                </Typography>
+              </IconButton>
+            )
+        : (
+          <IconButton
+            disabled
+          >
+           <Favorite style={{color: 'lightpink'}} fontSize={'large'}/>
+                <Typography className={classes.bottomIconCount} color='textPrimary'>{post.likes}</Typography>
+          </IconButton>
+              )}
+              <IconButton
               disabled={post.answer === null} 
               // onPress={() => {
               //   if(!user){
@@ -208,40 +172,14 @@ const SinglePostDisplay = ({isLoading}) => {
               //   }
               // }}
             >
-              {/* <Typography
+              <CommentOutlined style={{color: 'gray'}} fontSize={'large'}/>
+              <Typography className={classes.bottomIconCount}
               >ความคิดเห็น
-              </Typography> */}
+              </Typography>
             </IconButton>
 
-              <IconButton
-                name="heart-plus-outline"
-                color="pink"
-                size={28}
-                disabled={post.answer === null}
-                className={classes.heartIconStyle}
-                onClick={submitHeart}
-              >
-                <Typography
-                  className={classes.likeTextStyle}
-                >
-                  {post.likes}
-                </Typography>
-              </IconButton>
-
-          <IconButton
-            name="heart"
-            color="pink"
-            size={28}
-            className={classes.heartIconStyle}
-            disabled
-          >
-            <Typography
-              className={classes.likeTextStyle}
-            >
-              {post.likes}
-            </Typography>
-          </IconButton>
-
+              <Chip style={{alignSelf: 'center', marginBottom: 2}}variant='outlined' size='medium' icon={<FontAwesomeIcon size={'2x'} icon={chooseIcon(post.tags[0])}/>}
+              label={post.tags[0]}/>  
           </div>
         </Card>
       )}
