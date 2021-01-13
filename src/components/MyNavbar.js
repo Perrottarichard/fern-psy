@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles} from '@material-ui/core/styles';
@@ -10,13 +10,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Avatar from '@material-ui/core/Avatar'
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MainListItems from './MainListItems';
 import About from './About';
@@ -37,6 +35,7 @@ import AdminFlaggedComment from './AdminFlaggedComment';
 import AdminAnswers from './AdminAnswers';
 import AdminPostArticle from './AdminPostArticle';
 import ArticleDisplay from './ArticlesDisplay';
+import {BigHead} from '@bigheads/core'
 
 import { closeNotify } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
@@ -133,6 +132,10 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 240,
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary
   }
 }));
 
@@ -153,6 +156,7 @@ export default function MyNavbar({activeUser, forumAnswered}) {
   };
 
   const logout = () => {
+    window.localStorage.clear()
     dispatch(clearUser())
   }
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -174,17 +178,15 @@ export default function MyNavbar({activeUser, forumAnswered}) {
           <div className={classes.title}>
             {/* <img src={logo} alt='logo'></img> */}
           </div>
-          <IconButton color="inherit" edge='end' style={{ width: 150 }}>
             {user ?
-              <div>
-                <span>
-                  <Avatar style={{ float: 'left' }} src={user.image} alt='user'></Avatar>
-                  <MenuItem style={{ color: 'black', float: 'right' }} onClick={logout}>Logout</MenuItem>
-                </span>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div style={{height: 50, width: 50, margin: 'auto', marginBottom: 10}}>
+                    <BigHead {...user.avatarProps} faceMask={false}/>
+                  </div>
+                  <Button onClick={logout}>ออกจากระบบ</Button>
               </div>
               :
-              null}
-          </IconButton>
+              <Link to='/login' className={classes.link}>Sign in</Link>}
         </Toolbar>
       </AppBar>
       <SwipeableDrawer

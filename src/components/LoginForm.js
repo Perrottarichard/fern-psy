@@ -1,20 +1,40 @@
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import Logo from '../assets/askfernlogo2.svg'
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'lightpink',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'lightgray',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'lightgray',
+      },
+      '&:hover fieldset': {
+        borderColor: 'lightpink',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'lightpink',
+      },
+    },
+  },
+})(TextField);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,12 +49,22 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
     width: 100
   },
+  af: {
+    fontFamily: 'Arizonia', 
+    color: theme.palette.text.primary
+  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    borderRadius: 20,
+    backgroundColor: 'lightpink'
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary
   },
 }));
 
@@ -60,6 +90,7 @@ export default function LoginForm() {
   const handleChangePass = (event) => {
     setPassword(event.target.value)
   }
+
   const submitLogin = async event => {
     event.preventDefault()
     if (!email || !password) {
@@ -94,13 +125,13 @@ export default function LoginForm() {
       <div className={classes.paper}>
         <Avatar className={classes.avatar} src={Logo}>
         </Avatar>
-        <Typography component="h1" variant="h4" style={{fontFamily: 'Arizonia', color: 'lightgray'}}>
+        <Typography component="h1" variant="h4" className={classes.af}>
           AskFern
         </Typography>
         <form className={classes.form}
         noValidate
         onSubmit={submitLogin}>
-          <TextField
+          <CssTextField
             variant="outlined"
             margin="normal"
             required
@@ -113,7 +144,7 @@ export default function LoginForm() {
             autoComplete="email"
             autoFocus
           />
-          <TextField
+          <CssTextField
             variant="outlined"
             margin="normal"
             required
@@ -130,14 +161,13 @@ export default function LoginForm() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
-            Sign In
+            ลงชื่อเข้าใช้งาน
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/register" variant="body2">
+              <Link to="/register" className={classes.link}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

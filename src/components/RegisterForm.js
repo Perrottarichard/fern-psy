@@ -1,19 +1,41 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setUser } from '../reducers/activeUserReducer'
 import userService from '../services/userService'
 import forumService from '../services/forumService';
+import RegisterGraphic from '../assets/undraw_mobile_login_ikmv.svg'
 
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'lightpink',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'lightgray',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'lightgray',
+      },
+      '&:hover fieldset': {
+        borderColor: 'lightpink',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'lightpink',
+      },
+    },
+  },
+})(TextField);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +54,18 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    borderRadius: 20,
+    backgroundColor: 'lightgray',
+    color: 'black'
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary
+  },
+  graphic: {
+    height: 180,
+    width: 300
+  }
 }));
 
 export default function RegisterForm(props) {
@@ -97,18 +130,13 @@ export default function RegisterForm(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
+       <Avatar src={RegisterGraphic} className={classes.graphic} variant='square'/>
         <form className={classes.form}
         noValidate
         onSubmit={submitRegister}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 autoComplete="email"
                 name="email"
                 variant="outlined"
@@ -122,7 +150,7 @@ export default function RegisterForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 variant="outlined"
                 required
                 fullWidth
@@ -135,7 +163,7 @@ export default function RegisterForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 variant="outlined"
                 required
                 fullWidth
@@ -152,14 +180,13 @@ export default function RegisterForm(props) {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link to="/login" className={classes.link}>
                 Already have an account? Sign in
               </Link>
             </Grid>

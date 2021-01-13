@@ -1,6 +1,8 @@
 import userService from '../services/userService'
 
-const activeUserReducer = (state = {user: null, redirecting: false, userPoints: null, userLevel: null, notify: { open: false, severity: '', message: '' }}, action) => {
+const initialState = {user: null, redirecting: false, userPoints: null, userLevel: null, notify: { open: false, severity: '', message: '' }}
+
+const activeUserReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'SET_USER':
     return {...state, user: action.data};
@@ -9,7 +11,7 @@ const activeUserReducer = (state = {user: null, redirecting: false, userPoints: 
   case 'REDIRECTING':
     return {...state, redirecting: action.data}
   case 'USER_LOGOUT':
-    return {...state, user: action.data};
+    return initialState;
   case 'UPDATE_AVATAR':
     return {...state, user: {...state.user, avatarProps: action.data.avatarProps, avatarName: action.data.avatarName}}
   case 'INIT_STATS':

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 // import { ToastContainer } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
-import { setUser } from './reducers/activeUserReducer'
+import { setUser, initStats } from './reducers/activeUserReducer'
 import { initializeForumAnswered } from './reducers/forumReducer'
 import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
@@ -13,7 +13,6 @@ import MyNavbar from './components/MyNavbar';
 import userService from './services/userService';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
   const activeUser = useSelector(state => state.activeUser.user)
   const dispatch = useDispatch()
   const forumAnswered = useSelector(state => state.forum.answered)
@@ -31,17 +30,29 @@ const App = () => {
   })
 
   const theme = () => createMuiTheme({palette: {type: prefersDarkMode.current ? 'dark' : 'light'}})
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedForumUser')
+  const getLoggedUser = useCallback(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedForumUser');
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      dispatch(setUser(user))
-      setLoggedIn(true)
-      forumService.setToken(user.token)
-      userService.setToken(user.token)
+      const existingUser = JSON.parse(loggedUserJSON);
+      console.log(existingUser)
+      dispatch(setUser(existingUser));
+      forumService.setToken(existingUser.token);
+      userService.setToken(existingUser.token);
+      dispatch(initStats(existingUser._id))
+    } else {
+      console.log('no user');
     }
-  }, [dispatch])
+  }, [dispatch]);
+  
+  useEffect(() => {
+    if (!activeUser) {
+      getLoggedUser();
+    } else {
+      forumService.setToken(activeUser.token);
+      userService.setToken(activeUser.token);
+      dispatch(initStats(activeUser._id))
+    }
+  }, [dispatch, getLoggedUser, activeUser]);
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
@@ -53,7 +64,7 @@ const App = () => {
     <CssBaseline/>
     <Router>
       <div className="App">
-        <MyNavbar activeUser={activeUser} setLoggedIn={setLoggedIn} loggedIn={loggedIn} forumAnswered={forumAnswered} />
+        <MyNavbar activeUser={activeUser} forumAnswered={forumAnswered} />
         {/* <ToastContainer
           position="top-center"
           autoClose={3000}

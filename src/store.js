@@ -16,6 +16,7 @@ const appReducer = combineReducers({
   contact: contactReducer,
   userInfoForAdmin: userInfoForAdminReducer
 })
+
 const rootReducer = (state, action) => {
   if (action.type === 'USER_LOGOUT') {
     state = undefined
