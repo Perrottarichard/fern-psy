@@ -1,35 +1,74 @@
 import React, {useState} from 'react';
 import {BigHead} from '@bigheads/core'
-import { List, Chip, Card, Avatar, Container, Typography, IconButton} from '@material-ui/core';
+import { Avatar, Chip, Card, CardHeader, Divider, Container, Typography, IconButton} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {makeStyles, useTheme} from '@material-ui/core/styles'
-import {Favorite, FavoriteBorder, CommentOutlined} from '@material-ui/icons'
+import {Favorite, FavoriteBorder,  AddComment} from '@material-ui/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faUsers} from '@fortawesome/free-solid-svg-icons'
 import { heart } from '../reducers/forumReducer';
 import {timeSince} from './ForumDisplayAll'
+import DisplayComments from './DisplayComments';
+import Logo from '../assets/askfernlogo2.svg'
 
 
-const useclasses = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: 5,
-    backgroundColor: theme.palette.background
   },
   cardStylePost: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginBottom: 5,
+    marginBottom: 10,
+  },
+  avatarAndHeaderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  bigHeadContainer: {
+    minWidth: 90, 
+    minHeight: 90,
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
+  fernAvatar: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
+  questionContainer: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 30,
+    marginBottom: 10
+  },
+  answerContainer: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 30,
+    marginBottom: 10
   },
   bottomTags: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginLeft: 20,
-    marginRight: 20
-  },
+    flexWrap: 'wrap',
+    paddingRight: 10,
+    },
   bottomIconCount: {
     marginLeft: 10,
-    marginTop: 5
+    marginTop: 5,
+    fontSize: 12,
+    marginBottom: 5,
+    
+  },
+  chip: {
+    alignSelf: 'center', 
+    marginBottom: 2,
   }
 }))
 
@@ -84,7 +123,7 @@ const chooseIcon = (passed) => {
 
 const SinglePostDisplay = ({isLoading}) => {
 
-  const classes = useclasses();
+  const classes = useStyles();
   const user = useSelector(state => state.activeUser.user)
   const heartedByUser = useSelector(state => state.forum.heartedByUser)
   const post = useSelector(state => state.forum.activePost)
@@ -122,17 +161,49 @@ const SinglePostDisplay = ({isLoading}) => {
       : null} */}
       {post && (
         <Card
-          className={classes.cardStylePost} key={post._id}
+          className={classes.cardStylePost} 
+          key={post._id}
+          variant='elevation'
+          raised
         >
-
-          <div
+          <div className={classes.avatarAndHeaderContainer}>
+              <div className={classes.bigHeadContainer}>
+              <BigHead
+                {...post.user?.avatarProps}
+                faceMask={false}/>
+                </div>
+              <CardHeader
+              title={post.title}
+              titleTypographyProps={{variant: 'body1'}}
+              subheader={`โพสต์ของ ${post.user?.avatarName} ${timeSince(post.date)} ที่ผ่านมา`}
+              style={{padding: 0}}>
+              </CardHeader>
+              </div>
+          <div className={classes.questionContainer}
           >
             <Typography
             >
               {post.question}
             </Typography>
           </div>
-
+          <Divider/>
+          <div className={classes.avatarAndHeaderContainer}>
+              <Avatar src={Logo} className={classes.fernAvatar}/>
+              <CardHeader
+              title={`Fern`}
+              titleTypographyProps={{variant: 'body1'}}
+              subheader={`Answered ${timeSince(post.answer.date)} ที่ผ่านมา`}
+              style={{padding: 0}}>
+              </CardHeader>
+              </div>
+          <div className={classes.answerContainer}
+          >
+            <Typography
+            >
+              {post.answer.answer}
+            </Typography>
+          </div>
+          <Divider/>
           <div
             className={classes.bottomTags}
           >
@@ -141,7 +212,7 @@ const SinglePostDisplay = ({isLoading}) => {
                 disabled={post.answer === null}
                 onClick={submitHeart}
               >
-                <FavoriteBorder style={{color: 'lightpink'}} fontSize={'large'}/>
+                <FavoriteBorder style={{color: 'lightpink'}} fontSize={'default'}/>
                 <Typography
                   className={classes.bottomIconCount}
                 >
@@ -153,7 +224,7 @@ const SinglePostDisplay = ({isLoading}) => {
           <IconButton
             disabled
           >
-           <Favorite style={{color: 'lightpink'}} fontSize={'large'}/>
+           <Favorite style={{color: 'lightpink'}} fontSize={'default'}/>
                 <Typography className={classes.bottomIconCount} color='textPrimary'>{post.likes}</Typography>
           </IconButton>
               )}
@@ -171,17 +242,20 @@ const SinglePostDisplay = ({isLoading}) => {
               //   }
               // }}
             >
-              <CommentOutlined style={{color: 'gray'}} fontSize={'large'}/>
+              <AddComment style={{color: 'gray'}} fontSize={'default'}/>
+              {window.screen.width > 400 ?
               <Typography className={classes.bottomIconCount}
               >ความคิดเห็น
               </Typography>
+              : null}
             </IconButton>
 
-              <Chip style={{alignSelf: 'center', marginBottom: 2}}variant='outlined' size='medium' icon={<FontAwesomeIcon size={'2x'} icon={chooseIcon(post.tags[0])}/>}
+              <Chip className={classes.chip} variant='outlined' size='small' icon={<FontAwesomeIcon size={'lg'} icon={chooseIcon(post.tags[0])}/>}
               label={post.tags[0]}/>  
           </div>
         </Card>
       )}
+      <DisplayComments/>
     </Container>
   );
 };

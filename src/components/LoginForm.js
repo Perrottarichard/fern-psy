@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container';
 import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
+import Logo from '../assets/askfernlogo2.svg'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    height: 100,
+    width: 100
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -35,9 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginForm(props) {
+export default function LoginForm() {
   const classes = useStyles();
-  const { setLoggedIn } = props
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -71,7 +73,6 @@ export default function LoginForm(props) {
         )
         forumService.setToken(user.token)
         dispatch(setUser(user))
-        setLoggedIn(true)
         setEmail('')
         setPassword('')
         history.push('/')
@@ -91,11 +92,10 @@ export default function LoginForm(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+        <Avatar className={classes.avatar} src={Logo}>
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h4" style={{fontFamily: 'Arizonia', color: 'lightgray'}}>
+          AskFern
         </Typography>
         <form className={classes.form}
         noValidate

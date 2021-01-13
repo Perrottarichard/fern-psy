@@ -13,7 +13,6 @@ import { initializeForumAnswered, activePost } from '../reducers/forumReducer';
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: 5,
-    backgroundColor: theme.palette.background
   },
   loadingContainer: {
     justifyContent: 'center',
@@ -36,20 +35,19 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   bigHeadContainer: {
-    width: 90, 
-    height: 90
+    minWidth: 90, 
+    minHeight: 90,
   },
   cardStyle: {
-    width: '80%',
     borderRadius: 10,
-    marginBottom: 14
+    marginBottom: 14,
   },
   cardActionsContainer: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginLeft: 20,
-    marginRight: 20
+
   },
   bottomIcons: {
     display: 'flex',
@@ -286,14 +284,14 @@ const ForumDisplayAll = () => {
               </div>
               <CardActions className={classes.cardActionsContainer}>
                 <div className={classes.bottomIcons}>
-                <Favorite style={{color: 'lightpink'}} fontSize={'large'}/>
+                <Favorite style={{color: 'lightpink'}} fontSize={'default'}/>
                 <Typography className={classes.bottomIconCount} color='textPrimary'>{item.likes}</Typography>
                 </div>
                 <div className={classes.bottomIcons}>
-                <CommentOutlined style={{color: 'gray'}} fontSize={'large'}/>
+                <CommentOutlined style={{color: 'gray'}} fontSize={'default'}/>
                 <Typography className={classes.bottomIconCount} color='textPrimary'>{item.comments.length}</Typography>
                 </div>
-              <Chip variant='outlined' size='medium' icon={<FontAwesomeIcon size={'2x'} icon={chooseIcon(item.tags[0])}/>}
+              <Chip variant='outlined' size='medium' icon={<FontAwesomeIcon size={'lg'} icon={chooseIcon(item.tags[0])}/>}
               label={item.tags[0]}/>
               </CardActions>
               </CardActionArea>

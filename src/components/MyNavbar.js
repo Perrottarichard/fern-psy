@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles} from '@material-ui/core/styles';
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     display: 'flex',
-    fontWeight: 500
+    fontWeight: 500,
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -122,8 +122,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    paddingLeft: theme.spacing(0),
+    paddingRight: theme.spacing(0)
   },
   paper: {
     padding: theme.spacing(1),
@@ -136,12 +136,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MyNavbar({activeUser, setLoggedIn, forumAnswered}) {
+export default function MyNavbar({activeUser, forumAnswered}) {
   const classes = useStyles();
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
   const notify = useSelector(state => state.activeUser.notify)
+
+  console.log(activeUser)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -186,7 +188,7 @@ export default function MyNavbar({activeUser, setLoggedIn, forumAnswered}) {
         </Toolbar>
       </AppBar>
       <SwipeableDrawer
-        variant='permanent'
+        variant={window.screen.width > 500 ? 'permanent' : 'temporary'}
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
@@ -213,7 +215,12 @@ export default function MyNavbar({activeUser, setLoggedIn, forumAnswered}) {
 
         <Switch>
           <Route exact path="/">
+            {activeUser === null
+              ?
+              <Redirect to='/login'/>
+              :
             <Home activeUser={activeUser} />
+            }
           </Route>
 
           <Route exact path="/about">
@@ -245,15 +252,15 @@ export default function MyNavbar({activeUser, setLoggedIn, forumAnswered}) {
           </Route>
 
           <Route path="/login">
-            <LoginForm setLoggedIn={setLoggedIn} />
+            <LoginForm />
           </Route>
 
           <Route path="/register">
-            <RegisterForm setLoggedIn={setLoggedIn} />
+            <RegisterForm />
           </Route>
 
           <Route path="/adLogin">
-            <AdminLoginForm setLoggedIn={setLoggedIn} />
+            <AdminLoginForm />
           </Route>
           
           <Route path='/adDash'>

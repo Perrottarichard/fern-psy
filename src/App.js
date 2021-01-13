@@ -23,7 +23,7 @@ const App = () => {
   const prefersDarkMode = React.useRef()
 
   useEffect(() => {
-    if(window.localStorage.getItem("AskFernDark")){
+    if(window.localStorage.getItem("AskFernDark") === 'true'){
       prefersDarkMode.current = true;
     }else{
       prefersDarkMode.current = false;

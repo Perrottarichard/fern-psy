@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Home, Forum, Info, BookTwoTone, PostAdd } from '@material-ui/icons';
+import { Home, Forum, Info, LocalLibraryRounded, PostAdd } from '@material-ui/icons';
 
 const MainListItems = ({ handleDrawerClose }) => {
 
@@ -35,7 +35,7 @@ const MainListItems = ({ handleDrawerClose }) => {
 
       <ListItem style={itemStyle} button component={Link} to="/articles" onClick={() => handleDrawerClose()}>
         <ListItemIcon>
-          <BookTwoTone style={iconStyle}/>
+          <LocalLibraryRounded style={iconStyle}/>
         </ListItemIcon>
         <ListItemText primary="Articles" />
       </ListItem>

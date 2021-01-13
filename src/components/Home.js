@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
       <Container>
-        something here
+        authenticated
       </Container >
   )
 }
