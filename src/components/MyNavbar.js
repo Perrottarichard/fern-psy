@@ -146,8 +146,6 @@ export default function MyNavbar({activeUser, forumAnswered}) {
   const user = useSelector(state => state.activeUser.user)
   const notify = useSelector(state => state.activeUser.notify)
 
-  console.log(activeUser)
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -156,7 +154,8 @@ export default function MyNavbar({activeUser, forumAnswered}) {
   };
 
   const logout = () => {
-    window.localStorage.clear()
+    window.localStorage.removeItem('loggedForumUser')
+    window.localStorage.removeItem('AskFernDark')
     dispatch(clearUser())
   }
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -180,7 +179,7 @@ export default function MyNavbar({activeUser, forumAnswered}) {
           </div>
             {user ?
               <div style={{display: 'flex', flexDirection: 'row'}}>
-                  <div style={{height: 50, width: 50, margin: 'auto', marginBottom: 10}}>
+                  <div style={{height: 35, width: 35, margin: 'auto', marginBottom: 10}}>
                     <BigHead {...user.avatarProps} faceMask={false}/>
                   </div>
                   <Button onClick={logout}>ออกจากระบบ</Button>
@@ -306,7 +305,7 @@ export default function MyNavbar({activeUser, forumAnswered}) {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => dispatch(closeNotify())}>
         {notify && notify.open ?
-          <Alert severity={notify.severity} style={notify.severity === 'success' ? { backgroundColor: '#b7e89e', border: 'solid', borderColor: 'green', width: 260 } : { backgroundColor: 'lightgrey', border: 'solid', borderColor: 'red', width: 260 }} >
+          <Alert severity={notify.severity}>
             {notify.message}
           </Alert>
           : null}

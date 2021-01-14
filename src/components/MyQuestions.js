@@ -1,238 +1,178 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
-import { Container, Card, Button, Typography, CardContent, Badge } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faHeart, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { initializeForumPending, initializeForumAnswered } from '../reducers/forumReducer'
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {makeStyles, useTheme} from '@material-ui/core/styles'
+import {Button, Container, Typography, Chip} from '@material-ui/core'
+import {BigHead} from '@bigheads/core'
+import { initializeForumPending, initializeForumAnswered, getAllArticles } from '../reducers/forumReducer';
+import {getLevelTitle, levelColor} from '../helperFunctions'
+import {StarsRounded} from '@material-ui/icons'
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  bigHeadContainer: {
+    width: 200,
+    height: 200
+  },
+  statsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 20
+  },
+  pointsText: {
+    fontSize: 16
+  },
+  levelText: {
+    fontSize: 16
+  },
+  answerPendingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  showAnsweredButton: {
+    borderRadius: 20,
+    width: 300,
+    backgroundColor: 'lightpink',
+    marginBottom: 20,
+    marginTop: 20
+  },
+  showPendingButton: {
+    borderRadius: 20,
+    width: 300,
+    backgroundColor: 'lightgray'
+  },
+  avatarIntro: {
+    alignSelf: 'center'
+  },
+  showEditAvatarButton: {
+    alignSelf: 'center',
+    borderRadius: 20,
+    padding: 5,
+    width: 300,
+  },
+  editAvatarContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  showAnsweredText: {
+    color: 'black',
+  },
+  showPendingText: {
+    color: 'black',
+  },
+}));
 
 
-const tagColorOptions = [
-  { tag: 'ปัญหาเรื่องเพศ', backgroundColor: '#ff5c4d' },
-  { tag: 'การออกเดท', backgroundColor: '#288046' },
-  { tag: 'relationships', backgroundColor: '#ffa64d' },
-  { tag: 'lgbt', backgroundColor: '#ff4da6' },
-  { tag: 'เพื่อน', backgroundColor: '#5050ff' },
-  { tag: 'โรคซึมเศร้า', backgroundColor: '#343a40' },
-  { tag: 'ความวิตกกังวล', backgroundColor: '#5e320f' },
-  { tag: 'ไบโพลาร์', backgroundColor: '#f347ff' },
-  { tag: 'การทำงาน', backgroundColor: '#8e2bff' },
-  { tag: 'สุขภาพจิต', backgroundColor: '#1e45a8' },
-  { tag: 'bullying', backgroundColor: '#5e320f' },
-  { tag: 'ครอบครัว', backgroundColor: '#ffa64d' },
-  { tag: 'อื่นๆ', backgroundColor: '#707571' },
-  { tag: 'การเสพติด', backgroundColor: '#40073d' },
-]
-const chooseTagColor = (passed) => {
-  let color = tagColorOptions.find(t => t.tag === passed)
-  if (color) {
-    return {
-      backgroundColor: color.backgroundColor,
-      width: '90px',
-      verticalAlign: 'middle',
-      postition: 'relative'
-    }
-  } else {
-    return {
-      backgroundColor: 'magenta',
-      width: '80px'
-    }
-  }
-}
-const TypographyStyle = {
-  fontFamily: 'Kanit',
-  fontSize: '14px',
-  backgroundColor: '#343a40',
-  color: 'white',
-  marginTop: '10px',
-  paddingTop: '6px',
-  paddingBottom: '6px'
-}
-const pendingTypographyStyle = {
-  fontFamily: 'Kanit',
-  fontSize: '14px',
-  backgroundColor: 'gray',
-  color: 'white',
-  marginTop: '10px',
-  paddingTop: '6px',
-  paddingBottom: '6px'
-}
-const CardContentStyleQ = {
-  fontSize: '14px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  textAlign: 'left',
-  paddingLeft: '10px',
-  backgroundColor: 'white' //super light green
-}
-const pendingCardContentStyleQ = {
-  fontSize: '14px',
-  color: 'gray',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  textAlign: 'left',
-  paddingLeft: '10px',
-  backgroundColor: 'white' //super light green
-}
-const CardContentStyleA = {
-  fontSize: '14px',
-  fontFamily: 'Kanit',
-  padding: '10px',
-  textAlign: 'left',
-}
-
-const smallStyle = {
-  float: 'right',
-  color: 'white'
-}
-const postButtonDivStyle = {
-  display: 'block',
-  textAlign: 'center',
-  marginTop: '50px',
-  marginBottom: '50px',
-  fontFamily: 'Kanit',
-  fontSize: '20px'
-}
-const postButtonStyle = {
-  width: '150px',
-  fontFamily: 'Kanit',
-}
-const togglerButtonStyle = {
-  fontFamily: 'Kanit',
-  width: '100px',
-  marginTop: '20px',
-  float: 'center',
-  marginRight: '10px',
-  marginLeft: '10px',
-  borderColor: 'gray',
-  borderStyle: 'solid',
-  color: 'gray',
-  backgroundColor: 'white'
-}
-const answeredTogglerButtonStyle = {
-  fontFamily: 'Kanit',
-  width: '100px',
-  marginTop: '20px',
-  float: 'center',
-  marginRight: '10px',
-  marginLeft: '10px',
-  backgroundColor: 'white',
-  borderColor: '#1d8a17',
-  borderStyle: 'solid',
-  color: '#1d8a17'
-}
-
-
-const MyQuestions = () => {
-
-  let { id } = useParams()
-  const dispatch = useDispatch()
-  const [toggleAnswered, setToggleAnswered] = useState(false)
-  const [togglePending, setTogglePending] = useState(false)
-
-  const user = useSelector(state => state.activeUser)
-  const myAnsweredPosts = useSelector(state => state.forum.answered.filter(p => p.user === id))
-  const myPendingPosts = useSelector(state => state.forum.pending.filter(p => p.user.id === id))
+const MyQuestions = ({navigation}) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.activeUser.user);
+  const userPoints = useSelector((state) => state.activeUser?.userPoints)
+  const userLevel = useSelector((state) => state.activeUser?.userLevel)
+  const {avatarProps} = user
+  const {avatarName} = user
+  const id = user._id;
+  const answered = useSelector((state) => state.forum.answered);
+  const pending = useSelector((state) => state.forum.pending);
+  const myAnsweredPosts = answered.filter((p) => p.user?.id === id).sort((a, b) => new Date(b.date) - new Date(a.date));
+  const myPendingPosts = pending.filter((p) => p.user?.id === id).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   useEffect(() => {
-    dispatch(initializeForumAnswered())
-  }, [dispatch])
+    if(answered.length === 0){
+      console.log('UF Answered MQ')
+      dispatch(initializeForumAnswered());
+    }
+  }, [answered.length, dispatch]);
 
   useEffect(() => {
-    dispatch(initializeForumPending())
-  }, [dispatch])
-
-  const toggle = (type) => {
-    switch (type) {
-      case 'pending':
-        return setTogglePending(!togglePending)
-      case 'answered':
-        return setToggleAnswered(!toggleAnswered)
-      default: return null
+    if(pending.length === 0){
+      console.log('UF Pending MQ')
+      dispatch(initializeForumPending());
     }
-  }
-  if (myAnsweredPosts.length === 0 && myPendingPosts.length === 0) {
-    return (
-      <Container style={{ display: 'block', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับกลับสู่ {user.username}</h3>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '100px' }}>...คุณยังไม่ได้ถามคำถามใด ๆ</h3>
-        <div style={postButtonDivStyle}>
-          ตั้งกระทู้ถาม<br />
-          <Link to='/addpost'><Button color='primary' style={postButtonStyle} >ส่งคำถาม</Button></Link>
+  }, [dispatch, pending.length]);
+
+  return(
+    <Container className={classes.container}>
+      <div
+        className={classes.editAvatarContainer}
+      >
+        <div className={classes.bigHeadContainer}>
+        <BigHead
+          {...avatarProps} faceMask={false}
+        />
         </div>
-      </Container>
-    )
-  }
-  return (
-    <div>
-      <Container style={{ display: 'block', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Kanit', marginTop: '80px' }}>ยินดีต้อนรับคุณ {user.username}</h3>
-        <div style={{ display: 'block', textAlign: 'center' }}>
-          <Button onClick={() => toggle('answered')} style={answeredTogglerButtonStyle}>ตอบแล้ว {`(${myAnsweredPosts.length})`}</Button>
-          <Button onClick={() => toggle('pending')} style={togglerButtonStyle}>รอคำตอบ {`(${myPendingPosts.length})`}</Button>
+        <div>
+          <Typography
+            className={classes.avatarIntro}
+          >
+            สวัสดี, ฉันคือ 
+            {' '}
+            {avatarName}
+            {' '}
+            เราเป็นเพื่อนกันแล้วนะ
+          </Typography>
+          <Button
+            variant='outlined' className={classes.showEditAvatarButton} onClick={() => navigation.navigate("EditAvatar")}
+          >
+            <Typography >
+              แก้ไข
+            </Typography>
+          </Button>
         </div>
-        {myAnsweredPosts && toggleAnswered ?
-          myAnsweredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
-            <div key={f._id}>
-              <a href={`/post/${f._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <Card >
-
-                  <Typography style={TypographyStyle} tag="h5">{f.title}
-                    <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: '#ff99ff', marginLeft: '30px', marginRight: '10px' }} />
-                    <small>{f.likes}</small>
-                    <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
-                  </Typography>
-
-                  <CardContent style={CardContentStyleQ}>
-                    <FontAwesomeIcon icon={faQuestionCircle} style={{ color: '#e8ba4f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                    {f.question}
-
-                  </CardContent>
-                  <CardContent style={CardContentStyleA}>
-                    <FontAwesomeIcon icon={faCheckCircle} style={{ color: '#55d13f', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                    {f.answer.answer}
-
-                  </CardContent>
-                  <div style={{ display: 'block', textAlign: 'left' }}>
-                    {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
-                  </div>
-                </Card>
-              </a>
-            </div>)
-          : null
-        }
-      </Container>
-      <Container>
-        {myPendingPosts && togglePending ? myPendingPosts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(f =>
-          <div key={f._id}>
-            <Card >
-              <Typography style={pendingTypographyStyle} tag="h5">{f.title}
-                <FontAwesomeIcon icon={faHeart} style={{ fontSize: '10px', color: 'gray', marginLeft: '30px', marginRight: '10px' }} />
-                <small>{f.likes}</small>
-                <small className="text-muted" style={smallStyle}>{f.date ? f.date.slice(0, 10) : 'unknown'}</small>
-              </Typography>
-
-              <CardContent style={pendingCardContentStyleQ}>
-                <FontAwesomeIcon icon={faQuestionCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                {f.question}
-              </CardContent>
-
-              <CardContent style={CardContentStyleA}>
-                <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'gray', fontSize: '20px', float: 'left', position: 'relative', marginRight: '20px' }} />
-                <small className="text-muted">คำถามของคุณอยู่ระหว่างดำเนินการ</small>
-
-              </CardContent>
-              <div style={{ display: 'block', textAlign: 'left' }}>
-                {f.tags.map(t => <Badge key={t} style={chooseTagColor(t)} >{t}</Badge>)}
-              </div>
-            </Card>
-          </div>) : null}
-        <div style={postButtonDivStyle}>
-          ต้องการถาม คลิก<br />
-          <Link to='/addpost'><Button color='primary' style={postButtonStyle} >ส่งคำถาม</Button></Link>
-        </div>
-      </Container>
-    </div >
+      </div>
+      <div
+        className={classes.statsContainer}>
+        <Typography
+          className={classes.pointsText}>แต้มของฉัน {userPoints}</Typography>
+        <Chip
+          style={{backgroundColor: levelColor(userLevel), color: 'black'}}
+          label={getLevelTitle(userLevel)}
+          icon={<StarsRounded style={{color: 'goldenrod'}}/>}/>
+      </div>
+      <div
+        className={classes.answerPendingContainer}
+      >
+        <Button
+          variant='contained' className={classes.showAnsweredButton} onClick={() => console.log('clicked')}
+          disabled={myAnsweredPosts.length === 0}
+        >
+          <Typography
+            className={classes.showAnsweredText}
+          >
+            มีการตอบแล้ว (
+            {myAnsweredPosts.length}
+            )
+          </Typography>
+        </Button>
+        <Button
+         variant='contained' className={classes.showPendingButton} onClick={() => console.log('clicked')}
+          disabled={myPendingPosts.length === 0}
+        >
+          <Typography
+            className={classes.showPendingText}
+          >
+            กำลังรอคำตอบ (
+            {myPendingPosts.length}
+            )
+          </Typography>
+        </Button>
+      </div>
+    
+    </Container>
   )
-}
-export default MyQuestions
+};
+
+
+export default MyQuestions;

@@ -40,6 +40,12 @@ export const redirecting = (bool) => ({
   type: 'REDIRECTING',
   data: bool
 });
+export const notify = (severity, message) => {
+  return {
+    type: 'NOTIFY',
+    data: { open: true, severity: severity, message: message }
+  }
+}
 export const closeNotify = () => {
   const clear = { open: false, severity: '', message: '' }
   return {

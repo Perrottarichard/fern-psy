@@ -1,10 +1,33 @@
-import React from 'react'
+import React, {useState} from 'react'
 // import { useHistory } from 'react-router-dom'
 // import { useDispatch } from 'react-redux'
 import { Container} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import TabPanel from './TabPanel'
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import MyQuestions from './MyQuestions'
+import MoodTracker from './MoodTracker';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons'
 // import { setTagFilter } from '../reducers/forumReducer'
+
+const useStyles = makeStyles((theme) => ({
+  fixedHeight: {
+    height: 200,
+  },
+  menu: {
+    height: 'auto',
+  },
+  appBar: {
+    color: theme.palette.text.primary,
+    backgroundColor: 'transparent'
+  },
+  indicator: {
+    backgroundColor: 'lightpink'
+  }
+}))
 
 // const tagOptions = [
 //   { tag: 'ทั้งหมด', backgroundColor: '#8e2bff', icon: faGlobe },
@@ -27,9 +50,27 @@ import { Container} from '@material-ui/core'
 
 const Home = () => {
 
+  const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
       <Container>
-        authenticated
+
+        <div position="static" className={classes.appBar}>
+          <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
+          <Tab label="หน้าของฉัน" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="วันนี้ของฉัน" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          </Tabs>
+        </div>
+        <TabPanel value={value} index={0}>
+          <MyQuestions/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <MoodTracker/>
+        </TabPanel>
       </Container >
   )
 }

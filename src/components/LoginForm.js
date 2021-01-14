@@ -13,6 +13,7 @@ import { setUser } from '../reducers/activeUserReducer'
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import Logo from '../assets/askfernlogo2.svg'
+import {notify} from '../reducers/activeUserReducer'
 
 const CssTextField = withStyles({
   root: {
@@ -94,7 +95,7 @@ export default function LoginForm() {
   const submitLogin = async event => {
     event.preventDefault()
     if (!email || !password) {
-      // toast.warn('กรุณาใส่ email และ password')
+      dispatch(notify('error', 'กรุณาใส่ email และ password'))
     }
     else {
       try {
@@ -111,9 +112,9 @@ export default function LoginForm() {
       catch (error) {
         console.log(error.message)
         if (error.message.includes('401')) {
-          // toast.error('กรุณาตรวจสอบความถูกต้องของ email และ password')
+          dispatch(notify('error', 'กรุณาตรวจสอบความถูกต้องของ email และ password'))
         } else {
-          // toast.error('มีข้อผิดพลาด')
+          dispatch(notify('error', 'มีข้อผิดพลาด'))
         }
       }
     }

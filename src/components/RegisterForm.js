@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router'
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
@@ -6,14 +7,13 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setUser } from '../reducers/activeUserReducer'
 import userService from '../services/userService'
 import forumService from '../services/forumService';
 import RegisterGraphic from '../assets/undraw_mobile_login_ikmv.svg'
+import {notify} from '../reducers/activeUserReducer'
 
 const CssTextField = withStyles({
   root: {
@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegisterForm(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -93,17 +94,21 @@ export default function RegisterForm(props) {
   const handleChangeConfirmPassword = (event) => {
     setConfirmPassword(event.target.value)
   }
+
   const submitRegister = async event => {
     event.preventDefault()
 
  if (!password) {
-      // toast.warn('You must have a password', { autoClose: 5000 })
+     dispatch(notify('error', 'You must have a password'))
+    }
+    else if (!email) {
+      dispatch(notify('error', 'You must provide an email address'))
     }
     else if (password !== confirmPassword) {
-      // toast.warn('กรุณายืนยัน password ให้ถูกต้อง')
+      dispatch(notify('error', 'กรุณายืนยัน password ให้ถูกต้อง'))
     }
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      // toast.warn('กรุณากรอก Email ให้ถูกต้อง')
+      dispatch(notify('error', 'กรุณากรอก Email ให้ถูกต้อง'))
     }
     else {
       setIsLoading(true)
@@ -118,10 +123,11 @@ export default function RegisterForm(props) {
         setPassword('')
         setConfirmPassword('')
         setEmail('')
+        history.push('/')
       }
       catch (error) {
         console.log(error)
-        // toast.error('มีข้อผิดพลาด กรุณาลองใหม่ค่ะ')
+        dispatch(notify('error', 'มีข้อผิดพลาด กรุณาลองใหม่ค่ะ'))
       }
     }
   }
