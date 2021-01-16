@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
-import {Button, Accordion, Switch as MuiSwitch} from '@material-ui/core'
+import {Button, Accordion, Switch as MuiSwitch, Avatar} from '@material-ui/core'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,15 +36,16 @@ import AdminAnswers from './AdminAnswers';
 import AdminPostArticle from './AdminPostArticle';
 import ArticleDisplay from './ArticlesDisplay';
 import {BigHead} from '@bigheads/core'
+import {Brightness2, WbSunny} from '@material-ui/icons'
 
 import { closeNotify } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
 
-const CustomSwitch = withStyles({
+const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
-    color: 'white',
+    color: '#f5f578',
     '&$checked': {
-      color: 'lightpink',
+      color: '#ebb757'
     },
     '&$checked + $track': {
       backgroundColor: 'gray',
@@ -52,7 +53,7 @@ const CustomSwitch = withStyles({
   },
   checked: {},
   track: {},
-})(MuiSwitch);
+}))(MuiSwitch);
 
 const drawerWidth = 240;
 
@@ -189,7 +190,12 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           >
             <MenuIcon />
           </IconButton>
-          <CustomSwitch onChange={handleModeChange}/>
+          
+          <CustomSwitchDark 
+          onChange={handleModeChange} 
+          icon={<Brightness2/>}
+          checkedIcon={<WbSunny/>}
+          />
           <div className={classes.title}>
             {/* <img src={logo} alt='logo'></img> */}
           </div>

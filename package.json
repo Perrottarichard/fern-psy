@@ -57,6 +57,7 @@
   "proxy": "http://localhost:3001",
   "secure": false,
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
     "redux-devtools-extension": "^2.13.8"
   }
 }
