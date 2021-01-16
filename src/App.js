@@ -17,19 +17,17 @@ const App = () => {
   const dispatch = useDispatch()
   const forumAnswered = useSelector(state => state.forum.answered)
 
-  window.localStorage.setItem('AskFernDark', 'true');
-
-  const prefersDarkMode = React.useRef()
+  const [prefersDarkMode, setPrefersDarkMode] = useState(window.localStorage.getItem('AskFernDark'))
 
   useEffect(() => {
-    if(window.localStorage.getItem("AskFernDark") === 'true'){
-      prefersDarkMode.current = true;
+    if(!prefersDarkMode){
+      window.localStorage.setItem('AskFernDark', 'false')
     }else{
-      prefersDarkMode.current = false;
+      window.localStorage.setItem('AskFernDark', 'true')
     }
-  })
+  }, [prefersDarkMode])
 
-  const theme = () => createMuiTheme({palette: {type: prefersDarkMode.current ? 'dark' : 'light'}})
+  const theme = () => createMuiTheme({palette: {type: prefersDarkMode ? 'dark' : 'light'}})
   const getLoggedUser = useCallback(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedForumUser');
     if (loggedUserJSON) {
@@ -64,7 +62,7 @@ const App = () => {
     <CssBaseline/>
     <Router>
       <div className="App">
-        <MyNavbar activeUser={activeUser} forumAnswered={forumAnswered} />
+        <MyNavbar activeUser={activeUser} forumAnswered={forumAnswered} prefersDarkMode={prefersDarkMode} setPrefersDarkMode={setPrefersDarkMode}/>
         {/* <ToastContainer
           position="top-center"
           autoClose={3000}

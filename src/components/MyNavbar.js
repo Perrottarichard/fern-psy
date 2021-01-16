@@ -2,8 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { makeStyles} from '@material-ui/core/styles';
-import {Button, Accordion} from '@material-ui/core'
+import { makeStyles, withStyles} from '@material-ui/core/styles';
+import {Button, Accordion, Switch as MuiSwitch} from '@material-ui/core'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,6 +40,19 @@ import {BigHead} from '@bigheads/core'
 import { closeNotify } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
 
+const CustomSwitch = withStyles({
+  switchBase: {
+    color: 'white',
+    '&$checked': {
+      color: 'lightpink',
+    },
+    '&$checked + $track': {
+      backgroundColor: 'gray',
+    },
+  },
+  checked: {},
+  track: {},
+})(MuiSwitch);
 
 const drawerWidth = 240;
 
@@ -139,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MyNavbar({activeUser, forumAnswered}) {
+export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, setPrefersDarkMode}) {
   const classes = useStyles();
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
@@ -152,10 +165,12 @@ export default function MyNavbar({activeUser, forumAnswered}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleModeChange = () => {
+    setPrefersDarkMode(!prefersDarkMode)
+  }
 
   const logout = () => {
     window.localStorage.removeItem('loggedForumUser')
-    window.localStorage.removeItem('AskFernDark')
     dispatch(clearUser())
   }
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -174,6 +189,7 @@ export default function MyNavbar({activeUser, forumAnswered}) {
           >
             <MenuIcon />
           </IconButton>
+          <CustomSwitch onChange={handleModeChange}/>
           <div className={classes.title}>
             {/* <img src={logo} alt='logo'></img> */}
           </div>
@@ -182,7 +198,7 @@ export default function MyNavbar({activeUser, forumAnswered}) {
                   <div style={{height: 35, width: 35, margin: 'auto', marginBottom: 10}}>
                     <BigHead {...user.avatarProps} faceMask={false}/>
                   </div>
-                  <Button onClick={logout}>ออกจากระบบ</Button>
+                  <Button onClick={logout} style={{color: 'white'}}>ออกจากระบบ</Button>
               </div>
               :
               <Link to='/login' className={classes.link}>Sign in</Link>}
