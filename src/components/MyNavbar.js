@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
-import {Button, Accordion, Switch as MuiSwitch, Avatar} from '@material-ui/core'
+import {Button, Accordion, Switch as MuiSwitch} from '@material-ui/core'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -323,7 +323,9 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
       </main>
       <Snackbar
         open={notify && notify.open}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
+        //needed to avoid wierd blank background during exit transition
+        transitionDuration={{exit: 0}}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => dispatch(closeNotify())}>
         {notify && notify.open ?
