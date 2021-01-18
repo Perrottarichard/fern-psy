@@ -3,7 +3,6 @@ import { Container } from '@material-ui/core';
 // import Fern1 from '../fernanimal.jpg'
 // import Fern2 from '../fernhippie500.jpg'
 // import Fern3 from '../fernjapan.jpg'
-import '../about.css';
 
 
 const About = () => {

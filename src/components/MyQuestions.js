@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect} from 'react';
+import {useHistory} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import {makeStyles, useTheme} from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles'
 import {Button, Container, Typography, Chip} from '@material-ui/core'
 import {BigHead} from '@bigheads/core'
-import { initializeForumPending, initializeForumAnswered, getAllArticles } from '../reducers/forumReducer';
+import { initializeForumPending, initializeForumAnswered} from '../reducers/forumReducer';
 import {getLevelTitle, levelColor} from '../helperFunctions'
 import {StarsRounded} from '@material-ui/icons'
 
@@ -78,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 const MyQuestions = ({navigation}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.activeUser.user);
   const userPoints = useSelector((state) => state.activeUser?.userPoints)
   const userLevel = useSelector((state) => state.activeUser?.userLevel)
@@ -124,7 +126,7 @@ const MyQuestions = ({navigation}) => {
             เราเป็นเพื่อนกันแล้วนะ
           </Typography>
           <Button
-            variant='outlined' className={classes.showEditAvatarButton} onClick={() => navigation.navigate("EditAvatar")}
+            variant='outlined' className={classes.showEditAvatarButton} onClick={() => history.push(`editavatar/${user._id}`)}
           >
             <Typography >
               แก้ไข

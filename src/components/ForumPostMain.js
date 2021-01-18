@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center'
   },
   graphic: {
-    height: 160,
-    width: 220
+    height: 220,
+    width: 300
   },
   inputContainer: {
     display: 'flex',
@@ -253,14 +253,14 @@ const ForumPostMain = () => {
           setSelectedTags([]);
           }, 2500);
           setTimeout(() => {
-            history.push('/login');
+            history.push('/');
             }, 2500);
         }else{
           dispatch(addPoints(user._id, 3))
           setTitle('');
           setQuestion('');
           setSelectedTags([]);
-          history.push('/login');
+          history.push('/');
         }
         
       } catch (error) {
@@ -273,11 +273,9 @@ const ForumPostMain = () => {
   return (
       <Container
     >
-        {showLevelUpAnimation ?
-          <Dialog>
+          <Dialog open={showLevelUpAnimation} fullWidth>
             <LevelUpAnimationModal/>
           </Dialog>
-      : null}
         <div className={classes.graphicContainer}>
           <Avatar className={classes.graphic} variant='rounded' src={PostGraphic} alt='graphic'>
           </Avatar>

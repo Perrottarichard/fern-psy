@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react'
+import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {BigHead} from '@bigheads/core'
 import { Card, CardHeader, Menu, MenuItem, Typography, Container, IconButton, Divider} from '@material-ui/core';
@@ -17,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cardStyleComment: {
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
+    marginBottom: 10
   },
   avatarAndHeaderContainer: {
     display: 'flex',
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 30,
     marginRight: 'auto',
     paddingBottom: 10,
+    marginBottom: 10
   },
   replyHeader: {
     display: 'flex',
@@ -75,43 +78,14 @@ const useStyles = makeStyles((theme) => ({
   replyContent: {
     marginLeft: 20,
   },
-  replyButtonView: {
-
-  },
-  replyButton: {
-
-  },
-  replyButtonText: {
-
-  },
-  ellipsis: {
-
-  },
-  touchableOpacityEllipsis: {
-  },
-  replyListItem: {
-
-  },
-  bigHeadReplyContainer: {
-
-  },
-  replyHeadTitle: {
-
-  },
-  replyDescriptionStyle: {
-
-  },
-  replyWithoutMention: {
-
-  },
 }));
 
 const DisplayComments = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch()
+  const history = useHistory();
   const user = useSelector(state => state.activeUser.user)
-  const refresh = useSelector(state => state.forum.refresh)
   const post = useSelector(state => state.forum.activePost);
   const [isLoading, setIsLoading] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null)
@@ -119,7 +93,7 @@ const DisplayComments = () => {
   const memoizedComments = useMemo(() => {
     return post?.comments?.sort((a, b) => new Date(a.date) - new Date(b.date))
   }, [post])
-
+  
   const DATA = memoizedComments;
 
   useEffect(() => {
@@ -173,7 +147,9 @@ const DisplayComments = () => {
       </div>
       <div className={classes.commentReplyOrFlagContainer}>
       <IconButton
-              className={classes.replyButton} 
+              className={classes.replyButton}
+              disabled={!user}
+              onClick={() => history.push(`/addreply/${item._id}`)} 
             >
               <ReplyRounded fontSize={'small'}/>
               <Typography
@@ -184,6 +160,7 @@ const DisplayComments = () => {
             <IconButton
             variant='text'
             onClick={handleClick}
+            disabled={!user}
             className={classes.flagIcon}
             >
                 <FlagRounded fontSize='small'/>

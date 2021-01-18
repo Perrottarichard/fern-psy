@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom'
 import {BigHead} from '@bigheads/core'
-import { Avatar, Chip, Card, CardHeader, Divider, Container, Typography, IconButton} from '@material-ui/core';
+import { Avatar, Chip, Card, CardHeader, Divider, Container, Typography, IconButton, Dialog} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import {makeStyles, useTheme} from '@material-ui/core/styles'
-import {Favorite, FavoriteBorder,  AddComment} from '@material-ui/icons'
+import {makeStyles} from '@material-ui/core/styles'
+import {Favorite, FavoriteBorder,  AddComment as AddCommentIcon} from '@material-ui/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faUsers} from '@fortawesome/free-solid-svg-icons'
 import { heart } from '../reducers/forumReducer';
+import {notify} from '../reducers/activeUserReducer'
 import {timeSince} from './ForumDisplayAll'
 import DisplayComments from './DisplayComments';
 import Logo from '../assets/askfernlogo2.svg'
+import Lottie from 'react-lottie'
+import * as animationData from '../assets/heartUpAnimation.json'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   cardStylePost: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   avatarAndHeaderContainer: {
     display: 'flex',
@@ -121,9 +125,16 @@ const chooseIcon = (passed) => {
   return faQuestionCircle
 }
 
+const lottieOptions = {
+  loop: false,
+  autoplay: true,
+  animationData: animationData.default
+}
+
 const SinglePostDisplay = ({isLoading}) => {
 
   const classes = useStyles();
+  const history = useHistory();
   const user = useSelector(state => state.activeUser.user)
   const heartedByUser = useSelector(state => state.forum.heartedByUser)
   const post = useSelector(state => state.forum.activePost)
@@ -132,8 +143,8 @@ const SinglePostDisplay = ({isLoading}) => {
 
   const submitHeart = async () => {
     if (user === null) {
-      // ToastAndroid.show('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ', ToastAndroid.SHORT);
-      // navigation.navigate('LoginForm');
+      dispatch(notify('error', 'คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ'));
+      history.push('/')
     } else {
       try {
         dispatch(heart(post._id));
@@ -143,22 +154,24 @@ const SinglePostDisplay = ({isLoading}) => {
         }, 2500);
       } catch (error) {
         console.log(error);
-        // ToastAndroid.show('กรุณาลองใหม่', ToastAndroid.SHORT);
+        dispatch(notify('error', 'กรุณาลองใหม่'));
       }
     }
   };
+
 
   return (
     <Container
      
     >
-      {/* {showHeartAnimation ?
-        <Lottiediv
-          source={require('../assets/heartUpAnimation.json')}
-          autoPlay
-          loop={false}
-          style={{zIndex: 99}}/>
-      : null} */}
+      <Dialog open={showHeartAnimation} fullWidth>
+      <Lottie
+          options={lottieOptions}
+          height={300}
+          width={300}/>
+
+      </Dialog>
+        
       {post && (
         <Card
           className={classes.cardStylePost} 
@@ -229,20 +242,17 @@ const SinglePostDisplay = ({isLoading}) => {
           </IconButton>
               )}
               <IconButton
-              disabled={post.answer === null} 
-              // onPress={() => {
-              //   if(!user){
-              //     // ToastAndroid.show('คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ', ToastAndroid.SHORT);
-              //     navigation.navigate('LoginForm')
-              //   }else{
-              //     navigation.navigate('AddComment', {
-              //       postId: post._id,
-              //       postTitle: post.title,
-              //     });
-              //   }
-              // }}
+              disabled={post.answer === null || !user} 
+              onClick={() => {
+                if(!user){
+                  dispatch(notify('error', 'คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ'));
+                  history.push('/')
+                }else{
+                  history.push(`/addcomment/${post._id}`)
+                }
+              }}
             >
-              <AddComment style={{color: 'gray'}} fontSize={'default'}/>
+              <AddCommentIcon style={{color: 'gray'}} fontSize={'default'}/>
               {window.screen.width > 400 ?
               <Typography className={classes.bottomIconCount}
               >ความคิดเห็น

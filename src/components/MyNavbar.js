@@ -40,6 +40,9 @@ import {Brightness2, WbSunny} from '@material-ui/icons'
 
 import { closeNotify } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
+import AddComment from './AddComment';
+import AddReply from './AddReply';
+import AvatarPreview from './AvatarPreview';
 
 const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
@@ -62,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     fontWeight: 500,
+   
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -149,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: theme.palette.text.primary
+    color: 'white'
   }
 }));
 
@@ -266,6 +270,18 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
             <SinglePostDisplay activeUser={activeUser} />
           </Route>
 
+          <Route path="/addcomment/:id">
+            <AddComment activeUser={activeUser} />
+          </Route>
+
+          <Route path="/editavatar/:userId">
+            <AvatarPreview activeUser={activeUser} />
+          </Route>
+
+          <Route path="/addreply/:commentId">
+            <AddReply activeUser={activeUser} />
+          </Route>
+
           <Route path="/addpost">
             <ForumPostMain activeUser={activeUser} />
           </Route>
@@ -324,8 +340,10 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
       <Snackbar
         open={notify && notify.open}
         autoHideDuration={3000}
-        //needed to avoid wierd blank background during exit transition
+
+        //need this to avoid wierd blank background during exit transition
         transitionDuration={{exit: 0}}
+
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => dispatch(closeNotify())}>
         {notify && notify.open ?

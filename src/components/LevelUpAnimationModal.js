@@ -1,26 +1,32 @@
 import React from 'react'
-import {Dialog, Typography} from '@material-ui/core'
-// import LottieView from 'lottie-react-native'
+import {Typography} from '@material-ui/core'
+import Lottie from 'react-lottie'
+import * as animationData from '../assets/levelUpAnimation.json'
 
 
 const LevelUpAnimationModal = () => {
 
+  const options = {
+    loop: false,
+    autoplay: true,
+    animationData: animationData.default
+  }
+
   return(  
-    <Dialog
-      visible={true}
-      contentContainerStyle={{flex: 1, justifyContent: 'center'}}>
+    <div
+      >
       <div
-        style={{flex: 1, paddingTop: 90}}>
+        style={{display: 'flex', justifyContent: 'center', paddingTop: 90}}>
         <Typography
-          style={{alignSelf: 'center', fontSize: 30}}>ยินดีด้วยคุณได้เลื่อนขั้น!
+          style={{alignSelf: 'center', fontSize: 20}}>ยินดีด้วยคุณได้เลื่อนขั้น!
         </Typography>
       </div>
-      {/* <LottieView
-        source={require('../assets/levelUpAnimation.json')}
-        autoPlay
-        loop={false}
-        style={{zIndex: 99}}/> */}
-    </Dialog>
+      <Lottie
+        options={options}
+        height={300}
+        width={300}
+        />
+    </div>
   )
 }
 
