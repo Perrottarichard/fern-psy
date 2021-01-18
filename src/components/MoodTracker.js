@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Container, Button, RadioGroup, Radio, FormControlLabel, FormControl, Slider, Avatar, Typography} from '@material-ui/core'
+import {Container, Button, RadioGroup, Radio, FormControlLabel, FormControl, Slider, Avatar, Typography, Dialog} from '@material-ui/core'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 import {Pie} from '@nivo/pie'
 import {Line} from '@nivo/line'
@@ -395,9 +395,9 @@ const MoodTracker = () => {
   return(
       <Container
       >
-        {showLevelUpAnimation ?
+       <Dialog open={showLevelUpAnimation} fullWidth>
             <LevelUpAnimationModal/>
-      : null}
+          </Dialog>
         <div
           className={classes.chartContainer}>
         

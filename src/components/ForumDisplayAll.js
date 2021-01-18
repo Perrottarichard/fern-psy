@@ -92,13 +92,13 @@ const tagOptions = [
 //   { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
 //   { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
 // ];
-const chooseTagColor = (passed) => {
-  const color = tagOptions.find((t) => t.tag === passed);
-  if (color) {
-    return color.backgroundColor;
-  }
-  return 'magenta';
-};
+// const chooseTagColor = (passed) => {
+//   const color = tagOptions.find((t) => t.tag === passed);
+//   if (color) {
+//     return color.backgroundColor;
+//   }
+//   return 'magenta';
+// };
 
 const chooseIcon = (passed) => {
   const icon = tagOptions.find(t => t.tag === passed);

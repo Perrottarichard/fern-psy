@@ -1,19 +1,51 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllArticles } from '../reducers/forumReducer'
-import { Container, Card, CardMedia, Typography } from '@material-ui/core';
+import { Container, Card, CardContent, CardMedia, CardActionArea, CardActions, Typography} from '@material-ui/core';
+import {Visibility} from '@material-ui/icons'
+import {makeStyles} from '@material-ui/core/styles'
 import SpinningLoader from './SpinningLoader'
 
-
-// const arrayBufferToBase64 = (buffer) => {
-//   var binary = '';
-//   var bytes = [].slice.call(new Uint8Array(buffer));
-//   bytes.forEach((b) => binary += String.fromCharCode(b));
-//   return window.btoa(binary);
-// };
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'flex-start', 
+    flexWrap: 'wrap', 
+    margin: 20,
+    padding: 0
+  },
+  card: {
+    display: 'flex',
+    height: 360,
+    width: 300,
+    marginRight: 20,
+    paddingTop: 0,
+    marginTop: 0
+  },
+  cardActionArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 300,
+    margin: 0,
+    padding: 0
+  },
+  cardMedia: {
+    display: 'flex',
+    width: 300,
+    height: 225
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 'auto',
+    width: 300,
+  },
+}));
 
 const ArticleDisplay = () => {
 
+  const classes = useStyles();
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
   const articles = useSelector(state => state.forum.articles)
@@ -33,18 +65,26 @@ const ArticleDisplay = () => {
     )
   }
   return (
-    <Container style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', flexWrap: 'wrap', margin: 20}}>
+    
+    <Container className={classes.container}>
       {articles.length > 0 ? articles.map(f =>
-        <div key={f._id} style={{width: 420, height: 360}}>
-            <Card style={{width: 400, height: 340, padding: 0}}>
-            <CardMedia top style={{width: 400, height: 300}} 
-            // src={`data:image/png;base64,${arrayBufferToBase64(f.image.data.data)}`}
-            src={f.image} 
+            <Card key={f._id} className={classes.card}>
+            <CardActionArea className={classes.cardActionArea}>
+            <CardMedia className={classes.cardMedia} 
+            image={f.image} 
             />
-              <Typography>{f.title}
-              </Typography>
+            <CardContent className={classes.cardContent}>
+              <Typography variant='body2'>{f.title}
+              </Typography> 
+              </CardContent>
+              <CardActions style={{marginTop: 'auto', width: '100%', justifyContent: 'flex-end'}}>
+              <Visibility fontSize='small' style={{marginRight: 10}}/>
+              {f.views}
+              </CardActions>
+              </CardActionArea>
+              
             </Card>
-            </div>) : null}
+) : null}
     </Container>
   )
 }
