@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import {useHistory} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArticles } from '../reducers/forumReducer'
+import { getAllArticles, upView } from '../reducers/forumReducer'
 import { Container, Card, CardContent, CardMedia, CardActionArea, CardActions, Typography} from '@material-ui/core';
 import {Visibility} from '@material-ui/icons'
 import {makeStyles} from '@material-ui/core/styles'
 import SpinningLoader from './SpinningLoader'
+import {DateTime} from 'luxon'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const ArticleDisplay = () => {
 
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
   const articles = useSelector(state => state.forum.articles)
@@ -69,7 +72,12 @@ const ArticleDisplay = () => {
     <Container className={classes.container}>
       {articles.length > 0 ? articles.map(f =>
             <Card key={f._id} className={classes.card}>
-            <CardActionArea className={classes.cardActionArea}>
+            <CardActionArea className={classes.cardActionArea}
+            onClick={() => {
+              dispatch(upView(f._id))
+              history.push(`/viewarticle/${f._id}`)
+            }}
+            >
             <CardMedia className={classes.cardMedia} 
             image={f.image} 
             />
@@ -77,9 +85,13 @@ const ArticleDisplay = () => {
               <Typography variant='body2'>{f.title}
               </Typography> 
               </CardContent>
-              <CardActions style={{marginTop: 'auto', width: '100%', justifyContent: 'flex-end'}}>
+              <CardActions style={{marginTop: 'auto', width: '100%', justifyContent: 'space-between'}}>
+              <Typography variant='caption'>{DateTime.fromISO(f.date).toLocaleString()}</Typography>
+
+              <div style={{display: 'flex', alignItems: 'center'}}>
               <Visibility fontSize='small' style={{marginRight: 10}}/>
-              {f.views}
+              <Typography variant='caption'>{f.views}</Typography>
+              </div>
               </CardActions>
               </CardActionArea>
               

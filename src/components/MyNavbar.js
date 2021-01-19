@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom'
+import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
@@ -43,6 +43,7 @@ import { clearUser } from '../reducers/activeUserReducer';
 import AddComment from './AddComment';
 import AddReply from './AddReply';
 import AvatarPreview from './AvatarPreview';
+import SingleArticleDisplay from './SingleArticleDisplay';
 
 const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
@@ -159,6 +160,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, setPrefersDarkMode}) {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
@@ -177,6 +179,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
   const logout = () => {
     window.localStorage.removeItem('loggedForumUser')
     dispatch(clearUser())
+    history.push('/')
   }
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -264,6 +267,10 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
 
           <Route path="/articles">
             <ArticleDisplay activeUser={activeUser} />
+          </Route>
+
+          <Route path="/viewarticle/:articleId">
+            <SingleArticleDisplay activeUser={activeUser} />
           </Route>
 
           <Route path="/post/:id">

@@ -2,13 +2,11 @@ import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {makeStyles, withStyles} from '@material-ui/core/styles'
 import {useDispatch, useSelector} from 'react-redux'
-import {RadioGroup, Radio, Typography, Card, CardContent, TextField, Button, Divider, Container, FormControl, FormControlLabel, FormLabel} from '@material-ui/core'
+import {RadioGroup, Radio, Typography, Card, CardContent, TextField, Button, Divider, Container, FormControl, FormControlLabel} from '@material-ui/core'
 import {BigHead} from '@bigheads/core'
 import {updateUserAvatar} from '../reducers/activeUserReducer'
 import {notify} from '../reducers/activeUserReducer'
 
-// import {ExpandingDot} from 'react-native-animated-pagination-dots'
-// import Micon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -345,8 +343,14 @@ const AvatarPreview = () => {
   const history = useHistory();
   const user = useSelector(state => state.activeUser.user)
   const userLevel = useSelector(state => state.activeUser.userLevel)
-  const {avatarProps} = user
-  const {avatarName} = user
+  let avatarProps;
+  if(user){
+    avatarProps = user.avatarProps
+  }
+  let avatarName;
+  if(user){
+    avatarName = user.avatarName
+  }
   const [name, setName] = useState(avatarName || 'anonymous')
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
