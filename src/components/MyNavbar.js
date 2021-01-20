@@ -257,7 +257,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
             {activeUser === null
               ?
               <Redirect to='/login'/>
-            : activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin'
+            : activeUser?.username === 'Fern-Admin' || activeUser?.username === 'Richard-Admin'
               ?
               <Redirect to='/adDash'/>
               :
