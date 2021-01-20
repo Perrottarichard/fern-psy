@@ -1,23 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Container, Button } from '@material-ui/core'
+import { Table, TableContainer, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { initializeContacts, setContactHidden } from '../reducers/contactReducer'
-
-const buttonStyle = {
-  fontFamily: 'Montserrat',
-  width: '50px',
-  paddingRight: '3px',
-  paddingLeft: '3px',
-  fontSize: '10px',
-  backgroundColor: '#bf3d3d'
-}
-const mailIconStyle = {
-  fontSize: '32px',
-  backgroundColor: 'white',
-  color: '#343a40'
-}
 
 const AdminContactsDashboard = () => {
   const dispatch = useDispatch()
@@ -32,34 +18,34 @@ const AdminContactsDashboard = () => {
   }, [dispatch])
 
   return (
-    <Container>
-      <Table size='sm' hover responsive>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>LINE</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Message</th>
-          </tr>
-        </thead>
-        <tbody>
+    <TableContainer>
+      <Table size='small'>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>LINE</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Message</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {
             contact.map(c => c.hidden === false ?
-              <tr key={c._id}>
-                <td>{c.name}</td>
-                <td>{c.LINE}</td>
-                <td><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
-                </a></td>
-                <td>{c.date.slice(0, 10)}</td>
-                <td>{c.message}</td>
-                <td><Button style={buttonStyle} onClick={() => setHidden(c)} size='sm'>Remove</Button></td>
-              </tr>
+              <TableRow key={c._id}>
+                <TableCell>{c.name}</TableCell>
+                <TableCell>{c.LINE}</TableCell>
+                <TableCell><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare}/>
+                </a></TableCell>
+                <TableCell>{c.date.slice(0, 10)}</TableCell>
+                <TableCell>{c.message}</TableCell>
+                <TableCell><Button onClick={() => setHidden(c)} size='small'>Remove</Button></TableCell>
+              </TableRow>
               : null)
           }
-        </tbody>
+        </TableBody>
       </Table>
-    </Container>
+    </TableContainer>
   )
 }
 export default AdminContactsDashboard

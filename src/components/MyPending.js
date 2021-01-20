@@ -7,7 +7,7 @@ import {Favorite, CommentOutlined} from '@material-ui/icons'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faUsers} from '@fortawesome/free-solid-svg-icons'
-import { initializeForumAnswered, activePost } from '../reducers/forumReducer';
+import { activePost, initializeForumPending } from '../reducers/forumReducer';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -151,7 +151,7 @@ const applyFilterByTag = (allAnsweredPosts, filter) => {
   return allAnsweredPosts.filter(f => f.tags.includes(filter))
 }
 
-const ForumDisplayAll = () => {
+const MyPending = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -159,17 +159,17 @@ const ForumDisplayAll = () => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  let forumAnswered = useSelector((state) => state.forum.answered);
+  let forumPending = useSelector((state) => state.forum.pending);
   const [selectedFilterTag, setSelectedFilterTag] = useState('แสดงทั้งหมด')
 
   if(userId !== undefined){
-    forumAnswered = forumAnswered.filter(p => p.user.id === userId)
+    forumPending = forumPending.filter(p => p.user.id === userId)
   }
 
-  console.log(forumAnswered)
+  console.log(forumPending)
 
-  forumAnswered = applyFilterByTag(forumAnswered, selectedFilterTag)
-  const DATA = forumAnswered.sort((a, b) => new Date(b.date) - new Date(a.date))
+  forumPending = applyFilterByTag(forumPending, selectedFilterTag)
+  const DATA = forumPending.sort((a, b) => new Date(b.date) - new Date(a.date))
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -184,12 +184,12 @@ const ForumDisplayAll = () => {
   }
 
   useEffect(() => {
-    if(!forumAnswered){
-      dispatch(initializeForumAnswered());
+    if(!forumPending){
+      dispatch(initializeForumPending());
     }else{
       setIsLoading(false)
     }
-  }, [dispatch, forumAnswered]);
+  }, [dispatch, forumPending]);
 
   if (isLoading) {
     return (
@@ -272,7 +272,7 @@ const ForumDisplayAll = () => {
               <Card
               className={classes.cardStyle} key={item._id}
             >
-              <CardActionArea onClick={() => {
+              <CardActionArea disabled onClick={() => {
                 dispatch(activePost(item))
                 history.push(`/post/${item._id}`) 
               }}>
@@ -285,7 +285,7 @@ const ForumDisplayAll = () => {
               <CardHeader
               title={item.title}
               titleTypographyProps={{variant: 'body1'}}
-              subheader={`โพสต์ของ ${item.user?.avatarName} ${timeSince(item.date)} ที่ผ่านมา`}>
+              subheader={"กำลังรอคำตอบ"}>
               </CardHeader>
               </div>
               <CardActions className={classes.cardActionsContainer}>
@@ -309,5 +309,4 @@ const ForumDisplayAll = () => {
   );
 };
 
-export default ForumDisplayAll;
-
+export default MyPending;

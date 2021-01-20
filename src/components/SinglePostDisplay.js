@@ -48,13 +48,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 20,
     marginLeft: 20,
     marginRight: 30,
-    marginBottom: 10
+    marginBottom: 10,
+    whiteSpace: 'pre-wrap'
   },
   answerContainer: {
     marginTop: 20,
     marginLeft: 20,
     marginRight: 30,
-    marginBottom: 10
+    marginBottom: 10,
+    whiteSpace: 'pre-wrap'
   },
   bottomTags: {
     display: 'flex',
@@ -109,13 +111,13 @@ const tagOptions = [
 //   { tag: 'อื่นๆ', backgroundColor: '#707571', icon: 'head-question' },
 //   { tag: 'การเสพติด', backgroundColor: '#eb4034', icon: 'pill' },
 // ];
-const chooseTagColor = (passed) => {
-  const color = tagOptions.find((t) => t.tag === passed);
-  if (color) {
-    return color.backgroundColor;
-  }
-  return 'magenta';
-};
+// const chooseTagColor = (passed) => {
+//   const color = tagOptions.find((t) => t.tag === passed);
+//   if (color) {
+//     return color.backgroundColor;
+//   }
+//   return 'magenta';
+// };
 
 const chooseIcon = (passed) => {
   const icon = tagOptions.find(t => t.tag === passed);

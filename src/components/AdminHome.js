@@ -1,16 +1,15 @@
 import React, {useState} from 'react'
-// import { useHistory } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
 import { Container} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
-import TabPanel from './TabPanel'
+import AdminTabPanel from './AdminTabPanel';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import MyQuestions from './MyQuestions'
-import MoodTracker from './MoodTracker';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons'
-// import { setTagFilter } from '../reducers/forumReducer'
+import AdminForumDashboard from './AdminForumDashboard'
+import AdminContactsDashboard from './AdminContactsDashboard';
+import AdminUsersDashboard from './AdminUsersDashboard';
+import AdminFlaggedComment from './AdminFlaggedComment';
+import AdminAnswers from './AdminAnswers';
+import AdminPostArticle from './AdminPostArticle';
 
 const useStyles = makeStyles((theme) => ({
   fixedHeight: {
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ]
 
-const Home = () => {
+const AdminHome = () => {
 
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -60,17 +59,33 @@ const Home = () => {
 
         <div position="static" className={classes.appBar}>
           <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
-          <Tab label="หน้าของฉัน" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
-          <Tab label="วันนี้ของฉัน" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Pending" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Edit Answers" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Contacts" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Users" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Flagged Comments" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
+          <Tab label="Post Article" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
           </Tabs>
         </div>
-        <TabPanel value={value} index={0}>
-          <MyQuestions/>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <MoodTracker/>
-        </TabPanel>
+        <AdminTabPanel value={value} index={0}>
+          <AdminForumDashboard/>
+        </AdminTabPanel>
+        <AdminTabPanel value={value} index={1}>
+          <AdminAnswers/>
+        </AdminTabPanel>
+        <AdminTabPanel value={value} index={2}>
+          <AdminContactsDashboard/>
+        </AdminTabPanel>
+        <AdminTabPanel value={value} index={3}>
+          <AdminUsersDashboard/>
+        </AdminTabPanel>
+        <AdminTabPanel value={value} index={4}>
+          <AdminFlaggedComment/>
+        </AdminTabPanel>
+        <AdminTabPanel value={value} index={5}>
+          <AdminPostArticle/>
+        </AdminTabPanel>
       </Container >
   )
 }
-export default Home
+export default AdminHome;

@@ -44,6 +44,8 @@ import AddComment from './AddComment';
 import AddReply from './AddReply';
 import AvatarPreview from './AvatarPreview';
 import SingleArticleDisplay from './SingleArticleDisplay';
+import MyPending from './MyPending';
+import AdminHome from './AdminHome';
 
 const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
@@ -155,6 +157,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
     color: 'white'
+  },
+  hiddenButtonForAdmin: {
+    width: 30,
+    alignSelf: 'flex-start'
   }
 }));
 
@@ -197,6 +203,8 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           >
             <MenuIcon />
           </IconButton>
+
+          
           
           <CustomSwitchDark 
           onChange={handleModeChange} 
@@ -229,7 +237,8 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
         disableDiscovery={iOS}
       >
         <div className={classes.toolbarIcon}>
-          {/* <img alt='logo' src={logo} style={{ marginRight: 50 }}></img> */}
+        <Button className={classes.hiddenButtonForAdmin} onClick={() => history.push('adLogin')}>
+           </Button>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon style={{color: 'lightpink'}}/>
           </IconButton>
@@ -297,6 +306,14 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
             <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
           </Route>
 
+          <Route path="/myanswered/:userId">
+            <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
+          </Route>
+
+          <Route path="/mypending/:userId">
+            <MyPending activeUser={activeUser}/>
+          </Route>
+
           <Route path="/login">
             <LoginForm />
           </Route>
@@ -312,33 +329,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           <Route path='/adDash'>
             {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
               <NoPage /> :
-              <Container>
-                <Button color='secondary' id='pendingToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Pending Questions
-                </Button>
-                <Button color='secondary' id='answersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>My Answers</Button>
-                <Button color='secondary' id='contactsToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Private Messages</Button>
-                <Button color='secondary' id='usersToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Show All Users</Button>
-                <Button color='secondary' id='flaggedToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Flagged Comments</Button>
-                <Button color='secondary' id='articlesToggler' style={{ margin: '0.5rem', position: 'relative', fontFamily: 'Montserrat', width: '80px', fontSize: '12px', padding: '10px' }}>Post Articles</Button>
-                <Accordion toggler="#pendingToggler">
-                  <AdminForumDashboard />
-                </Accordion>
-                <Accordion toggler="#answersToggler">
-                  <AdminAnswers />
-                </Accordion>
-                <Accordion toggler="#contactsToggler">
-                  <AdminContactsDashboard />
-                </Accordion>
-                <Accordion toggler="#usersToggler">
-                  <AdminUsersDashboard />
-                </Accordion>
-                <Accordion toggler="#flaggedToggler">
-                  <AdminFlaggedComment />
-                </Accordion>
-                <Accordion toggler="#articlesToggler">
-                 <AdminPostArticle/>
-                </Accordion>
-              </Container>
+              <AdminHome/>
             }
           </Route>
         </Switch>

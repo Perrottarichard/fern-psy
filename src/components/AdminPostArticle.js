@@ -1,38 +1,62 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Input} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import { Container, Button, TextField, Input} from '@material-ui/core'
 import { addArticle } from '../reducers/forumReducer'
 
-
-const labelStyle = {
-  fontFamily: 'Montserrat',
-  fontVariant: 'small-caps',
-  fontWeight: 400,
-  fontSize: '1.5rem',
-  marginBottom: '0px',
-  marginTop: '30px'
+const useStyles = makeStyles((theme) => ({
+container: {
+  display: 'flex',
+  justifyContent: 'center',
+  margin: 'auto',
+  marginTop: 30,
+  paddingTop: 30
+},
+  inputContainer: {
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  justifyContent: 'center',
+},
+textAreaContainerTitle: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingLeft: 10,
+  paddingRight: 10,
+  borderWidth: 0.25,
+  borderRadius: 10,
+  marginBottom: 10
+},
+textAreaContainerContent: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingLeft: 10,
+  paddingRight: 10,
+  borderWidth: 0.25,
+  borderRadius: 10,
+  marginBottom: 10
+},
+textAreaTitle: {
+  marginTop: 10,
+  marginBottom: 10,
+  justifyContent: 'flex-start',
+  fontSize: 16,
+},
+textAreaContent: {
+  marginTop: 10,
+  marginBottom: 10,
+  justifyContent: 'flex-start',
+  fontSize: 16
+},
+submitButton: {
+  marginTop: 30,
+  width: 200,
+  alignSelf: 'center'
 }
-const buttonStyle = {
-  fontFamily: 'Montserrat',
-  backgroundColor: 'white',
-  marginTop: '15px',
-  marginBottom: '15px',
-  width: '100px',
-  float: 'left',
-  color: 'green'
-}
-// const clearButtonStyle = {
-//   fontFamily: 'Montserrat',
-//   backgroundColor: 'white',
-//   marginTop: '15px',
-//   marginBottom: '15px',
-//   width: '100px',
-//   float: 'right',
-//   color: '#343a40'
-// }
-
+}))
 
 const AdminPostArticle = () => {
+  const classes = useStyles();
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [file, setFile] = useState([])
@@ -61,50 +85,52 @@ const AdminPostArticle = () => {
         article.append("content", content)
         article.append("file", file)
 
-        // Axios.post("https://httpbin.org/anything", article).then(res => console.log(res))
-        // let article = {
-        //   title: title,
-        //   content: content,
-        //   image: file
-        // }
         dispatch(addArticle(article))
-        // setTitle('')
-        // setContent('')
-        // setFile([])
+
       } catch (error) {
         console.log(error)
       }
     }
   }
   return (
-    <div id='forum-response-div'>
-      <Container>
-        <form>
-        <p style={labelStyle}>Title:</p>
-        <Input
-          style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
-          type='text'
+      <Container className={classes.container}>
+        <form className={classes.inputContainer}>
+        <div className={classes.textAreaContainerTitle}>
+        <TextField
+          className={classes.textAreaTitle}
+          fullWidth
+          variant='outlined'
           onChange={handleTitleChange}
           value={title}
+          label='Title'
         />
-        <p style={labelStyle}>Content:</p>
-        <Input
-          style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
-          type='textarea'
+        </div>
+        <div className={classes.textAreaContainerContent}>
+        <TextField
+          className={classes.textAreaContent}
+          variant='outlined'
+          fullWidth
+          multiline
+          rows={5}
           onChange={handleContentChange}
           value={content}
+          label='Content'
         />
-        <p style={labelStyle}>File:</p>
+        </div>
           <Input
-          style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
+          variant='filled'
           type='file'
           name='myImage'
           onChange={handleFileChange}
         />
-        <Button style={buttonStyle} onClick={handleArticleSubmit}>Submit Article</Button>
+        <Button 
+        className={classes.submitButton}
+        onClick={handleArticleSubmit} 
+        variant='contained'>
+          Submit Article
+          </Button>
         </form>
       </Container>
-    </div>
   )
 }
 export default AdminPostArticle

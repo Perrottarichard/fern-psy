@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {makeStyles} from '@material-ui/core/styles'
 import { Container, Card, Typography, Avatar, Switch, Button } from '@material-ui/core';
-// import Icon from 'react-native-vector-icons/Fontisto';
 import CatFernGraphic from '../assets/undraw_friends_r511.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faLine } from '@fortawesome/free-brands-svg-icons'
+import {Translate} from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   switchContainer: { 
@@ -115,6 +115,7 @@ const About = () => {
         className={classes.switchContainer}
       >
         <Switch
+          icon={<Translate fontSize='small'/>}
           onChange={toggleLanguage}
           value={isEng}
         />
@@ -122,9 +123,7 @@ const About = () => {
       <div
         className={classes.imageContainer}
       >
-        {/* <CatFernGraphic
-          width={140} height={140}
-        /> */}
+        <Avatar src={CatFernGraphic} variant='rounded' style={{height: 220, width: 230}}/>
       </div>
       {!isEng
         ? (

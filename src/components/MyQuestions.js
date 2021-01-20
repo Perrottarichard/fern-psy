@@ -147,7 +147,7 @@ const MyQuestions = ({navigation}) => {
         className={classes.answerPendingContainer}
       >
         <Button
-          variant='contained' className={classes.showAnsweredButton} onClick={() => console.log('clicked')}
+          variant='contained' className={classes.showAnsweredButton} onClick={() => history.push(`myanswered/${user._id}`)}
           disabled={myAnsweredPosts.length === 0}
         >
           <Typography
@@ -159,7 +159,7 @@ const MyQuestions = ({navigation}) => {
           </Typography>
         </Button>
         <Button
-         variant='contained' className={classes.showPendingButton} onClick={() => console.log('clicked')}
+         variant='contained' className={classes.showPendingButton} onClick={() => history.push(`mypending/${user._id}`)}
           disabled={myPendingPosts.length === 0}
         >
           <Typography

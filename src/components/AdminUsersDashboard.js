@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button, Container } from '@material-ui/core'
+import { Table, TableContainer, TableBody, TableCell, TableHead, TableRow, Button, IconButton } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
+import {MailOutline} from '@material-ui/icons'
 import { initializeUsers } from '../reducers/userInfoForAdminReducer'
-
-const buttonStyle = {
-  fontFamily: 'Montserrat'
-}
-const mailIconStyle = {
-  fontSize: '32px',
-  backgroundColor: 'white',
-  color: '#343a40'
-}
-const headingStyle = {
-  fontFamily: 'Montserrat'
-}
 
 const AdminUsersDashboard = () => {
   const dispatch = useDispatch()
@@ -27,26 +16,26 @@ const AdminUsersDashboard = () => {
   }, [dispatch])
 
   return (
-    <Container>
-      <Table size='sm' hover responsive>
-        <thead>
-          <tr>
-            <th style={headingStyle}>Email</th>
-            <th style={headingStyle}>Questions</th>
-          </tr>
-        </thead>
-        <tbody>
+    <TableContainer>
+      <Table size='small'>
+        <TableHead>
+          <TableRow>
+            <TableCell >Email</TableCell>
+            <TableCell >Questions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {
             users.map(c =>
-              <tr key={c.id}>
-                <td><a href={`mailto:${c.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare} style={mailIconStyle} />
-            </a><span>{c.email}</span></td>
-                <td><Button style={buttonStyle} size='sm' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></td>
-              </tr>)
+              <TableRow key={c.id}>
+                <TableCell><IconButton href={`mailto:${c.email}`} target='_blank'> <MailOutline/>
+            </IconButton><span>{c.email}</span></TableCell>
+                <TableCell><Button size='small' disabled onClick={() => setQuestionToggle(!questionToggle)}>Questions</Button></TableCell>
+              </TableRow>)
           }
-        </tbody>
+        </TableBody>
       </Table>
-    </Container>
+    </TableContainer>
   )
 }
 export default AdminUsersDashboard

@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center'
   },
   graphic: {
-    height: 220,
-    width: 300
+    height: 196,
+    width: 295
   },
   inputContainer: {
     display: 'flex',

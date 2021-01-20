@@ -6,7 +6,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 // import { ToastContainer } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
 import { setUser, initStats } from './reducers/activeUserReducer'
-import { initializeForumAnswered } from './reducers/forumReducer'
+import { initializeForumAnswered, initializeForumPending } from './reducers/forumReducer'
 import forumService from './services/forumService'
 import MyNavbar from './components/MyNavbar';
 
@@ -48,12 +48,17 @@ const App = () => {
     } else {
       forumService.setToken(activeUser.token);
       userService.setToken(activeUser.token);
+      if(!activeUser.username)
       dispatch(initStats(activeUser._id))
     }
   }, [dispatch, getLoggedUser, activeUser]);
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(initializeForumPending())
   }, [dispatch])
 
   return (

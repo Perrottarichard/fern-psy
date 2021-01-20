@@ -1,37 +1,24 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Container, Button, Input } from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import { Container, Button, TextField } from '@material-ui/core'
 import { answerQuestion } from '../reducers/forumReducer'
 
-const labelStyle = {
-  fontFamily: 'Montserrat',
-  fontVariant: 'small-caps',
-  fontWeight: 400,
-  fontSize: '1.5rem',
-  marginBottom: '0px',
-  marginTop: '30px'
-}
-const buttonStyle = {
-  fontFamily: 'Montserrat',
-  backgroundColor: 'white',
-  marginTop: '15px',
-  marginBottom: '15px',
-  width: '100px',
-  float: 'left',
-  color: 'green'
-}
-const clearButtonStyle = {
-  fontFamily: 'Montserrat',
-  backgroundColor: 'white',
-  marginTop: '15px',
-  marginBottom: '15px',
-  width: '100px',
-  float: 'right',
-  color: '#343a40'
-}
+const useStyles = makeStyles((theme) => ({
 
+  submitContainer: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  button: {
+    marginTop: 20,
+    width: 200
+  }
+}))
 
 const AdminForumAnswer = (props) => {
+
+  const classes = useStyles();
   const { setAnswering, answering } = props
   const [answer, setAnswer] = useState('')
   const dispatch = useDispatch()
@@ -59,20 +46,26 @@ const AdminForumAnswer = (props) => {
   return (
     <div id='forum-response-div'>
       <Container>
-        <p style={labelStyle}>Question:</p>
-        <p style={{ fontFamily: 'Montserrat' }}>Reminder: This forum is anonymous.</p>
-        {(!answering) ? <h3 style={{ color: 'red', fontFamily: 'Montserrat' }}>You must first select a post</h3> :
+        <p >Question:</p>
+        <p >Reminder: This forum is anonymous.</p>
+        {(!answering) ? <h3 style={{ color: 'pink'}}>You must first select a post</h3> :
           <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Montserrat' }}><em>You are answering the following question:</em></p>{answering.question}</div>}
-        <Input
-          style={{ fontFamily: 'Montserrat', marginTop: '15px' }}
-          type='textarea'
+        <div style={{width: '100%', marginTop: 20}}>
+        <TextField
           onChange={handleContentChange}
+          variant='outlined'
+          multiline
+          rows={4}
+          fullWidth
           value={answer}
           onSubmit={handleEditorSubmit}
           disabled={answering === '' ? true : false}
         />
-        <Button style={buttonStyle} onClick={handleEditorSubmit}>Submit Answer</Button>
-        <Button style={clearButtonStyle} onClick={() => setAnswering('')}>Clear Selection</Button>
+        </div>
+        <div className={classes.submitContainer}>
+        <Button className={classes.button}onClick={handleEditorSubmit} variant='contained'>Submit Answer</Button>
+        <Button className={classes.button}onClick={() => setAnswering('')} variant='contained'>Clear Selection</Button>
+        </div>
       </Container>
     </div>
   )

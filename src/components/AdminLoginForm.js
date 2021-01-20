@@ -6,42 +6,9 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import loginService from '../services/loginService'
 import forumService from '../services/forumService'
 import { setUser } from '../reducers/activeUserReducer'
-import { Button, Input } from '@material-ui/core'
-
-const textStyle = {
-  textAlign: 'center',
-  fontFamily: 'Montserrat',
-  fontVariant: 'small-caps'
-}
-const formDivStyle = {
-  fontFamily: 'Montserrat',
-  fontVariant: 'small-caps',
-  display: 'block',
-  textAlign: 'center'
-}
-const formStyle = {
-  width: '70%',
-  display: 'inline-block'
-}
-const labelStyle = {
-  float: 'left',
-  marginBottom: '0px',
-  padding: '0px',
-  fontFamily: 'Montserrat'
-}
-const loginButtonStyle = {
-  float: 'center',
-  width: '200px',
-  backgroundColor: '#28804b',
-  fontFamily: 'Montserrat',
-  color: 'white'
-}
-const iconStyle = {
-  float: 'center'
-}
+import { Button, TextField } from '@material-ui/core'
 
 const AdminLoginForm = (props) => {
-  const { setLoggedIn } = props
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
@@ -67,7 +34,6 @@ const AdminLoginForm = (props) => {
         )
         forumService.setToken(admin.token)
         dispatch(setUser(admin))
-        setLoggedIn(true)
         setUsername('')
         setPassword('')
         history.push('/adDash')
@@ -83,14 +49,42 @@ const AdminLoginForm = (props) => {
   return (
     <div className='container' id='admin-login-form'>
       <div>
-        <h2 style={textStyle}><FontAwesomeIcon icon={faLock} style={iconStyle} />{' '}Admin{' '}</h2>
+        <h2 ><FontAwesomeIcon icon={faLock}  />{' '}Admin{' '}</h2>
       </div>
-      <div id='form-div' style={formDivStyle}>
-        <form style={formStyle} onSubmit={submitLogin}>
-            <p style={labelStyle}>Username:</p>
-            <Input onChange={handleChangeUser} value={username}></Input><br />
-            <p style={labelStyle}>Password:</p> <Input id='password' type="password" onChange={handleChangePass} value={password}></Input><br />
-            <Button color='none' style={loginButtonStyle} id='admin-submit-login' type="submit">Enter</Button>
+      <div id='form-div' >
+        <form onSubmit={submitLogin}>
+
+            <TextField 
+            onChange={handleChangeUser} 
+            value={username}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label='Username'
+            >
+            </TextField>
+
+            <TextField 
+            id='password' 
+            type="password" 
+            onChange={handleChangePass} 
+            value={password}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label='Password'
+            >
+            </TextField>
+
+            <Button 
+            id='admin-submit-login' 
+            type="submit"
+            variant='contained'
+            >
+              Enter
+            </Button>
         </form>
       </div>
     </div>
