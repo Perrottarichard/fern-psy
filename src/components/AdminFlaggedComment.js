@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table, Button, Container } from '@material-ui/core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
+import { Table, TableContainer, TableBody, TableCell, TableHead, TableRow, Button, IconButton } from '@material-ui/core'
+import {MailOutline} from '@material-ui/icons'
 import { getFlaggedComments, deleteComment, removeCommentFlag } from '../reducers/forumReducer';
 
 const AdminFlaggedComment = () => {
@@ -31,31 +30,31 @@ const AdminFlaggedComment = () => {
     }
   }
   return (
-    <Container>
+    <TableContainer>
       <Table size='small'>
-        <thead>
-          <tr>
-            <th >Username</th>
-            <th >Email</th>
-            <th >Content</th>
-          </tr>
-        </thead>
-        <tbody>
+        <TableHead>
+          <TableRow>
+            <TableCell >Email</TableCell>
+            <TableCell >Content</TableCell>
+            <TableCell >Unflag</TableCell>
+            <TableCell >Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {
             flagged ? flagged.map(c =>
-              <tr key={c._id}>
-                <td >{c.user.username}</td>
-                <td><a href={`mailto:${c.user.email}`}> <FontAwesomeIcon id='fa-contact-form-admin' icon={faEnvelopeSquare}/>
-                </a></td>
-                <td >{c.content}</td>
-                <td><Button onClick={() => removeFlag(c._id)}>Unflag</Button></td>
-                <td><Button onClick={() => removeQuestion(c._id)}>Delete</Button></td>
+              <TableRow key={c._id}>
+                <TableCell><IconButton href={`mailto:${c.user.email}`} target='_blank'> <MailOutline/>
+                </IconButton>{c.user.email}</TableCell>
+                <TableCell >{c.content}</TableCell>
+                <TableCell><Button size='small' variant='contained' onClick={() => removeFlag(c._id)}>Unflag</Button></TableCell>
+                <TableCell><Button size='small' variant='contained'onClick={() => removeQuestion(c._id)}>Delete</Button></TableCell>
 
-              </tr>)
+              </TableRow>)
               : null}
-        </tbody>
+        </TableBody>
       </Table>
-    </Container>
+    </TableContainer>
   )
 }
 export default AdminFlaggedComment

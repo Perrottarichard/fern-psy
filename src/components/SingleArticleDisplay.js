@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles'
-import {useTheme, Typography, Container, CardMedia} from '@material-ui/core';
+import {Typography, Container, CardMedia} from '@material-ui/core';
 import {DateTime} from 'luxon'
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';

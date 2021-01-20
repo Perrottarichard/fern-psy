@@ -166,11 +166,16 @@ const SinglePostDisplay = ({isLoading}) => {
     <Container
      
     >
-      <Dialog open={showHeartAnimation} fullWidth>
+      <Dialog open={showHeartAnimation} PaperProps={{
+    style: {
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+    },
+  }}>
       <Lottie
           options={lottieOptions}
-          height={300}
-          width={300}/>
+          height={240}
+          width={240}/>
 
       </Dialog>
         
@@ -224,7 +229,7 @@ const SinglePostDisplay = ({isLoading}) => {
           >
             {!user?.heartedPosts?.includes(post._id) && !heartedByUser.includes(post._id) ? (
               <IconButton
-                disabled={post.answer === null}
+                disabled={post.answer === null || (user.username === 'Fern-Admin' || user.username === 'Richard-Admin')}
                 onClick={submitHeart}
               >
                 <FavoriteBorder style={{color: 'lightpink'}} fontSize={'default'}/>
@@ -244,7 +249,7 @@ const SinglePostDisplay = ({isLoading}) => {
           </IconButton>
               )}
               <IconButton
-              disabled={post.answer === null || !user} 
+              disabled={post.answer === null || (user.username === 'Fern-Admin' || user.username === 'Richard-Admin') || !user} 
               onClick={() => {
                 if(!user){
                   dispatch(notify('error', 'คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ'));

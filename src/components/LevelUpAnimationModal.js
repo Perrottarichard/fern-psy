@@ -16,15 +16,16 @@ const LevelUpAnimationModal = () => {
     <div
       >
       <div
-        style={{display: 'flex', justifyContent: 'center', paddingTop: 90}}>
+        style={{display: 'flex', justifyContent: 'center', paddingTop: 90, backgroundColor: 'transparent'}}>
         <Typography
           style={{alignSelf: 'center', fontSize: 20}}>ยินดีด้วยคุณได้เลื่อนขั้น!
         </Typography>
       </div>
       <Lottie
         options={options}
-        height={300}
-        width={300}
+        height={260}
+        width={240}
+        style={{backgroundColor: 'transparent'}}
         />
     </div>
   )

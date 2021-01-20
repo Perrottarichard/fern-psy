@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-// import { ToastContainer } from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css'
 import { setUser, initStats } from './reducers/activeUserReducer'
 import { initializeForumAnswered, initializeForumPending } from './reducers/forumReducer'
 import forumService from './services/forumService'
@@ -67,19 +65,13 @@ const App = () => {
     <CssBaseline/>
     <Router>
       <div className="App">
-        <MyNavbar activeUser={activeUser} forumAnswered={forumAnswered} prefersDarkMode={prefersDarkMode} setPrefersDarkMode={setPrefersDarkMode}/>
-        {/* <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        /> */}
         
+        <MyNavbar 
+        activeUser={activeUser} 
+        forumAnswered={forumAnswered} 
+        prefersDarkMode={prefersDarkMode} 
+        setPrefersDarkMode={setPrefersDarkMode}/>
+
       </div>
     </Router >
     </MuiThemeProvider>

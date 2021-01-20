@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     color: theme.palette.text.primary,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    marginBottom: 26
   },
   indicator: {
     backgroundColor: 'lightpink'

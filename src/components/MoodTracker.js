@@ -395,7 +395,12 @@ const MoodTracker = () => {
   return(
       <Container
       >
-       <Dialog open={showLevelUpAnimation} fullWidth>
+       <Dialog open={showLevelUpAnimation} PaperProps={{
+    style: {
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+    },
+  }}>
             <LevelUpAnimationModal/>
           </Dialog>
         <div

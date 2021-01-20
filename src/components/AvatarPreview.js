@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {makeStyles, withStyles} from '@material-ui/core/styles'
 import {useDispatch, useSelector} from 'react-redux'
-import {RadioGroup, Radio, Typography, Card, CardContent, TextField, Button, Divider, Container, FormControl, FormControlLabel} from '@material-ui/core'
+import {RadioGroup, Radio, Typography, Card, TextField, Button, Divider, Container, FormControl, FormControlLabel} from '@material-ui/core'
 import {BigHead} from '@bigheads/core'
 import {updateUserAvatar} from '../reducers/activeUserReducer'
 import {notify} from '../reducers/activeUserReducer'
@@ -352,6 +352,8 @@ const AvatarPreview = () => {
     avatarName = user.avatarName
   }
   const [name, setName] = useState(avatarName || 'anonymous')
+  
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 

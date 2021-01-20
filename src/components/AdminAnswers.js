@@ -11,8 +11,7 @@ const AdminAnswers = () => {
 
   useEffect(() => {
     dispatch(initializeForumAnswered())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch])
 
   return (
     <TableContainer>

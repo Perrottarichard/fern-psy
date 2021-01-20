@@ -2,12 +2,11 @@ import React, {useState, useEffect, useMemo} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {BigHead} from '@bigheads/core'
-import { Card, CardHeader, Menu, MenuItem, Typography, Container, IconButton, Divider} from '@material-ui/core';
+import { Card, CardHeader, Menu, MenuItem, Typography, IconButton} from '@material-ui/core';
 import {FlagRounded, ReplyRounded} from '@material-ui/icons'
-import {makeStyles, useTheme} from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles'
 import { setFlaggedComment } from '../reducers/forumReducer';
 import {timeSince} from './ForumDisplayAll'
-import SinglePostDisplay from './SinglePostDisplay'
 
 const useStyles = makeStyles((theme) => ({
   container: {

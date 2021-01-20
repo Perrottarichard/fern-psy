@@ -46,10 +46,8 @@ const AdminForumAnswer = (props) => {
   return (
     <div id='forum-response-div'>
       <Container>
-        <p >Question:</p>
-        <p >Reminder: This forum is anonymous.</p>
-        {(!answering) ? <h3 style={{ color: 'pink'}}>You must first select a post</h3> :
-          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: '10px', borderWidth: '1px' }}><p style={{ fontFamily: 'Montserrat' }}><em>You are answering the following question:</em></p>{answering.question}</div>}
+        {(!answering) ? <h3>You must first select a post</h3> :
+          <div style={{ borderColor: 'red', borderStyle: 'solid', padding: 10, borderWidth: 1, marginTop: 20, borderRadius: 5 }}><p><em>You are answering the following question:</em></p>{answering.question}</div>}
         <div style={{width: '100%', marginTop: 20}}>
         <TextField
           onChange={handleContentChange}

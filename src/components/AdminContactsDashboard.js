@@ -19,6 +19,7 @@ const AdminContactsDashboard = () => {
 
   return (
     <TableContainer>
+      {contact.length > 0 ?
       <Table size='small'>
         <TableHead>
           <TableRow>
@@ -45,6 +46,7 @@ const AdminContactsDashboard = () => {
           }
         </TableBody>
       </Table>
+      : 'Nothing to show here yet'}
     </TableContainer>
   )
 }

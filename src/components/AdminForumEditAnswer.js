@@ -44,8 +44,8 @@ const AdminForumEditAnswer = (props) => {
   return (
     <div id='forum-response-div'>
       <Container>
-        {(!editing.answer) ? <h3 style={{ color: 'pink'}}>You must first select an answer to change</h3> :
-          <div style={{ borderColor: 'red', borderStyle: 'solid', paddingLeft: 10, paddingBottom: 10, borderWidth: 1, marginBottom: 10, marginTop: 10 }}><p><em>You are editing the following answer:</em></p>{editing.answer}</div>}
+        {(!editing.answer) ? <h3>You must first select an answer to change</h3> :
+          <div style={{ borderColor: 'red', borderStyle: 'solid', paddingLeft: 10, paddingBottom: 10, borderWidth: 1, marginBottom: 10, marginTop: 10, borderRadius: 5 }}><p><em>You are editing the following answer:</em></p>{editing.answer}</div>}
         <TextField
           onChange={handleContentChange}
           value={answer}

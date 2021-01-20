@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
-import {Button, Accordion, Switch as MuiSwitch} from '@material-ui/core'
+import {Button, Switch as MuiSwitch, Avatar} from '@material-ui/core'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,18 +25,13 @@ import Home from './Home';
 import ForumDisplayAll from './ForumDisplayAll';
 import ContactForm from './ContactForm';
 import AdminLoginForm from './AdminLoginForm';
-import AdminContactsDashboard from './AdminContactsDashboard';
-import AdminUsersDashboard from './AdminUsersDashboard';
-import AdminForumDashboard from './AdminForumDashboard';
 import NoPage from './NoPage'
 import SinglePostDisplay from './SinglePostDisplay';
 import MyQuestions from './MyQuestions';
-import AdminFlaggedComment from './AdminFlaggedComment';
-import AdminAnswers from './AdminAnswers';
-import AdminPostArticle from './AdminPostArticle';
 import ArticleDisplay from './ArticlesDisplay';
 import {BigHead} from '@bigheads/core'
 import {Brightness2, WbSunny} from '@material-ui/icons'
+import Logo from '../assets/askfernlogo2.svg'
 
 import { closeNotify } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
@@ -217,7 +212,12 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
             {user ?
               <div style={{display: 'flex', flexDirection: 'row'}}>
                   <div style={{height: 35, width: 35, margin: 'auto', marginBottom: 10}}>
+                    {!user.username
+                    ?
                     <BigHead {...user.avatarProps} faceMask={false}/>
+                    :
+                    <Avatar src={Logo}/>
+                    }
                   </div>
                   <Button onClick={logout} style={{color: 'white'}}>ออกจากระบบ</Button>
               </div>
@@ -257,6 +257,9 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
             {activeUser === null
               ?
               <Redirect to='/login'/>
+            : activeUser.username === 'Fern-Admin' || activeUser.username === 'Richard-Admin'
+              ?
+              <Redirect to='/adDash'/>
               :
             <Home activeUser={activeUser} />
             }
