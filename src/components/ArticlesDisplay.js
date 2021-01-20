@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     height: 360,
     width: 300,
     marginRight: 20,
+    marginTop: 20,
     paddingTop: 0,
-    marginTop: 0
   },
   cardActionArea: {
     display: 'flex',

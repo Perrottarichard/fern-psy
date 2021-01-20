@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect} from 'react-router-dom'
 // import { useDispatch } from 'react-redux'
 import { Container} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import MyQuestions from './MyQuestions'
 import MoodTracker from './MoodTracker';
+import { useSelector } from 'react-redux';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faQuestionCircle, faBusinessTime, faBrain, faHome, faSyringe, faHeartBroken, faVenusMars, faTransgender, faAngry, faFlushed, faGlassCheers, faTheaterMasks, faSadTear, faGlobe, faUsers, faCode, faHeart } from '@fortawesome/free-solid-svg-icons'
 // import { setTagFilter } from '../reducers/forumReducer'
@@ -50,14 +51,23 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
 
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = useState(0);
+  const user = useSelector(state => state.activeUser.user)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log(user)
+  if(user?.username === 'Fern-Admin' || user?.username === 'Richard-Admin'){
+  return (
+  <Redirect to="/adDash"/>
+  )
+
+  }else{
   return (
       <Container>
-
         <div position="static" className={classes.appBar}>
           <Tabs value={value} onChange={handleChange} centered classes={{ indicator: classes.indicator }}>
           <Tab label="หน้าของฉัน" style={{ textTransform: 'none', fontSize: 16, fontWeight: 'bold' }} />
@@ -72,5 +82,6 @@ const Home = () => {
         </TabPanel>
       </Container >
   )
+}
 }
 export default Home

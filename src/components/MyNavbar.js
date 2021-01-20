@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect, Link, useHistory } from 'react-router-dom'
+import { Switch, Route, Link, useHistory, Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
@@ -207,7 +207,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           checkedIcon={<WbSunny/>}
           />
           <div className={classes.title}>
-            {/* <img src={logo} alt='logo'></img> */}
+
           </div>
             {user ?
               <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -254,67 +254,62 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
 
         <Switch>
           <Route exact path="/">
-            {activeUser === null
-              ?
-              <Redirect to='/login'/>
-            : activeUser?.username === 'Fern-Admin' || activeUser?.username === 'Richard-Admin'
-              ?
-              <Redirect to='/adDash'/>
+            {user === null || user === undefined ?
+              <LoginForm/>
               :
-            <Home activeUser={activeUser} />
-            }
+            <Home activeUser={user} />}
           </Route>
 
-          <Route exact path="/about">
+          <Route path="/about">
             <About />
           </Route>
 
-          <Route exact path="/contact">
+          <Route path="/contact">
             <ContactForm />
           </Route>
 
           <Route path="/myquestions/:id">
-            <MyQuestions activeUser={activeUser} />
+            <MyQuestions activeUser={user} />
           </Route>
 
           <Route path="/articles">
-            <ArticleDisplay activeUser={activeUser} />
+            <ArticleDisplay activeUser={user} />
           </Route>
 
           <Route path="/viewarticle/:articleId">
-            <SingleArticleDisplay activeUser={activeUser} />
+            <SingleArticleDisplay activeUser={user} />
           </Route>
 
           <Route path="/post/:id">
-            <SinglePostDisplay activeUser={activeUser} />
+            <SinglePostDisplay activeUser={user} />
           </Route>
 
           <Route path="/addcomment/:id">
-            <AddComment activeUser={activeUser} />
+            <AddComment activeUser={user} />
           </Route>
 
           <Route path="/editavatar/:userId">
-            <AvatarPreview activeUser={activeUser} />
+            <AvatarPreview activeUser={user} />
           </Route>
 
           <Route path="/addreply/:commentId">
-            <AddReply activeUser={activeUser} />
+            <AddReply activeUser={user} />
           </Route>
 
           <Route path="/addpost">
-            <ForumPostMain activeUser={activeUser} />
+            <ForumPostMain activeUser={user} />
           </Route>
 
           <Route path="/allquestions">
-            <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
+            <ForumDisplayAll activeUser={user} forumAnswered={forumAnswered} />
           </Route>
 
           <Route path="/myanswered/:userId">
-            <ForumDisplayAll activeUser={activeUser} forumAnswered={forumAnswered} />
+            <ForumDisplayAll activeUser={user} forumAnswered={forumAnswered} />
           </Route>
 
           <Route path="/mypending/:userId">
-            <MyPending activeUser={activeUser}/>
+            <MyPending activeUser={user}/>
           </Route>
 
           <Route path="/login">
@@ -330,7 +325,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           </Route>
           
           <Route path='/adDash'>
-            {!activeUser || (activeUser.username !== 'Fern-Admin' && activeUser.username !== 'Richard-Admin') ?
+            {!user || (user.username !== 'Fern-Admin' && user?.username !== 'Richard-Admin') ?
               <NoPage /> :
               <AdminHome/>
             }

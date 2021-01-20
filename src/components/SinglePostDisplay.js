@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
   bigHeadContainer: {
     minWidth: 90, 
     minHeight: 90,
+    maxHeight: 100,
+    maxWidth: 100,
     marginTop: 'auto',
     marginBottom: 'auto'
   },
@@ -144,7 +146,7 @@ const SinglePostDisplay = ({isLoading}) => {
   const dispatch = useDispatch()
 
   const submitHeart = async () => {
-    if (user === null) {
+    if (user === null || user === undefined) {
       dispatch(notify('error', 'คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ'));
       history.push('/')
     } else {
@@ -227,9 +229,9 @@ const SinglePostDisplay = ({isLoading}) => {
           <div
             className={classes.bottomTags}
           >
-            {!user?.heartedPosts?.includes(post._id) && !heartedByUser.includes(post._id) ? (
+            {!heartedByUser || !heartedByUser.includes(post._id) ? (
               <IconButton
-                disabled={post.answer === null || (user.username === 'Fern-Admin' || user.username === 'Richard-Admin')}
+                disabled={post.answer === null || (user?.username === 'Fern-Admin' || user?.username === 'Richard-Admin') || user === undefined || user === null}
                 onClick={submitHeart}
               >
                 <FavoriteBorder style={{color: 'lightpink'}} fontSize={'default'}/>
@@ -249,7 +251,7 @@ const SinglePostDisplay = ({isLoading}) => {
           </IconButton>
               )}
               <IconButton
-              disabled={post.answer === null || (user.username === 'Fern-Admin' || user.username === 'Richard-Admin') || !user} 
+              disabled={post.answer === null || (user?.username === 'Fern-Admin' || user?.username === 'Richard-Admin') || user === null || user === undefined} 
               onClick={() => {
                 if(!user){
                   dispatch(notify('error', 'คุณต้องเข้าสู่ระบบเพื่อส่งหัวใจ'));

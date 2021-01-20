@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   bigHeadContainer: {
+    maxWidth: 100,
+    maxHeight: 100,
     minWidth: 90, 
     minHeight: 90,
   },

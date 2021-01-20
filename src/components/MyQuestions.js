@@ -76,16 +76,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const MyQuestions = ({navigation}) => {
+const MyQuestions = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.activeUser.user);
   const userPoints = useSelector((state) => state.activeUser?.userPoints)
   const userLevel = useSelector((state) => state.activeUser?.userLevel)
-  const {avatarProps} = user
-  const {avatarName} = user
-  const id = user._id;
+  let avatarProps;
+  let avatarName;
+  let id;
+  if(user && !user.username) {
+    avatarProps = user.avatarProps
+    avatarName = user.avatarName
+    id = user._id
+  }else{
+    avatarProps = undefined
+    avatarName = undefined
+    id = undefined
+  }
+  
   const answered = useSelector((state) => state.forum.answered);
   const pending = useSelector((state) => state.forum.pending);
   const myAnsweredPosts = answered.filter((p) => p.user?.id === id).sort((a, b) => new Date(b.date) - new Date(a.date));
