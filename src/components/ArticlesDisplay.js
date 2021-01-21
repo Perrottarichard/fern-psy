@@ -12,36 +12,38 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex', 
     flexDirection: 'row', 
-    justifyContent: 'flex-start', 
+    justifyContent: 'center', 
     flexWrap: 'wrap', 
-    margin: 20,
+    marginLeft: 10,
+    marginRight: 10,
     padding: 0
   },
   card: {
     display: 'flex',
-    height: 360,
-    width: 300,
-    marginRight: 20,
-    marginTop: 20,
+    height: 330,
+    width: 290,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: 10,
     paddingTop: 0,
   },
   cardActionArea: {
     display: 'flex',
     flexDirection: 'column',
-    width: 300,
+    width: 290,
     margin: 0,
     padding: 0
   },
   cardMedia: {
     display: 'flex',
-    width: 300,
+    width: 290,
     height: 225
   },
   cardContent: {
     display: 'flex',
     flexDirection: 'column',
     marginBottom: 'auto',
-    width: 300,
+    width: 290,
   },
 }));
 
@@ -96,7 +98,7 @@ const ArticleDisplay = () => {
               </CardActionArea>
               
             </Card>
-) : null}
+) :'No articles yet'}
     </Container>
   )
 }

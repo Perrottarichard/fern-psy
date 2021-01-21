@@ -48,11 +48,11 @@ const AdminLoginForm = (props) => {
   }
   return (
     <div className='container' id='admin-login-form'>
-      <div>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
         <h2 ><FontAwesomeIcon icon={faLock}  />{' '}Admin{' '}</h2>
       </div>
-      <div id='form-div' >
-        <form onSubmit={submitLogin}>
+      <div id='form-div' style={{display: 'flex', justifyContent: 'center'}} >
+        <form onSubmit={submitLogin} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
             <TextField 
             onChange={handleChangeUser} 
@@ -60,7 +60,7 @@ const AdminLoginForm = (props) => {
             variant="outlined"
             margin="normal"
             required
-            fullWidth
+            style={{width: 280}}
             label='Username'
             >
             </TextField>
@@ -73,7 +73,7 @@ const AdminLoginForm = (props) => {
             variant="outlined"
             margin="normal"
             required
-            fullWidth
+            style={{width: 280}}
             label='Password'
             >
             </TextField>
@@ -82,6 +82,7 @@ const AdminLoginForm = (props) => {
             id='admin-submit-login' 
             type="submit"
             variant='contained'
+            style={{width: 200, alignSelf:'center', marginTop: 20}}
             >
               Enter
             </Button>

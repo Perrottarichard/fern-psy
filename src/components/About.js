@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {makeStyles} from '@material-ui/core/styles'
-import { Container, Card, Typography, Avatar, Switch, Button } from '@material-ui/core';
+import { Container, Card, Typography, Avatar, Switch, Button, FormControlLabel } from '@material-ui/core';
 import CatFernGraphic from '../assets/undraw_friends_r511.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faLine } from '@fortawesome/free-brands-svg-icons'
@@ -114,11 +114,16 @@ const About = () => {
       <div
         className={classes.switchContainer}
       >
-        <Switch
-          icon={<Translate fontSize='small'/>}
+        <FormControlLabel
+        value={isEng}
+        control={<Switch
           onChange={toggleLanguage}
-          value={isEng}
+          checked={isEng}
+        />}
+        label={'Th-En'}
+        labelPlacement='top'
         />
+        
       </div>
       <div
         className={classes.imageContainer}

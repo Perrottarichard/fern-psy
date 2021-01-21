@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link, useHistory, Redirect } from 'react-router-dom'
+import { Switch, Route, Link, useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, withStyles} from '@material-ui/core/styles';
@@ -45,6 +45,9 @@ import AdminHome from './AdminHome';
 const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
     color: '#f5f578',
+    '&$track': {
+      backgroundColor: 'gray'
+    },
     '&$checked': {
       color: '#ebb757'
     },
@@ -205,6 +208,7 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           onChange={handleModeChange} 
           icon={<Brightness2/>}
           checkedIcon={<WbSunny/>}
+          checked={prefersDarkMode === false}
           />
           <div className={classes.title}>
 
@@ -237,7 +241,10 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
         disableDiscovery={iOS}
       >
         <div className={classes.toolbarIcon}>
-        <Button className={classes.hiddenButtonForAdmin} onClick={() => history.push('adLogin')}>
+        <Button className={classes.hiddenButtonForAdmin} onClick={() => {
+          handleDrawerClose()
+          history.push('adLogin')}
+        }>
            </Button>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon style={{color: 'lightpink'}}/>
