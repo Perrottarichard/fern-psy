@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import { Container, Button, TextField, Input} from '@material-ui/core'
 import { addArticle } from '../reducers/forumReducer'
+import {notify} from '../reducers/activeUserReducer'
 
 const useStyles = makeStyles((theme) => ({
 container: {
@@ -75,9 +76,9 @@ const AdminPostArticle = () => {
   const handleArticleSubmit = async (event) => {
     event.preventDefault()
     if (!title) {
-      // toast.warn('You must have a title')
+      dispatch(notify('error', 'You must have a title'))
     } else if(!content){
-      // toast.warn('Your article must have content')
+      dispatch(notify('error', 'You must have content'))
     }else{
       try {
         const article = new FormData()
@@ -86,8 +87,9 @@ const AdminPostArticle = () => {
         article.append("file", file)
 
         dispatch(addArticle(article))
-
+        dispatch(notify('success', 'Article posted'))
       } catch (error) {
+        dispatch(notify('error', 'Something went wrong'))
         console.log(error)
       }
     }
