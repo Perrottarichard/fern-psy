@@ -7,6 +7,7 @@ import {BigHead} from '@bigheads/core'
 import { initializeForumPending, initializeForumAnswered} from '../reducers/forumReducer';
 import {getLevelTitle, levelColor} from '../helperFunctions'
 import {StarsRounded} from '@material-ui/icons'
+import {initStats} from '../reducers/activeUserReducer'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -107,6 +108,10 @@ const MyQuestions = () => {
       dispatch(initializeForumAnswered());
     }
   }, [answered.length, dispatch]);
+
+  useEffect(() => {
+    dispatch(initStats(user._id))
+  },[dispatch, user._id])
 
   useEffect(() => {
     if(pending.length === 0){

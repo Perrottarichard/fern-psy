@@ -41,7 +41,10 @@ const updateEditedAnswer = async (newObject) => {
   const response = await axios.put(`${baseUrl}/editanswer/${newObject._id}`, newObject);
   return response.data;
 };
-
+const createArticle = async article => {
+  const response = await axios.post(`${baseUrl}/postarticle`, article)
+  return response.data
+};
 const addComment = async (comment, postToModify) => {
   const config = {
     headers: { Authorization: token },
@@ -97,5 +100,5 @@ const flagComment = async (c) => {
 };
 
 export default {
-  getPending, getAnswered, getArticles, create, update, setToken, remove, heartUp, addComment, addReply, flagComment, getFlagged, removeComment, unflag, updateEditedAnswer, incView
+  getPending, getAnswered, getArticles, create, update, setToken, remove, heartUp, addComment, addReply, flagComment, getFlagged, removeComment, unflag, updateEditedAnswer, incView, createArticle
 };
