@@ -178,9 +178,9 @@ export default function MyNavbar({forumAnswered}) {
     setOpen(false);
   };
   const handleModeChange = () => {
-    window.localStorage.setItem('AskFernDark', darkMode.toString())
     dispatch(setDarkMode(!darkMode))
   }
+  console.log(darkMode)
   const logout = () => {
     window.localStorage.removeItem('loggedForumUser')
     dispatch(clearUser())
