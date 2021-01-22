@@ -6,6 +6,7 @@ import {RadioGroup, Radio, Typography, Card, TextField, Button, Divider, Contain
 import {BigHead} from '@bigheads/core'
 import {updateUserAvatar} from '../reducers/activeUserReducer'
 import {notify} from '../reducers/activeUserReducer'
+import {Lock} from '@material-ui/icons'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -539,8 +540,7 @@ const AvatarPreview = () => {
     : 
       <div
         style={{justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
-        {/* <Micon
-          name='lock' size={90} color='gray'/> */}
+        <Lock fontSize='large'/>
         <Typography>
           Level: {item.level}
         </Typography>

@@ -1,6 +1,6 @@
 import userService from '../services/userService'
 
-const initialState = {user: null, redirecting: false, userPoints: null, userLevel: null, notify: { open: false, severity: '', message: '' }}
+const initialState = {user: null, redirecting: false, userPoints: null, userLevel: null, notify: { open: false, severity: '', message: ''}, darkMode: false }
 
 const activeUserReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -8,6 +8,8 @@ const activeUserReducer = (state = initialState, action) => {
     return {...state, user: action.data};
   case 'NOTIFY':
       return { ...state, notify: action.data }
+  case 'SET_DARK_MODE':
+      return {...state, darkMode: action.data}
   case 'REDIRECTING':
     return {...state, redirecting: action.data}
   case 'USER_LOGOUT':
@@ -36,6 +38,10 @@ export const clearUser = () => ({
   type: 'USER_LOGOUT',
   data: null,
 });
+export const setDarkMode = (bool) => ({
+  type: 'SET_DARK_MODE',
+  data: bool
+})
 export const redirecting = (bool) => ({
   type: 'REDIRECTING',
   data: bool

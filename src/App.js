@@ -15,17 +15,17 @@ const App = () => {
   const dispatch = useDispatch()
   const forumAnswered = useSelector(state => state.forum.answered)
 
-  const [prefersDarkMode, setPrefersDarkMode] = useState(window.localStorage.getItem('AskFernDark'))
+  const darkMode = useSelector(state => state.activeUser.darkMode)
 
-  useEffect(() => {
-    if(!prefersDarkMode){
-      window.localStorage.setItem('AskFernDark', 'false')
-    }else{
-      window.localStorage.setItem('AskFernDark', 'true')
-    }
-  }, [prefersDarkMode])
+  // useEffect(() => {
+  //   if(darkMode){
+  //     window.localStorage.setItem('AskFernDark', 'false')
+  //   }else{
+  //     window.localStorage.setItem('AskFernDark', 'true')
+  //   }
+  // }, [])
 
-  const theme = () => createMuiTheme({palette: {type: prefersDarkMode ? 'dark' : 'light'}})
+  const theme = () => createMuiTheme({palette: {type: darkMode ? 'dark' : 'light'}})
   const getLoggedUser = useCallback(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedForumUser');
     if (loggedUserJSON) {
@@ -69,8 +69,8 @@ const App = () => {
         <MyNavbar 
         activeUser={activeUser} 
         forumAnswered={forumAnswered} 
-        prefersDarkMode={prefersDarkMode} 
-        setPrefersDarkMode={setPrefersDarkMode}/>
+        darkMode={darkMode} 
+        />
 
       </div>
     </Router >

@@ -100,13 +100,13 @@ export default function LoginForm() {
     else {
       try {
         const user = await loginService.userlogin({ email: email.toLowerCase(), password })
+        setEmail('')
+        setPassword('')
         window.localStorage.setItem(
           'loggedForumUser', JSON.stringify(user)
         )
         forumService.setToken(user.token)
         dispatch(setUser(user))
-        setEmail('')
-        setPassword('')
         history.push('/')
       }
       catch (error) {

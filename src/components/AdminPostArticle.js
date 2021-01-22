@@ -88,6 +88,9 @@ const AdminPostArticle = () => {
 
         dispatch(addArticle(article))
         dispatch(notify('success', 'Article posted'))
+        setTitle('')
+        setContent('')
+        setFile([])
       } catch (error) {
         dispatch(notify('error', 'Something went wrong'))
         console.log(error)

@@ -59,7 +59,6 @@ const Home = () => {
     setValue(newValue);
   };
 
-  console.log(user)
   if(user?.username === 'Fern-Admin' || user?.username === 'Richard-Admin'){
   return (
   <Redirect to="/adDash"/>

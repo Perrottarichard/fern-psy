@@ -33,7 +33,7 @@ import {BigHead} from '@bigheads/core'
 import {Brightness2, WbSunny} from '@material-ui/icons'
 import Logo from '../assets/askfernlogo2.svg'
 
-import { closeNotify } from '../reducers/activeUserReducer'
+import { closeNotify, setDarkMode } from '../reducers/activeUserReducer'
 import { clearUser } from '../reducers/activeUserReducer';
 import AddComment from './AddComment';
 import AddReply from './AddReply';
@@ -44,19 +44,19 @@ import AdminHome from './AdminHome';
 
 const CustomSwitchDark = withStyles((theme) => ({
   switchBase: {
-    color: '#f5f578',
+    color: '#ebb757',
     '&$track': {
       backgroundColor: 'gray'
     },
     '&$checked': {
-      color: '#ebb757'
+      color: '#f5f578'
     },
     '&$checked + $track': {
       backgroundColor: 'gray',
     },
   },
   checked: {},
-  track: {},
+  track: {backgroundColor: 'gray'},
 }))(MuiSwitch);
 
 const drawerWidth = 240;
@@ -162,13 +162,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, setPrefersDarkMode}) {
+export default function MyNavbar({forumAnswered}) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.activeUser.user)
   const notify = useSelector(state => state.activeUser.notify)
+  const darkMode = useSelector(state => state.activeUser.darkMode)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -177,9 +178,9 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
     setOpen(false);
   };
   const handleModeChange = () => {
-    setPrefersDarkMode(!prefersDarkMode)
+    window.localStorage.setItem('AskFernDark', darkMode.toString())
+    dispatch(setDarkMode(!darkMode))
   }
-
   const logout = () => {
     window.localStorage.removeItem('loggedForumUser')
     dispatch(clearUser())
@@ -206,9 +207,9 @@ export default function MyNavbar({activeUser, forumAnswered, prefersDarkMode, se
           
           <CustomSwitchDark 
           onChange={handleModeChange} 
-          icon={<Brightness2/>}
-          checkedIcon={<WbSunny/>}
-          checked={prefersDarkMode === false}
+          icon={<WbSunny/>}
+          checkedIcon={<Brightness2/>}
+          checked={darkMode === true}
           />
           <div className={classes.title}>
 
