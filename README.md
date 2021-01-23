@@ -47,7 +47,3 @@ https://github.com/Perrottarichard/fern-psy-backend
 - create article content including images
 - edit previously posted forum responses
 - delete flagged comments
-
-## Screenshots (desktop)
-
-![Alt text](https://github.com/Perrottarichard/fern-psy/tree/master/fernPsyScreenshotsWeb)
