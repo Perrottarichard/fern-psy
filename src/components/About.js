@@ -4,7 +4,6 @@ import { Container, Card, Typography, Avatar, Switch, Button, FormControlLabel }
 import CatFernGraphic from '../assets/undraw_friends_r511.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faLine } from '@fortawesome/free-brands-svg-icons'
-import {Translate} from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   switchContainer: { 

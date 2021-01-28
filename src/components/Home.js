@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { useHistory, Redirect} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 // import { useDispatch } from 'react-redux'
 import { Container} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
 
   const classes = useStyles();
-  const history = useHistory();
   const [value, setValue] = useState(0);
   const user = useSelector(state => state.activeUser.user)
 
