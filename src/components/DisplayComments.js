@@ -2,11 +2,13 @@ import React, {useState, useEffect, useMemo} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {BigHead} from '@bigheads/core'
-import { Card, CardHeader, Menu, MenuItem, Typography, IconButton} from '@material-ui/core';
+import { Avatar, Card, CardHeader, Menu, MenuItem, Typography, IconButton} from '@material-ui/core';
 import {FlagRounded, ReplyRounded} from '@material-ui/icons'
 import {makeStyles} from '@material-ui/core/styles'
 import { setFlaggedComment } from '../reducers/forumReducer';
 import {timeSince} from './ForumDisplayAll'
+import Logo from '../assets/askfernlogo2.svg'
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
   replyBigHeadContainer: {
     minWidth: 40, 
     minHeight: 40,
+    maxWidth: 40,
+    maxHeight: 40,
     marginTop: 'auto',
     marginBottom: 'auto',
   },
@@ -67,6 +71,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     paddingBottom: 10,
     marginBottom: 10
+  },
+  fernAvatar: {
+    minWidth: 40, 
+    minHeight: 40,
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginRight: 10
   },
   replyHeader: {
     display: 'flex',
@@ -183,11 +194,25 @@ const DisplayComments = () => {
         variant='outlined'
       >
         <div className={classes.replyHeader}>
+        {r.user?.email === 'fern-admin-reply@askfern.app'?
+        <div className={classes.avatarAndHeaderContainer}>
+              <Avatar src={Logo} className={classes.fernAvatar}/>
+              <CardHeader
+              title={`Fern`}
+              titleTypographyProps={{variant: 'body2'}}
+              subheader={`ตอบ ${timeSince(r.date)} ที่ผ่านมา`}
+              subheaderTypographyProps={{variant: 'caption'}}
+              style={{padding: 0, margin: 0}}>
+              </CardHeader>
+              </div>
+:
+<div>
         <div className={classes.replyBigHeadContainer}>
           <BigHead
             {...r.user?.avatarProps}
             faceMask={false}/>
         </div>
+
         <CardHeader
           title={r.user?.avatarName}
           titleTypographyProps={{variant: 'body2'}}
@@ -195,7 +220,11 @@ const DisplayComments = () => {
           subheaderTypographyProps={{variant: 'caption'}}
           style={{padding: 0, margin: 0}}>
         </CardHeader>
+        </div>
+}
+
       </div>
+    
           <Typography
             className={classes.replyContent}
             variant='body2'
